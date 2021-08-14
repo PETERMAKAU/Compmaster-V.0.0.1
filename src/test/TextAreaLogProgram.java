@@ -35,12 +35,8 @@ public class TextAreaLogProgram extends JFrame {
          
         textArea = new JTextArea(50, 10);
         textArea.setEditable(false);
-        PrintStream printStream = new PrintStream(new CustomOutputStream(textArea));
-         
-        // keeps reference of standard output stream
-        standardOut = System.out;
-         
-        // re-assigns standard output stream and error output stream
+        PrintStream printStream = new PrintStream(new CustomOutputStream(textArea));        
+        standardOut = System.out;       
         System.setOut(printStream);
         System.setErr(printStream);
  

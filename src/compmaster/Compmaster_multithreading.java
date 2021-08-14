@@ -25,10 +25,11 @@ class CA{
 
 }
 ////////////////thread 2///////////////////////////
-class MyTask extends CA implements Runnable{
+//class MyTask extends CA implements Runnable{
+    class MyTask implements Runnable{
     @Override
     public void run(){
-    for(int doc=1; doc<= 10;doc++){
+    for(int doc=1; doc<= 1000;doc++){
       System.out.println("@@Extracting Document"+doc+" --File 2");
     
     };
@@ -39,7 +40,7 @@ class MyTask extends CA implements Runnable{
 class YourTask implements Runnable{
     @Override
     public void run(){
-    for(int doc=1; doc<= 10;doc++){
+    for(int doc=1; doc<= 1000;doc++){
       System.out.println("@@Extracting Document"+doc+" --File 3");
     
     };
@@ -55,9 +56,13 @@ public class Compmaster_multithreading {
       //  MyTask task =new MyTask();
        // task.start();
         ///////////call Thread 2///////////////
-        Runnable r = new MyTask();
+       /* Runnable r = new MyTask();
         Thread task = new Thread(r);
-        task.start();
+        task.start();*/
+        
+          ////////////end call Thread 2///////////
+        new Thread(new MyTask()).start();
+        /////////////call Thread 3//////////////
         ////////////end call Thread 2///////////
         new Thread(new YourTask()).start();
         /////////////call Thread 3//////////////

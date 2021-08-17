@@ -94,8 +94,11 @@ import test.CustomOutputStream;
      ArrayList<String> data19;     
      ArrayList<String> data20;     
      ArrayList<String> data21;
+     ArrayList<String> data21_a;
      ArrayList<String> data22;
+     ArrayList<String> data22_a;
      ArrayList<String> data23;   
+      ArrayList<String> data23_a;  
      ArrayList<String> data24;
      
      ArrayList<String> size_store;
@@ -1201,33 +1204,60 @@ reader.close();
                                              if(str_chandata.equals(chandata_loop)){
                                                         check_position_to_insert();
                                                         data24.set(int_positon_to_insert, str_asset_status);
+                                                }                                            
                                                 }
-                                            
-                                        }
-                                              else if(str_asset_def_body.equals("$AA_ENC_COMP_MIN")){
+                                             //////////////////////////////////////////////////////////////
+                                              else if(str_asset_def_body.equals("$AA_ENC_COMP_MIN[0]")){
                                        // data8.add(str_asset_status);
                                              if(str_chandata.equals(chandata_loop)){
                                                         check_position_to_insert();
                                                         data21.set(int_positon_to_insert, str_asset_status);
                                                 }
-                                            
-                                        }
-                                               else if(str_asset_def_body.equals("$AA_ENC_COMP_MAX")){
+                                              }
+                                              ///////////////////////////////////////////////////////////////////////
+                                              //////////////////////////////////////////////////////////////
+                                              else if(str_asset_def_body.equals("$AA_ENC_COMP_MIN[1]")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data21_a.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                              }
+                                              ///////////////////////////////////////////////////////////////////////
+                                               else if(str_asset_def_body.equals("$AA_ENC_COMP_MAX[0]")){
                                        // data8.add(str_asset_status);
                                              if(str_chandata.equals(chandata_loop)){
                                                         check_position_to_insert();
                                                         data22.set(int_positon_to_insert, str_asset_status);
+                                                }                                            
                                                 }
-                                            
-                                        }
-                                                else if(str_asset_def_body.equals("$AA_ENC_COMP_IS_MODULO")){
+                                               ////////////////////////////////////////
+                                                else if(str_asset_def_body.equals("$AA_ENC_COMP_MAX[1]")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data22_a.set(int_positon_to_insert, str_asset_status);
+                                                }                                            
+                                                }
+                                               /////////////////////////////////////////////////
+                                                else if(str_asset_def_body.equals("$AA_ENC_COMP_IS_MODULO[0]")){
                                        // data8.add(str_asset_status);
                                              if(str_chandata.equals(chandata_loop)){
                                                         check_position_to_insert();
                                                         data23.set(int_positon_to_insert, str_asset_status);
                                                 }
-                                            
-                                        }
+                                                }
+                                            ////////////////////////////////////////////////////////
+                                                 /////////////////////////////////////////////////
+                                                else if(str_asset_def_body.equals("$AA_ENC_COMP_IS_MODULO[1]")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data23_a.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                                }
+                                            ////////////////////////////////////////////////////////
+                                        
                                             else if(str_asset_def_body.equals("$AA_ENC_COMP_STEP[1]")){
                                        // data8.add(str_asset_status);
                                              if(str_chandata.equals(chandata_loop)){
@@ -1427,23 +1457,44 @@ reader.close();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
              private void insert_21() {
-         old_str_asset_def_body="$AA_ENC_COMP_MIN";       
+         old_str_asset_def_body="$AA_ENC_COMP_MIN[0]";       
       //  data.clear();
         data=data21;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+          }
+             private void insert_21_a() {
+         old_str_asset_def_body="$AA_ENC_COMP_MIN[1]";       
+      //  data.clear();
+        data=data21_a;
+        insert_array();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+          }
               private void insert_22() {
-        old_str_asset_def_body="$AA_ENC_COMP_MAX";        
+        old_str_asset_def_body="$AA_ENC_COMP_MAX[0]";          
       //  data.clear();
         data=data22;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+               private void insert_22_a() {
+        old_str_asset_def_body="$AA_ENC_COMP_MAX[1]";          
+      //  data.clear();
+        data=data22_a;
+        insert_array();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
                private void insert_23() {
-        old_str_asset_def_body="$AA_ENC_COMP_IS_MODULO";
+        old_str_asset_def_body="$AA_ENC_COMP_IS_MODULO[0]";  
       //  data.clear();
         data=data23;
+        insert_array();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+                    private void insert_23_a() {
+        old_str_asset_def_body="$AA_ENC_COMP_IS_MODULO[1]";  
+      //  data.clear();
+        data=data23_a;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -1479,8 +1530,11 @@ reader.close();
                                insert_20();
                                insert_24();
                                insert_21();
+                               insert_21_a();
                                insert_22();
+                                 insert_22_a();
                                insert_23();
+                               insert_23_a();
                                 
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -1568,6 +1622,12 @@ reader.close();
                                  data21 = new ArrayList<String>(int_array_size_for_used);
                                  data22 = new ArrayList<String>(int_array_size_for_used);
                                  data23 = new ArrayList<String>(int_array_size_for_used);
+                                 
+                                 
+                                 data21_a = new ArrayList<String>(int_array_size_for_used);
+                                 data22_a = new ArrayList<String>(int_array_size_for_used);
+                                 data23_a = new ArrayList<String>(int_array_size_for_used);
+                                 
                                  data24 = new ArrayList<String>(int_array_size_for_used);
                                  
                                  for (int i = 0; i <= int_array_size_for_used-1; i = i+1) {
@@ -1594,8 +1654,11 @@ reader.close();
                                          data19.add("");
                                          data20.add("");
                                          data21.add("");
-                                         data22.add("");                                     
+                                         data21_a.add("");
+                                         data22.add(""); 
+                                          data22_a.add(""); 
                                          data23.add("");
+                                          data23_a.add("");
                                          data24.add("");
                                             }
                                  int cc=data5.size();

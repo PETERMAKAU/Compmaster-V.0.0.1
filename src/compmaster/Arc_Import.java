@@ -8,8 +8,10 @@ package compmaster;
 import static compmaster.Arc_Import.conn;
 
 import java.awt.List;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,6 +34,7 @@ import static jdk.nashorn.internal.objects.Global.print;
 import static sun.misc.Version.print;
 import java.lang.*;
 import java.io.*;
+import static java.lang.Thread.interrupted;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -58,15 +61,14 @@ import test.CustomOutputStream;
 
  class Compmaster_Loop implements Runnable{
      
-     private Thread PROGRESS_THREAD;
-    private int PROGRESS_VALUE;     
+        
     static Connection conn = null;
     static ResultSet rs = null;  
     static String str_global_count="0%";
     String chandata_loop="";
     int used_inserted_status=0;
     PreparedStatement pst = null;
-  
+    int count_number_of_loops=0;
     int array_size_for_size_store=0;
       ArrayList<String> data; 
      ArrayList<String> data0; 
@@ -84,7 +86,18 @@ import test.CustomOutputStream;
      ArrayList<String> data12;     
      ArrayList<String> data13;
      ArrayList<String> data14;
-     ArrayList<String> data15;     
+     ArrayList<String> data15;   
+     
+     ArrayList<String> data16;     
+     ArrayList<String> data17;
+     ArrayList<String> data18;
+     ArrayList<String> data19;     
+     ArrayList<String> data20;     
+     ArrayList<String> data21;
+     ArrayList<String> data22;
+     ArrayList<String> data23;   
+     ArrayList<String> data24;
+     
      ArrayList<String> size_store;
      ArrayList<String> data_chabdata_count;
      ArrayList<String> data_used_only_xx;
@@ -113,8 +126,13 @@ import test.CustomOutputStream;
     String var13x="",var14x="",var15x="",var16x="",var17x="",var18x="",var19x="",var20x="",var21x="",var22x="",var23x="",var24x="",var25x="",var26x="",var27x="",var28x="",var29x="",var30x="",var31x="",var32x="",var33x="",var34x="";
     String str_asset_def_body="n/a",str_row_1_or_0="",old_str_asset_def_body="n/a",str_chandata_code="n/a", str_chandata="n/a", str_asset_number="n/a", str_asset_body="n/a", str_asset_status="n/a",str_pos_counter="n/a";
      // int countxx=7;
+     
+    
     @Override
     public void run(){
+       
+            
+            //////////////////xxxxx//////////////
         conn = mysqlconnect.ConnectDb();
    /* for(int doc=1; doc<= 100000;doc++){
       System.out.println("@@Extracting Document"+doc+" --Hot");
@@ -132,7 +150,7 @@ import test.CustomOutputStream;
                                   used_chennel_count=0;
                          
                                Arc_Import mainClass = new Arc_Import();                 
-                               mainClass.UpdateJTable();
+                             // mainClass.UpdateJTable();
                                pathxx= mainClass.pathx;
                               // String pathx="C:\\Users\\peter\\Desktop\\COMPMASTER_INPUT_SOURCE\\Compensation\\001-N-K-P-A-H-39033.arc";
                          
@@ -146,6 +164,9 @@ import test.CustomOutputStream;
                              count_chandata_types();
                               for(int i =0; i<data_chabdata_count.size(); i++)
                                      {
+                                         
+                                         count_number_of_loops=count_number_of_loops+1;
+                                     start_timer();
                                      countLines();
                                      chandata_loop=data_chabdata_count.get(i);
                                      insert_table_transition();
@@ -158,17 +179,33 @@ import test.CustomOutputStream;
                                      }
                                      
                                      }
+                              str_global_count="COMPLETED";
+                              count_number_of_loops=0;
+                              mainClass.stop_timer();
+                              restart_process();
+                              JOptionPane.showMessageDialog(null, "Finished successfully!");
                              }
+                         
+                         ////////////xxxxx//////////////////
+            
+            
+            
+           /* for(int i=0; i<1000; i++){
+    System.out.println("Count 2: "+i);
+    
+    }*/
+            
+             
        // JOptionPane.showMessageDialog(null, loop1x.isAlive());
     }
-    static void check_thread_is_running(){
-     Runnable r = new Compmaster_Loop ();
-        Thread loop1x = new Thread(r);
-     //  loop1x.start();
-        JOptionPane.showMessageDialog(null, loop1x.isAlive());
-        System.out.println(loop1x.isAlive());
-    }
+   
     ////////////functions//////////////
+    
+    
+    private void restart_process(){
+    Arc_Import mainClass = new Arc_Import();
+   //mainClass.restart();
+    }
     private void insert_data(){
         
         if(str_chandata.equals(chandata_loop)){
@@ -272,20 +309,21 @@ reader.close();
          while((line = bufferedReader.readLine()) != null) {
           //normalize_line();
         //ggg
-                str_asset_def_body="";
-                row_number=row_number+1;
+                //str_asset_def_body="";
+               // row_number=row_number+1;
                // System.out.println(row_number);   
-                fl_row_number = (double) row_number;
-                fl_cnt = (double) cnt;         
-                per_pr=  (fl_row_number/(fl_cnt))*100;  
-                per_pr=per_pr/2;
-                DecimalFormat d_per_pr = new DecimalFormat("##.00000");
-                String str_per_pr =d_per_pr.format(per_pr);
-                String str_per =per_pr+" %";
+               // fl_row_number = (double) row_number;
+               // fl_cnt = (double) cnt;         
+               // per_pr=  (fl_row_number/(fl_cnt))*100;  
+               // per_pr=per_pr/2;
+               // DecimalFormat d_per_pr = new DecimalFormat("##.00000");
+               // String str_per_pr =d_per_pr.format(per_pr);
+               // String str_per =per_pr+" %";
                // row_of_rows = "[ "+row_number+" of "+cnt+" ] [ "+ str_per_pr +" %"+" ]";   
-                row_of_rows = "[ "+data_chabdata_count.size()+" CHANNELS "+" ] [ "+ str_per_pr +" %"+" ]";
+               // row_of_rows = "[ "+data_chabdata_count.size()+" CHANNELS "+" ] [ "+ str_per_pr +" %"+" ]";
                // here
          ////////////////////////////
+             str_global_count="1/2 - Processing your file. Please wait !";
                 String input = line;     //input string
                 String firstFourChars = "";
                 String first6Char = "";
@@ -311,8 +349,9 @@ reader.close();
         //////////////////////////////////
           ////////////////////////////////////////////
       //  System.out.println(line +"   "+row_of_rows);  
-                str_global_count="["+chandata_loop+"]"+""+row_of_rows;
-         System.out.println("["+chandata_loop+"]"+""+row_of_rows); 
+               // str_global_count="["+chandata_loop+"]"+""+row_of_rows;
+              
+       //  System.out.println("["+chandata_loop+"]"+""+row_of_rows); 
               if(firstFourChars.equals("CHANDATA") || first6Char.equals("N20070")  ){
               if(firstFourChars.equals("CHANDATA")){
             // txt_percentage.setText("0.00");
@@ -761,7 +800,7 @@ reader.close();
                  fl_cnt = (double) cnt;         
                  per_pr=  (fl_row_number/(fl_cnt))*100;  
                   
-                 per_pr=per_pr/2;
+                // per_pr=per_pr/1;
                 ////////////////convert to 4 decpoints////////////////////
                 DecimalFormat d_per_pr = new DecimalFormat("##.00000");
                 String str_per_pr =d_per_pr.format(per_pr);
@@ -775,6 +814,8 @@ reader.close();
                 String input = line;     //input string
                 String first8Chars = "";
                 String first6Char = "";
+                String first16Char = "";
+                
                    /////////////////////////////////////
               if (input.length() > 8) 
               {
@@ -794,7 +835,17 @@ reader.close();
               {
                first6Char = input;
               } 
-              str_global_count="["+chandata_loop+"]"+""+row_of_rows;
+              /////////////////////////////////
+                if (input.length() > 16) 
+              {
+               first16Char = input.substring(0, 16);
+              } 
+              else
+              {
+               first16Char = input;
+              } 
+              ///////////////////////////////////
+              str_global_count="2/2 "+"["+chandata_loop+"]"+""+row_of_rows;
          System.out.println("["+chandata_loop+"]"+""+row_of_rows); 
          
           ////////////////////////////////////////////
@@ -813,6 +864,15 @@ reader.close();
                    || first6Char.equals("N10000")
                    || first6Char.equals("N30300")   
                    || first6Char.equals("N18342")
+                   
+                   
+                   || first6Char.equals("N32450")
+                   || first6Char.equals("N38000")
+                   || first16Char.equals("$AA_ENC_COMP_STE")   
+                   || first16Char.equals("$AA_ENC_COMP_MIN")
+                   || first16Char.equals("$AA_ENC_COMP_MAX")
+                   || first16Char.equals("$AA_ENC_COMP_IS_")
+                 
                    ){
                
                 if(first8Chars.equals("CHANDATA")){
@@ -880,7 +940,9 @@ reader.close();
                  int int_pos = Integer.parseInt(str_pos_counter)+1;
                  str_pos_counter=int_pos+"";
                  
-                 }else{
+                 }
+                 
+                 else{
                    str_row_1_or_0=str_asset_body.substring(str_asset_body.indexOf("[") + 1, str_asset_body.indexOf(",")); 
                    str_pos_counter=str_asset_body.substring(str_asset_body.indexOf(",") + 1, str_asset_body.indexOf("]")); 
                    str_pos_counter = str_pos_counter.replaceAll("[^0-9]", "");
@@ -894,7 +956,51 @@ reader.close();
                    str_asset_def_body="$MA_ENC_COMP_ENABLE[0]";
                    }else if(str_asset_def_body.equals("$MA_ENC_COMP_ENABLE") && str_row_1_or_0.equals("1") ){
                   str_asset_def_body="$MA_ENC_COMP_ENABLE[1]";
-                   }                   
+                   }                      
+                   ////////////////////////////////                   
+                   else if(str_asset_def_body.equals("$AA_ENC_COMP_STEP") && str_row_1_or_0.equals("0") ){
+                   str_asset_def_body="$AA_ENC_COMP_STEP[0]";
+                   }else if(str_asset_def_body.equals("$AA_ENC_COMP_STEP") && str_row_1_or_0.equals("1") ){
+                  str_asset_def_body="$AA_ENC_COMP_STEP[1]";
+                   } 
+                   ////////////////////////
+                   else if(str_asset_def_body.equals("$MA_BACKLASH") && str_row_1_or_0.equals("0") ){
+                   str_asset_def_body="$MA_BACKLASH[0]";
+                   }else if(str_asset_def_body.equals("$MA_BACKLASH") && str_row_1_or_0.equals("1") ){
+                  str_asset_def_body="$MA_BACKLASH[1]";
+                   }     
+                   /////////////////////////
+                   else if(str_asset_def_body.equals("$MA_MM_ENC_COMP_MAX_POINTS") && str_row_1_or_0.equals("0") ){
+                   str_asset_def_body="$MA_MM_ENC_COMP_MAX_POINTS[0]";
+                   }else if(str_asset_def_body.equals("$MA_MM_ENC_COMP_MAX_POINTS") && str_row_1_or_0.equals("1") ){
+                  str_asset_def_body="$MA_MM_ENC_COMP_MAX_POINTS[1]";
+                   }     
+                   /////////////////////////
+                   
+                   
+                    ////////////////////////
+                   else if(str_asset_def_body.equals("$AA_ENC_COMP_MIN") && str_row_1_or_0.equals("0") ){
+                   str_asset_def_body="$AA_ENC_COMP_MIN[0]";
+                   }else if(str_asset_def_body.equals("$AA_ENC_COMP_MIN") && str_row_1_or_0.equals("1") ){
+                  str_asset_def_body="$AA_ENC_COMP_MIN[1]";
+                   }     
+                   /////////////////////////
+                    ////////////////////////
+                   else if(str_asset_def_body.equals("$AA_ENC_COMP_IS_MODULO") && str_row_1_or_0.equals("0") ){
+                   str_asset_def_body="$AA_ENC_COMP_IS_MODULO[0]";
+                   }else if(str_asset_def_body.equals("$AA_ENC_COMP_IS_MODULO") && str_row_1_or_0.equals("1") ){
+                  str_asset_def_body="$AA_ENC_COMP_IS_MODULO[1]";
+                   }     
+                   /////////////////////////
+                    ////////////////////////
+                   else if(str_asset_def_body.equals("$AA_ENC_COMP_MAX") && str_row_1_or_0.equals("0") ){
+                   str_asset_def_body="$AA_ENC_COMP_MAX[0]";
+                   }else if(str_asset_def_body.equals("$AA_ENC_COMP_MAX") && str_row_1_or_0.equals("1") ){
+                  str_asset_def_body="$AA_ENC_COMP_MAX[1]";
+                   }     
+                   /////////////////////////
+                   
+                   
                    else{
                    
                    }
@@ -1040,11 +1146,93 @@ reader.close();
                                                 }
                                             
                                         }
+                                         
                                            else if(str_asset_def_body.equals("$MN_MM_CEC_MAX_POINTS")){
                                        // data8.add(str_asset_status);
                                              if(str_chandata.equals(chandata_loop)){
                                                         check_position_to_insert();
                                                         data15.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                          ////////////////////////////////////////////////////////////////////  
+                                         else if(str_asset_def_body.equals("$MA_BACKLASH[0]")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data16.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                          else if(str_asset_def_body.equals("$MA_BACKLASH[1]")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data17.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                           else if(str_asset_def_body.equals("$MA_MM_ENC_COMP_MAX_POINTS[0]")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data18.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                            else if(str_asset_def_body.equals("$MA_MM_ENC_COMP_MAX_POINTS[1]")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data19.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                             else if(str_asset_def_body.equals("$AA_ENC_COMP_STEP[0]")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data20.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                             else if(str_asset_def_body.equals("$AA_ENC_COMP_STEP[1]")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data24.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                              else if(str_asset_def_body.equals("$AA_ENC_COMP_MIN")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data21.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                               else if(str_asset_def_body.equals("$AA_ENC_COMP_MAX")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data22.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                                else if(str_asset_def_body.equals("$AA_ENC_COMP_IS_MODULO")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data23.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                            else if(str_asset_def_body.equals("$AA_ENC_COMP_STEP[1]")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data24.set(int_positon_to_insert, str_asset_status);
                                                 }
                                             
                                         }
@@ -1084,8 +1272,8 @@ reader.close();
          finish_loops();
       
           Arc_Import mainClass = new Arc_Import(); 
-        mainClass.update_table_2();
-          mainClass.stop_timer();
+          mainClass.update_table_2();
+          //mainClass.stop_timer();
       
          reset_varaiables();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -1096,28 +1284,28 @@ reader.close();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_0() {
-        old_str_asset_def_body="$MA_CEC_ENABLE";
+        old_str_asset_def_body="N32700 $MA_CEC_ENABLE";
        // data.clear();
         data=data0;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_1() {
-        old_str_asset_def_body="$MA_ENC_IS_LINEAR[0]";
+        old_str_asset_def_body="N31000 $MA_ENC_IS_LINEAR[0]";
        // data.clear();
         data=data1;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_2() {
-        old_str_asset_def_body="$MA_ENC_IS_LINEAR[1]";
+        old_str_asset_def_body="N31000 $MA_ENC_IS_LINEAR[1]";
        // data.clear();
         data=data2;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_3() {
-        old_str_asset_def_body="$MA_GANTRY_AXIS_TYPE";
+        old_str_asset_def_body="N37100 $MA_GANTRY_AXIS_TYPE";
         
       //  data.clear();
         data=data3;
@@ -1125,35 +1313,35 @@ reader.close();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_4() {
-        old_str_asset_def_body="$MA_NUM_ENCS";
+        old_str_asset_def_body="N30200 $MA_NUM_ENCS";
        // data.clear();
         data=data4;
         insert_array();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_5() {
-        old_str_asset_def_body="$MA_ENC_COMP_ENABLE[0]";
+        old_str_asset_def_body="N32700 $MA_ENC_COMP_ENABLE[0]";
        // data.clear();
         data=data5;
         insert_array();
       //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_6() {
-        old_str_asset_def_body="$MA_ENC_COMP_ENABLE[1]";
+        old_str_asset_def_body="N32700 $MA_ENC_COMP_ENABLE[1]";
       //  data.clear();
         data=data6;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
  private void insert_7() {
-        old_str_asset_def_body="$MA_POS_LIMIT_MINUS";
+        old_str_asset_def_body="N36110 $MA_POS_LIMIT_MINUS[0]";
       //  data.clear();
         data=data7;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
   private void insert_8() {
-        old_str_asset_def_body="$MA_POS_LIMIT_PLUS";
+        old_str_asset_def_body="N36110 $MA_POS_LIMIT_PLUS[1]";
       //  data.clear();
         data=data8;
         insert_array();
@@ -1175,50 +1363,124 @@ reader.close();
     }
     //$MN_AXCONF_LOGIC_MACHAX_TAB  $MN_AXCONF_MACHAX_NAME_TAB  $MA_IS_ROT_AX  $MN_MM_CEC_MAX_POINTS
     private void insert_12() {
-        old_str_asset_def_body="$MN_AXCONF_LOGIC_MACHAX_TAB";
+        old_str_asset_def_body="N10002 $MN_AXCONF_LOGIC_MACHAX_TAB";
       //  data.clear();
         data=data12;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_13() {
-        old_str_asset_def_body="$MN_AXCONF_MACHAX_NAME_TAB";
+        old_str_asset_def_body="N10000 $MN_AXCONF_MACHAX_NAME_TAB";
       //  data.clear();
         data=data13;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_14() {
-        old_str_asset_def_body="$MA_IS_ROT_AX";
+        old_str_asset_def_body="N30300 $MA_IS_ROT_AX";
       //  data.clear();
         data=data14;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_15() {
-        old_str_asset_def_body="$MN_MM_CEC_MAX_POINTS";
+        old_str_asset_def_body="N18342 $MN_MM_CEC_MAX_POINTS";
       //  data.clear();
         data=data15;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+     private void insert_16() {
+        old_str_asset_def_body="N32450 $MA_BACKLASH[0]";
+      //  data.clear();
+        data=data16;
+        insert_array();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+       private void insert_17() {
+        old_str_asset_def_body="N32450 $MA_BACKLASH[1]";        
+      //  data.clear();
+        data=data17;
+        insert_array();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+         private void insert_18() {
+       old_str_asset_def_body="N38000 $MA_MM_ENC_COMP_MAX_POINTS[0]";       
+      //  data.clear();
+        data=data18;
+        insert_array();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+           private void insert_19() {
+       old_str_asset_def_body="N38000 $MA_MM_ENC_COMP_MAX_POINTS[1]";       
+      //  data.clear();
+        data=data19;
+        insert_array();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+            private void insert_20() {
+        old_str_asset_def_body="$AA_ENC_COMP_STEP[0]";        
+      //  data.clear();
+        data=data20;
+        insert_array();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+             private void insert_21() {
+         old_str_asset_def_body="$AA_ENC_COMP_MIN";       
+      //  data.clear();
+        data=data21;
+        insert_array();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+              private void insert_22() {
+        old_str_asset_def_body="$AA_ENC_COMP_MAX";        
+      //  data.clear();
+        data=data22;
+        insert_array();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+               private void insert_23() {
+        old_str_asset_def_body="$AA_ENC_COMP_IS_MODULO";
+      //  data.clear();
+        data=data23;
+        insert_array();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+         private void insert_24() {
+        old_str_asset_def_body="$AA_ENC_COMP_STEP[1]";  
+      //  data.clear();
+        data=data24;
+        insert_array();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     private void finish_loops() {
-                                insert_12();
+                               
                                insert_13();
-                               insert_14();
+                               insert_12();
                                insert_15();
-                               insert_0();
+                               insert_4();
+                               insert_14();
                                insert_1();
                                insert_2();
-                               insert_3();
-                               insert_4();
+                               insert_16();
+                               insert_17();
+                              // insert_9();
+                             //  insert_10();
+                                insert_6();
+                               insert_0();
                                insert_5();
                                insert_6();
                                insert_7();
                                insert_8();
-                               insert_9();
-                               insert_10();
-                               
+                               insert_18();
+                               insert_19();
+                              // insert_10();
+                               insert_20();
+                               insert_24();
+                               insert_21();
+                               insert_22();
+                               insert_23();
                                 
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -1291,12 +1553,22 @@ reader.close();
                                  data7 = new ArrayList<String>(int_array_size_for_used);
                                  data8 = new ArrayList<String>(int_array_size_for_used);
                                  data9 = new ArrayList<String>(int_array_size_for_used);
-                                 data10 = new ArrayList<String>(int_array_size_for_used);
-                                 
+                                 data10 = new ArrayList<String>(int_array_size_for_used);                                 
                                  data12 = new ArrayList<String>(int_array_size_for_used);
                                  data13 = new ArrayList<String>(int_array_size_for_used);
                                   data14 = new ArrayList<String>(int_array_size_for_used);
                                  data15 = new ArrayList<String>(int_array_size_for_used);
+                                 
+                                 
+                                 data16 = new ArrayList<String>(int_array_size_for_used);
+                                 data17 = new ArrayList<String>(int_array_size_for_used);
+                                 data18 = new ArrayList<String>(int_array_size_for_used);
+                                 data19 = new ArrayList<String>(int_array_size_for_used);
+                                 data20 = new ArrayList<String>(int_array_size_for_used);
+                                 data21 = new ArrayList<String>(int_array_size_for_used);
+                                 data22 = new ArrayList<String>(int_array_size_for_used);
+                                 data23 = new ArrayList<String>(int_array_size_for_used);
+                                 data24 = new ArrayList<String>(int_array_size_for_used);
                                  
                                  for (int i = 0; i <= int_array_size_for_used-1; i = i+1) {
                                      int bb =i;
@@ -1310,12 +1582,21 @@ reader.close();
                                          data7.add("");
                                          data8.add("");
                                          data9.add("");
-                                         data10.add("");
-                                         
+                                         data10.add("");                                         
                                          data12.add("");
                                          data13.add("");
                                          data14.add("");
                                          data15.add("");
+                                         
+                                         data16.add("");
+                                         data17.add("");
+                                         data18.add("");
+                                         data19.add("");
+                                         data20.add("");
+                                         data21.add("");
+                                         data22.add("");                                     
+                                         data23.add("");
+                                         data24.add("");
                                             }
                                  int cc=data5.size();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -1335,18 +1616,20 @@ reader.close();
          FileReader fileReader = new FileReader(pathxx);
                 try (BufferedReader bufferedReader = new BufferedReader(fileReader)) {      
          while((line = bufferedReader.readLine()) != null) {       
-                str_asset_def_body="";
-                row_number=row_number+1;
+               // str_asset_def_body="";
+               // row_number=row_number+1;
                // System.out.println(row_number);   
-                fl_row_number = (double) row_number;
-                fl_cnt = (double) cnt;         
-                per_pr=  (fl_row_number/(fl_cnt))*100;  
-                per_pr=per_pr/2;
-                DecimalFormat d_per_pr = new DecimalFormat("##.00000");
-                String str_per_pr =d_per_pr.format(per_pr);
-                String str_per =per_pr+" %";
+               // fl_row_number = (double) row_number;
+               // fl_cnt = (double) cnt;         
+              //  per_pr=  (fl_row_number/(fl_cnt))*100;  
+               // per_pr=per_pr/3;
+               // DecimalFormat d_per_pr = new DecimalFormat("##.00000");
+               // String str_per_pr =d_per_pr.format(per_pr);
+                //String str_per =per_pr+" %";
               
-                row_of_rows = "[ "+data_chabdata_count.size()+" CHANNELS "+" ] [ "+ str_per_pr +" %"+" ]";
+                //row_of_rows = "[ "+data_chabdata_count.size()+" CHANNELS "+" ] [ "+ str_per_pr +" %"+" ]";
+                str_global_count="1/2 - Processing your file. Please wait !";
+                //System.out.println(str_global_count);
                 String input = line;     //input string
                 String firstFourChars = "";
                 String first20Char = "";
@@ -1411,7 +1694,7 @@ reader.close();
                    try{
                                 pst = conn.prepareStatement(sql);            
                                 pst.setString(1, temp_chandata);
-                                pst.setString(2, chan_name);
+                                pst.setString(2, line);
                                 pst.execute();  
                                 //JOptionPane.showMessageDialog(null, "Patient Registered");
                             }catch (Exception e){
@@ -1452,6 +1735,17 @@ reader.close();
    data13.clear();     
    data14.clear();
    data15.clear(); 
+   
+   data16.clear();     
+   data17.clear();
+   data18.clear();  
+    data19.clear();
+   data20.clear();     
+   data21.clear();
+   data22.clear(); 
+   data23.clear(); 
+   data24.clear();
+   
    data_used_only_indices.clear(); 
    data_used_only_xx.clear();
    data11.clear();
@@ -1463,13 +1757,18 @@ reader.close();
         pick_chan_name();
         String xxx=chandata_loop;
         String xxx2=str_chan_name;
-       for(int i=0; i<2; i++ ){
+        String strs_parent_insert="";
+       for(int i=0; i<3; i++ ){
            if(i==0){
-           chandata_loop="";
-           str_chan_name="";
+               strs_parent_insert="";
+          // chandata_loop="";
+          // str_chan_name="";
+           }else if(i==1){
+           strs_parent_insert=xxx;
+          // str_chan_name="";
            }else{
-           chandata_loop=xxx;
-           str_chan_name=xxx2;
+           //chandata_loop="";
+         strs_parent_insert=xxx2;
            }
            
             String sql = "insert into tbl_processed_table(col1, col2, col3, col4,col5,col6, col7, col8, col9,col10,col11, col12,col13, col14, col15,col16, col17, col18, col19,col20,col21, col22, col23, col24,col25,col26, col27, col28, col29, col30) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
@@ -1477,7 +1776,7 @@ reader.close();
   
     try {
        pst = conn.prepareStatement(sql);
-            pst.setString(1, chandata_loop);
+            pst.setString(1, strs_parent_insert);
             pst.setString(2, "");
             pst.setString(3, "");      
             pst.setString(4, ""); 
@@ -1506,7 +1805,7 @@ reader.close();
             pst.setString(27, ""); 
             pst.setString(28, "");
             pst.setString(29, ""); 
-            pst.setString(30, str_chan_name);   
+            pst.setString(30, "");   
            
 
             pst.execute();  
@@ -1577,16 +1876,64 @@ reader.close();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
+    private void start_timer() {
+        
+          Arc_Import mainClass = new Arc_Import(); 
+          mainClass.update_table_2();
+         // mainClass.start_timer(1);
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     }
 ///////////end thread 2//////////////
 ////////////////thread 3///////////////////////////
 class Compmaster_Loop2 implements Runnable{
     @Override
     public void run(){
+       System.out.println("Thread has started");     
+            for(int i=0; i<1000; i++){
+                 
+    //System.out.println("Count 2: "+i);
+                                     } 
+           // JOptionPane.showMessageDialog(null, "Finished!");
+             // System.out.println("Thread has ended");   
+
+    }
+    }
+/////////////////end thread 3////////////////////
+class TaskThread implements Runnable {
+
+    boolean shouldStop;
+
+    public TaskThread(boolean shouldStop) {
+        this.shouldStop = shouldStop;
+    }
+
+    @Override
+    public void run() {
+
+        System.out.println("Thread has started");
+
+        if (shouldStop=true) {
+            for(int i=0; i<1000; i++){
+    System.out.println("Count 2: "+i);
     
     }
+            
+              System.out.println("Thread has ended");
+        }
+
+      
+
     }
+
+    public void stop() {
+        shouldStop = true;
+    }
+
+}
+
+/////////////////////////////////////////////////////
 public class Arc_Import extends javax.swing.JFrame {
      String loop1_global_count="";
      static int non_zero_columns=0; 
@@ -1595,7 +1942,8 @@ public class Arc_Import extends javax.swing.JFrame {
    static PreparedStatement pst = null;    
     static String pathx ="n/a";     
     String pathxx="";
-    
+    private Thread PROGRESS_THREAD;
+    private int PROGRESS_VALUE;  
     
    
 
@@ -1627,6 +1975,9 @@ public class Arc_Import extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         cntxxc = new javax.swing.JLabel();
         lbl_per = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jProgressBar1 = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Configuration");
@@ -1725,6 +2076,20 @@ public class Arc_Import extends javax.swing.JFrame {
         lbl_per.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_per.setOpaque(true);
 
+        jButton5.setText("REFRESH");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("Trigger");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -1737,16 +2102,23 @@ public class Arc_Import extends javax.swing.JFrame {
                     .addComponent(btn_normalize, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(txtpatid, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(path, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
-                            .addComponent(lbl_per, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(110, 110, 110)
-                        .addComponent(cntxxc, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtpatid)
+                                .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jButton6)
+                                    .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(path, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+                        .addComponent(lbl_per, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(110, 110, 110)
+                .addComponent(cntxxc, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -1762,24 +2134,29 @@ public class Arc_Import extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(txtpatid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton4)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jButton4)
+                                    .addComponent(jButton6))
                                 .addGap(2, 2, 2))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jButton1)
                                     .addComponent(path))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_normalize)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jButton2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btn_normalize))
+                                    .addComponent(jButton5))))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3))
+                            .addComponent(jButton3)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(4, 4, 4)
                                 .addComponent(lbl_per, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1800,7 +2177,7 @@ public class Arc_Import extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE))
         );
 
         setSize(new java.awt.Dimension(759, 615));
@@ -1811,17 +2188,22 @@ public class Arc_Import extends javax.swing.JFrame {
                                // reset_varaiables();
         start_timer(1);                        
         pathx=path.getText().toString().trim(); 
-     
+        //trigger_thread();
            //JOptionPane.showMessageDialog(null, "Not Running");
-        new Thread(new Compmaster_Loop()).start();
+       new Thread(new Compmaster_Loop()).start();
+      // new Thread(new Compmaster_Loop2()).start();
+        
        
     }//GEN-LAST:event_jButton2ActionPerformed
+  
+    
     private void start_timer(int seconds){
     timer = new java.util.Timer();   
-    timer.schedule(new Arc_Import.RemindTask(), seconds * 1000, 2000);
+    timer.schedule(new Arc_Import.RemindTask(), seconds * 500, 500);
     }
     static void stop_timer(){
-     //timer = new java.util.Timer();   
+     //timer = new java.util.Timer();  
+      //  lbl_per.setText("Copleted");
     timer.cancel();
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -1844,6 +2226,7 @@ public class Arc_Import extends javax.swing.JFrame {
         //create_sqlite_db();
         conn = mysqlconnect.ConnectDb();
         update_table_2();
+         
        // UpdateJTable();
         //update_combo();
       // 
@@ -1872,6 +2255,8 @@ public class Arc_Import extends javax.swing.JFrame {
 
     private void btn_normalizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_normalizeActionPerformed
         // TODO add your handling code here:
+        
+       
         select_col_size();
         update_table_2();
        // insert_array();
@@ -1887,6 +2272,22 @@ public class Arc_Import extends javax.swing.JFrame {
         
         search_table();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+       
+       restart();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+      //  System.out.println("Start");
+        // Start the thread
+        
+      //  System.out.println("End");SqliteDataTable
+        
+      
+    }//GEN-LAST:event_jButton6ActionPerformed
    
     /**
      * @param args the command line arguments
@@ -1933,7 +2334,10 @@ public class Arc_Import extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_per;
     private javax.swing.JTextField path;
@@ -2141,7 +2545,7 @@ public class Arc_Import extends javax.swing.JFrame {
         
                     Statement stmt2;  
                     stmt2= conn.createStatement();
-                    String sql112="Select * from  tbl_col_size order by count DESC LIMIT 1";
+                    String sql112="Select MAX(count) as count  from  tbl_col_size GROUP BY id LIMIT 1";
                     rs=stmt2.executeQuery(sql112);
                     if(rs.next()){
                        non_zero_columns = Integer.parseInt(rs.getString("count"));
@@ -2152,7 +2556,7 @@ public class Arc_Import extends javax.swing.JFrame {
 
     void stop_thread() {
         
-        new Thread(new Compmaster_Loop()).stop();
+       // new Thread(new Compmaster_Loop()).stop();
         select_col_size();
         update_table_2();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -2165,7 +2569,27 @@ public class Arc_Import extends javax.swing.JFrame {
         //JOptionPane.showMessageDialog(null, loop1_global_count); 
         lbl_per.setText(loop1_global_count);
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        
     }
+    static void finish_treads(){
+   // lbl_per.setText("COMPLETED");
+    
+    }
+     public void close(){
+        
+WindowEvent winClosingEvent = new WindowEvent(this,WindowEvent.WINDOW_CLOSING);
+Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
+}
+
+    private void restart() {
+         Arc_Import s = new Arc_Import();
+        s.setVisible(true);
+         close();
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
      class RemindTask extends TimerTask {
     public void run() {
     

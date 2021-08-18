@@ -100,6 +100,7 @@ import test.CustomOutputStream;
      ArrayList<String> data23;   
       ArrayList<String> data23_a;  
      ArrayList<String> data24;
+     ArrayList<String> data25; //Used second insert
      
      ArrayList<String> size_store;
      ArrayList<String> data_chabdata_count;
@@ -129,7 +130,7 @@ import test.CustomOutputStream;
     String var13x="",var14x="",var15x="",var16x="",var17x="",var18x="",var19x="",var20x="",var21x="",var22x="",var23x="",var24x="",var25x="",var26x="",var27x="",var28x="",var29x="",var30x="",var31x="",var32x="",var33x="",var34x="";
     String str_asset_def_body="n/a",str_row_1_or_0="",old_str_asset_def_body="n/a",str_chandata_code="n/a", str_chandata="n/a", str_asset_number="n/a", str_asset_body="n/a", str_asset_status="n/a",str_pos_counter="n/a";
      // int countxx=7;
-     
+    int status_used_sess_2 =0; 
     
     @Override
     public void run(){
@@ -143,6 +144,7 @@ import test.CustomOutputStream;
     };*/
         
                                  data = new ArrayList<String>(); 
+                                 
                                  data11 = new ArrayList<String>(); 
                                  size_store= new ArrayList<String>(); 
                                  data_chabdata_count= new ArrayList<String>();
@@ -326,7 +328,7 @@ reader.close();
                // row_of_rows = "[ "+data_chabdata_count.size()+" CHANNELS "+" ] [ "+ str_per_pr +" %"+" ]";
                // here
          ////////////////////////////
-             str_global_count="1/2 - Processing your file. Please wait !";
+                str_global_count="1/2 - Processing your file. Please wait !";
                 String input = line;     //input string
                 String firstFourChars = "";
                 String first6Char = "";
@@ -366,8 +368,7 @@ reader.close();
                 str_asset_def_body="-";
                 str_asset_status="-";
                 str_pos_counter="-";                 
-                  ///////////////filter multiple blank chandata(1) entries//////////////////////                 
-                     ///////////////filter multiple blank chandata(1) entries//////////////////////
+                
                  try{
              String sql ="Select asset_number from tbl_chandata ORDER BY id DESC LIMIT 1";
             pst = conn.prepareStatement(sql);
@@ -459,7 +460,7 @@ reader.close();
                             }
                         ////////////end add data to arraylist//////////////
                         }else{
-                             //////////used chahhel loop finished insert////////////
+                             //////////used channel loop finished insert////////////
                           insert_used_values_row();
                          //return true;
                             
@@ -467,9 +468,9 @@ reader.close();
                          }else{
                             old_str_asset_def_body =str_asset_def_body;
                            if(str_chandata.equals(chandata_loop)){
-                        data_used_only_xx.add(str_asset_status);
+                         data_used_only_xx.add(str_asset_status);
                          data_used_only_indices.add("("+str_pos_counter_1+")");
-                        size_store.add(str_pos_counter);
+                         size_store.add(str_pos_counter);
                             }
                             }
                         ////////////////
@@ -535,7 +536,7 @@ reader.close();
     }
     private void insert_array() {
         leng = data.size();
-      
+      int ss = data_used_only_xx.size();
       
         
      if(leng > 0){
@@ -622,8 +623,8 @@ reader.close();
             pst.execute();  
       
          pst.close();         
-         data.clear();
-                  
+      //   data.clear();
+          ss = data_used_only_xx.size();        
                   
                 }else{
                   
@@ -640,7 +641,8 @@ reader.close();
     }
      
      }
-     data.clear();
+    // data.clear();
+     ss = data_used_only_xx.size();
      end_used_only =1;
      old_str_asset_def_body="n/a";
      if(!old_str_asset_def_body.equals(str_asset_def_body) && loop_id==2){
@@ -787,7 +789,8 @@ reader.close();
    lastFiveDigits  = line;
     }
     }
-    private void insert_multiple_pockets() {        
+    private void insert_multiple_pockets() {    
+        
            reset_dble();
          try{        
          String pxx=pathxx;     
@@ -1041,9 +1044,23 @@ reader.close();
                     rs=stmt2.executeQuery(sql1122);
                     if(rs.next()){
                                          insert_data();
-                        
-                           
-                                
+                                          
+                                          /////////////////////////
+                                          if(status_used_sess_2==0){
+                                          status_used_sess_2=status_used_sess_2+1;
+                                           int xx =data_used_only_xx.size(); 
+                                            
+                                             
+                                             for(int i =0; i<data_used_only_xx.size(); i++)
+                                                         {                                         
+                                                      str_asset_status=data_used_only_xx.get(i);
+                                                       int_positon_to_insert=data_used_only_xx.indexOf(str_asset_status);
+                                                      data25.set(int_positon_to_insert, str_asset_status);
+                                                         }
+                                            
+                                          }
+                                        
+                                         /////////////////////
                                       loop_id=3;
                                          if(str_asset_def_body.equals("$MA_CEC_ENABLE"))
                                         {                                       
@@ -1310,26 +1327,28 @@ reader.close();
 
         
       // 
-        
+        status_used_sess_2=0;
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_0() {
+        int xx =data10.size();
         old_str_asset_def_body="N32700 $MA_CEC_ENABLE";
-       // data.clear();
+        data.clear();
+        xx =data10.size();
         data=data0;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_1() {
         old_str_asset_def_body="N31000 $MA_ENC_IS_LINEAR[0]";
-       // data.clear();
+        data.clear();
         data=data1;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_2() {
         old_str_asset_def_body="N31000 $MA_ENC_IS_LINEAR[1]";
-       // data.clear();
+        data.clear();
         data=data2;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -1337,56 +1356,56 @@ reader.close();
     private void insert_3() {
         old_str_asset_def_body="N37100 $MA_GANTRY_AXIS_TYPE";
         
-      //  data.clear();
+        data.clear();
         data=data3;
         insert_array();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_4() {
         old_str_asset_def_body="N30200 $MA_NUM_ENCS";
-       // data.clear();
+        data.clear();
         data=data4;
         insert_array();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_5() {
         old_str_asset_def_body="N32700 $MA_ENC_COMP_ENABLE[0]";
-       // data.clear();
+        data.clear();
         data=data5;
         insert_array();
       //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_6() {
         old_str_asset_def_body="N32700 $MA_ENC_COMP_ENABLE[1]";
-      //  data.clear();
+       data.clear();
         data=data6;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
  private void insert_7() {
         old_str_asset_def_body="N36110 $MA_POS_LIMIT_MINUS[0]";
-      //  data.clear();
+        data.clear();
         data=data7;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
   private void insert_8() {
         old_str_asset_def_body="N36110 $MA_POS_LIMIT_PLUS[1]";
-      //  data.clear();
+        data.clear();
         data=data8;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
    private void insert_9() {
         old_str_asset_def_body="ENC Axis Comp active";
-      //  data.clear();
+        data.clear();
         data=data9;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_10() {
         old_str_asset_def_body="CEC Axis Comp active";
-      //  data.clear();
+        data.clear();
         data=data10;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -1394,28 +1413,28 @@ reader.close();
     //$MN_AXCONF_LOGIC_MACHAX_TAB  $MN_AXCONF_MACHAX_NAME_TAB  $MA_IS_ROT_AX  $MN_MM_CEC_MAX_POINTS
     private void insert_12() {
         old_str_asset_def_body="N10002 $MN_AXCONF_LOGIC_MACHAX_TAB";
-      //  data.clear();
+        data.clear();
         data=data12;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_13() {
         old_str_asset_def_body="N10000 $MN_AXCONF_MACHAX_NAME_TAB";
-      //  data.clear();
+        data.clear();
         data=data13;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_14() {
         old_str_asset_def_body="N30300 $MA_IS_ROT_AX";
-      //  data.clear();
+        data.clear();
         data=data14;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_15() {
         old_str_asset_def_body="N18342 $MN_MM_CEC_MAX_POINTS";
-      //  data.clear();
+        data.clear();
         data=data15;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -1423,93 +1442,103 @@ reader.close();
     
      private void insert_16() {
         old_str_asset_def_body="N32450 $MA_BACKLASH[0]";
-      //  data.clear();
+        data.clear();
         data=data16;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
        private void insert_17() {
         old_str_asset_def_body="N32450 $MA_BACKLASH[1]";        
-      //  data.clear();
+       data.clear();
         data=data17;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
          private void insert_18() {
        old_str_asset_def_body="N38000 $MA_MM_ENC_COMP_MAX_POINTS[0]";       
-      //  data.clear();
+       data.clear();
         data=data18;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
            private void insert_19() {
        old_str_asset_def_body="N38000 $MA_MM_ENC_COMP_MAX_POINTS[1]";       
-      //  data.clear();
+       data.clear();
         data=data19;
         insert_array();
-       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      
     }
             private void insert_20() {
         old_str_asset_def_body="$AA_ENC_COMP_STEP[0]";        
-      //  data.clear();
+        data.clear();
         data=data20;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+           }
              private void insert_21() {
          old_str_asset_def_body="$AA_ENC_COMP_MIN[0]";       
-      //  data.clear();
+         data.clear();
         data=data21;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
           }
              private void insert_21_a() {
          old_str_asset_def_body="$AA_ENC_COMP_MIN[1]";       
-      //  data.clear();
+         data.clear();
         data=data21_a;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
           }
               private void insert_22() {
         old_str_asset_def_body="$AA_ENC_COMP_MAX[0]";          
-      //  data.clear();
+        data.clear();
         data=data22;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
                private void insert_22_a() {
         old_str_asset_def_body="$AA_ENC_COMP_MAX[1]";          
-      //  data.clear();
+        data.clear();
         data=data22_a;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
                private void insert_23() {
         old_str_asset_def_body="$AA_ENC_COMP_IS_MODULO[0]";  
-      //  data.clear();
+         data.clear();
         data=data23;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
                     private void insert_23_a() {
         old_str_asset_def_body="$AA_ENC_COMP_IS_MODULO[1]";  
-      //  data.clear();
+        data.clear();
         data=data23_a;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
          private void insert_24() {
         old_str_asset_def_body="$AA_ENC_COMP_STEP[1]";  
-      //  data.clear();
+        data.clear();
         data=data24;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+       private void insert_used() {
+         //  here
+        old_str_asset_def_body="N20070 $MC_AXCONF_MACHAX_USED";  
+        //data.clear();
+        data=data25;
+        insert_array();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }    
+         
     private void finish_loops() {
                                
                                insert_13();
                                insert_12();
                                insert_15();
+                               insert_used();
                                insert_4();
                                insert_14();
                                insert_1();
@@ -1622,14 +1651,15 @@ reader.close();
                                  data21 = new ArrayList<String>(int_array_size_for_used);
                                  data22 = new ArrayList<String>(int_array_size_for_used);
                                  data23 = new ArrayList<String>(int_array_size_for_used);
-                                 
+                                // data25 = new ArrayList<String>(); 
                                  
                                  data21_a = new ArrayList<String>(int_array_size_for_used);
                                  data22_a = new ArrayList<String>(int_array_size_for_used);
                                  data23_a = new ArrayList<String>(int_array_size_for_used);
                                  
                                  data24 = new ArrayList<String>(int_array_size_for_used);
-                                 
+                                 data25 = new ArrayList<String>(int_array_size_for_used);
+                                 // 
                                  for (int i = 0; i <= int_array_size_for_used-1; i = i+1) {
                                      int bb =i;
                                      data0.add("");
@@ -1646,8 +1676,7 @@ reader.close();
                                          data12.add("");
                                          data13.add("");
                                          data14.add("");
-                                         data15.add("");
-                                         
+                                         data15.add("");                                         
                                          data16.add("");
                                          data17.add("");
                                          data18.add("");
@@ -1660,7 +1689,9 @@ reader.close();
                                          data23.add("");
                                           data23_a.add("");
                                          data24.add("");
+                                         data25.add("");
                                             }
+                                int xx =data_used_only_xx.size(); 
                                  int cc=data5.size();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -1797,8 +1828,7 @@ reader.close();
     data12.clear();
    data13.clear();     
    data14.clear();
-   data15.clear(); 
-   
+   data15.clear();    
    data16.clear();     
    data17.clear();
    data18.clear();  
@@ -1807,8 +1837,7 @@ reader.close();
    data21.clear();
    data22.clear(); 
    data23.clear(); 
-   data24.clear();
-   
+   data24.clear();   
    data_used_only_indices.clear(); 
    data_used_only_xx.clear();
    data11.clear();
@@ -1901,6 +1930,7 @@ reader.close();
                            data=data_used_only_xx;
                            insert_column_size();                                
                            insert_array();
+                           int ss = data_used_only_xx.size();
                            used_inserted_status=1;
                           
         
@@ -2167,19 +2197,18 @@ public class Arc_Import extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtpatid)
-                                .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE))
-                            .addGap(18, 18, 18)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jButton6)
-                                    .addGap(0, 0, Short.MAX_VALUE))))
-                        .addComponent(path, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
-                        .addComponent(lbl_per, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtpatid)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton6)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addComponent(path, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+                    .addComponent(lbl_per, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(110, 110, 110)
                 .addComponent(cntxxc, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))

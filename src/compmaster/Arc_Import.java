@@ -78,6 +78,8 @@ import test.CustomOutputStream;
 /////////////////end thread 3////////////////////
 
 public class Arc_Import extends javax.swing.JFrame {
+
+   
      String loop1_global_count="";
      int int_data_chabdata_count=0;
      int stop_timer_status=0;
@@ -141,6 +143,7 @@ public class Arc_Import extends javax.swing.JFrame {
     static ArrayList<String> data_chabdata_count;
     static  ArrayList<String> data_used_only_xx;
    static  ArrayList<String> data_used_only_indices;     
+   static  ArrayList<String> data_used_name;
      String str_pos_counter_1="";
      int  int_array_size_for_used=0;    
      int int_positon_to_insert=0;   
@@ -877,6 +880,7 @@ lbl_per.setText("0%");
                                  data_chabdata_count= new ArrayList<String>();
                                  data_used_only_xx= new ArrayList<String>();
                                  data_used_only_indices= new ArrayList<String>();
+                                 data_used_name= new ArrayList<String>();
                                  used_inserted_status=0;
                               //  List<Integer> myArrayList = new ArrayList<>(100);                           
                                   used_chennel_count=0;
@@ -887,7 +891,7 @@ lbl_per.setText("0%");
        hide_all_checkboxes();
         conn = mysqlconnect.ConnectDb();
         update_table_2();
-         
+         set_jtables();
        // UpdateJTable();
         //update_combo();
       // 
@@ -903,7 +907,15 @@ lbl_per.setText("0%");
         
         UpdateJTable();
     }//GEN-LAST:event_jButton3MouseClicked
-
+ private static void set_jtables() {
+        TableColumnModel columnModel = SqliteDataTable.getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(300);
+        columnModel.getColumn(0).setMaxWidth(300);
+        columnModel.getColumn(1).setPreferredWidth(150);
+        columnModel.getColumn(1).setMaxWidth(150);
+      
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here: 
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -920,6 +932,7 @@ lbl_per.setText("0%");
        
         select_col_size();
         update_table_2();
+        
        // insert_array();
        
     }//GEN-LAST:event_btn_normalizeActionPerformed
@@ -967,7 +980,8 @@ lbl_per.setText("0%");
        //  process_continuing=2; 
          
                 
-              
+              data_used_name.clear();
+              //JOptionPane.showMessageDialog(null, data_used_name.size());
                  continue_with_loop();
                btnContinue.setVisible(false);
             // JOptionPane.showMessageDialog(null, "Check responsiveness !");
@@ -1671,6 +1685,7 @@ lbl_per.setText("0%");
      catch (Exception e){
      JOptionPane.showMessageDialog(null, e);
      }
+     set_jtables();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void fetch_field_id() {
@@ -1848,6 +1863,7 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
         String removedStr = data_used_only_xx.remove(int_checkbox_index);
         String removedStr_index = data_used_only_indices.remove(int_checkbox_index);
         String removedStr_index_store = size_store.remove(int_checkbox_index);
+         String removedStr_index_name = data_used_name.remove(int_checkbox_index);
         
         
         
@@ -1865,6 +1881,7 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
         process_continuing=0;
        hide_all_checkboxes();
         String str_caption="";
+        String str_caption2="";
         
       // Compmaster_Loop lop1 = new Compmaster_Loop();
       // datacheckbox= lop1.data_used_only_xx;
@@ -1873,155 +1890,156 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
         if(data_used_only_indices.size()>0){
         for(int i =0; i<data_used_only_indices.size(); i++){
              str_caption=data_used_only_indices.get(i);
+            str_caption2= data_used_name.get(i);
              if(i==0){
              chk1.setVisible(true);
-             chk1.setText(str_caption);
+             chk1.setText(str_caption+" ["+str_caption2+"]");
              chk1.setSelected(true);
              }
              else if(i==1){
              chk2.setVisible(true);
-             chk2.setText(str_caption);
+             chk2.setText(str_caption+" ["+str_caption2+"]");
              chk2.setSelected(true);
              }
              else if(i==2){
              chk3.setVisible(true);
-             chk3.setText(str_caption);
+             chk3.setText(str_caption+" ["+str_caption2+"]");
              chk3.setSelected(true);
              }
              else if(i==3){
              chk4.setVisible(true);
-             chk4.setText(str_caption);
+             chk4.setText(str_caption+" ["+str_caption2+"]");
              chk4.setSelected(true);
              }
              else if(i==4){
              chk5.setVisible(true);
-             chk5.setText(str_caption);
+             chk5.setText(str_caption+" ["+str_caption2+"]");
              chk5.setSelected(true);
              }
              else if(i==5){
              chk6.setVisible(true);
-             chk6.setText(str_caption);
+             chk6.setText(str_caption+" ["+str_caption2+"]");
              chk6.setSelected(true);
              }
              else if(i==6){
              chk7.setVisible(true);
-             chk7.setText(str_caption);
+             chk7.setText(str_caption+" ["+str_caption2+"]");
              chk7.setSelected(true);
              }
              else if(i==7){
              chk8.setVisible(true);
-             chk8.setText(str_caption);
+             chk8.setText(str_caption+" ["+str_caption2+"]");
              chk8.setSelected(true);
              }
              else if(i==8){
              chk9.setVisible(true);
-             chk9.setText(str_caption);
+             chk9.setText(str_caption+" ["+str_caption2+"]");
              chk9.setSelected(true);
              }
              else if(i==9){
              chk10.setVisible(true);
-             chk10.setText(str_caption);
+             chk10.setText(str_caption+" ["+str_caption2+"]");
              chk10.setSelected(true);
              }
              else if(i==10){
              chk11.setVisible(true);
-             chk11.setText(str_caption);
+             chk11.setText(str_caption+" ["+str_caption2+"]");
              chk11.setSelected(true);
              }
              else if(i==11){
              chk12.setVisible(true);
-             chk12.setText(str_caption);
+             chk12.setText(str_caption+" ["+str_caption2+"]");
              chk12.setSelected(true);
              }
               else if(i==12){
              chk13.setVisible(true);
-             chk13.setText(str_caption);
+             chk13.setText(str_caption+" ["+str_caption2+"]");
              chk13.setSelected(true);
              }
                else if(i==13){
              chk14.setVisible(true);
-             chk14.setText(str_caption);
+             chk14.setText(str_caption+" ["+str_caption2+"]");
              chk14.setSelected(true);
              }
              else if(i==14){
              chk15.setVisible(true);
-             chk15.setText(str_caption);
+             chk15.setText(str_caption+" ["+str_caption2+"]");
              chk15.setSelected(true);
              }
              else if(i==15){
              chk16.setVisible(true);
-             chk16.setText(str_caption);
+             chk16.setText(str_caption+" ["+str_caption2+"]");
              chk16.setSelected(true);
              }
              //////
                else if(i==16){
              chk17.setVisible(true);
-             chk17.setText(str_caption);
+             chk17.setText(str_caption+" ["+str_caption2+"]");
              chk17.setSelected(true);
              }
              else if(i==17){
              chk18.setVisible(true);
-             chk18.setText(str_caption);
+             chk18.setText(str_caption+" ["+str_caption2+"]");
              chk18.setSelected(true);
              }
              else if(i==18){
              chk19.setVisible(true);
-             chk19.setText(str_caption);
+             chk19.setText(str_caption+" ["+str_caption2+"]");
              chk19.setSelected(true);
              }
              else if(i==19){
              chk20.setVisible(true);
-             chk20.setText(str_caption);
+             chk20.setText(str_caption+" ["+str_caption2+"]");
              chk20.setSelected(true);
              }
              else if(i==20){
              chk21.setVisible(true);
-             chk21.setText(str_caption);
+             chk21.setText(str_caption+" ["+str_caption2+"]");
              chk21.setSelected(true);
              }
              else if(i==21){
              chk22.setVisible(true);
-             chk22.setText(str_caption);
+             chk22.setText(str_caption+" ["+str_caption2+"]");
              chk22.setSelected(true);
              }
              else if(i==22){
              chk23.setVisible(true);
-             chk23.setText(str_caption);
+             chk23.setText(str_caption+" ["+str_caption2+"]");
              chk23.setSelected(true);
              }
              else if(i==23){
              chk24.setVisible(true);
-             chk24.setText(str_caption);
+             chk24.setText(str_caption+" ["+str_caption2+"]");
              chk24.setSelected(true);
              }
              else if(i==24){
              chk25.setVisible(true);
-             chk25.setText(str_caption);
+             chk25.setText(str_caption+" ["+str_caption2+"]");
              chk25.setSelected(true);
              }
              else if(i==25){
              chk26.setVisible(true);
-             chk26.setText(str_caption);
+             chk26.setText(str_caption+" ["+str_caption2+"]");
              chk26.setSelected(true);
              }
              else if(i==26){
              chk27.setVisible(true);
-             chk27.setText(str_caption);
+             chk27.setText(str_caption+" ["+str_caption2+"]");
              chk27.setSelected(true);
              }
               else if(i==27){
              chk28.setVisible(true);
-             chk28.setText(str_caption);
+             chk28.setText(str_caption+" ["+str_caption2+"]");
              chk28.setSelected(true);
              }
              else if(i==28){
              chk29.setVisible(true);
-             chk29.setText(str_caption);
+             chk29.setText(str_caption+" ["+str_caption2+"]");
              chk29.setSelected(true);
              }
              else if(i==29){
              chk30.setVisible(true);
-             chk30.setText(str_caption);
+             chk30.setText(str_caption+" ["+str_caption2+"]");
              chk30.setSelected(true);
              }
              
@@ -2033,7 +2051,7 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
         }else{
       //  JOptionPane.showMessageDialog(null, "NO MORE USED DATA"); 
         }
-        
+      //  data_used_name.clear();
        // JOptionPane.showMessageDialog(null, "Choose axes!"); 
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -2060,7 +2078,10 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
                                          
                                          
                                          
-                                    insert_used_only();  
+                                    insert_used_only(); 
+                                   // insert_used_only_names();
+                                    //data_used_name
+                                   
                                     int indices =data_used_only_indices.size();
                                     
                                     return true;
@@ -2082,8 +2103,8 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
     }
     ////////////functions//////////////
    public boolean continue_with_loop(){
-       
-       
+      // str_asset_status=str.replaceAll("[^a-zA-Z0-9]", "");
+    // data_used_name.clear();
        new SwingWorker(){
 
             @Override
@@ -2122,10 +2143,12 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
                                     reset_varaiables();
                                     clear_arrays();
                                     data_chabdata_count.clear();
+                                   /// Arc_Import
+                                    //close();
                                     return true;
                                      }else{
-                                           ixx=ixx+1;
-                                     count_number_of_loops=count_number_of_loops+1;
+                                       ixx=ixx+1;
+                                       count_number_of_loops=count_number_of_loops+1;
                                        restart_process();
                                       
                                       }
@@ -2245,7 +2268,88 @@ reader.close();
         // mainClass.UpdateJTable();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+    private boolean insert_used_only_names() {
+        
+        data_used_name.clear();
+      for (int i=0; i< data_used_only_indices.size(); i++){
+                  
+                    data_used_name.add("n/a");
+                  }  
+         try{        
+         String pxx=pathxx;     
+         FileReader fileReader = new FileReader(pathxx);
+         try (BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+      //String line;
+         while((line = bufferedReader.readLine()) != null) {
+         
+               str_global_count="Rendering file. Please wait !";
+                String input = line;     //input string
+                String firstFourChars = "";
+                String first6Char = "";
+                   /////////////////////////////////////
+              if (input.length() > 8) 
+              {
+              firstFourChars = input.substring(0, 8);
+              } 
+              else
+              {
+               firstFourChars = input;
+               } 
+        ////////////////////////////////////////////
+         /////////////////////////////////////
+              if (input.length() > 6) 
+              {
+               first6Char = input.substring(0, 6);
+              } 
+              else
+              {
+               first6Char = input;
+              } 
+       
+                  
+              if(firstFourChars.equals("CHANDATA") || first6Char.equals("N10000")){      
+                  if(firstFourChars.equals("CHANDATA")){
+            // txt_percentage.setText("0.00");
+               
+                str_chandata=line;
+               
+				}
+                  normalize_line();  
+                 str_asset_number=first6Char;               
+                 try{                   
+                 str_asset_body = line.substring(line.indexOf(" ") + 1, line.indexOf("=")); 
+                
+                 str_asset_status = line.substring(line.lastIndexOf("=") + 1);
+                 //error_body before [
+                 str_asset_def_body =  str_asset_body.substring(0, str_asset_body.indexOf("["));
+               
+                 str_pos_counter = str_asset_body.substring(str_asset_body.indexOf("[") + 1, str_asset_body.indexOf("]"));
+                 str_pos_counter = str_pos_counter.replaceAll("[^0-9]", "");
+                 str_asset_status=str_asset_status.replaceAll("[^a-zA-Z0-9]", "");
+                 if(str_chandata.equals(chandata_loop)){
+                   if(data_used_only_indices.contains("("+str_pos_counter +")")){
+                   int_positon_to_insert= data_used_only_indices.indexOf("("+str_pos_counter +")");
+                  data_used_name.set(int_positon_to_insert, str_asset_status);
+                   }
+                 }
+                  
+                 }catch(Exception e){
+                 
+                 }
+              
+                 
+        
+        }   
+        
+      }
+      
+    }
+    }catch(Exception e){}
+         
+       
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return true;
+    }
     private boolean insert_used_only() {
        // array_size_for_size_store=7;
         end_used_only =0;
@@ -2991,9 +3095,9 @@ reader.close();
                                              
                                              for(int i =0; i<data_used_only_xx.size(); i++)
                                                          {                                         
-                                                      str_asset_status=data_used_only_xx.get(i);
-                                                       int_positon_to_insert=data_used_only_xx.indexOf(str_asset_status);
-                                                      data25.set(int_positon_to_insert, str_asset_status);
+                                                     String  ppx =data_used_only_xx.get(i);
+                                                       int_positon_to_insert=data_used_only_xx.indexOf(ppx);
+                                                      data25.set(int_positon_to_insert, ppx);
                                                          }
                                             
                                           }
@@ -3769,7 +3873,7 @@ reader.close();
        return true;
     }
     private void clear_arrays() {
-        
+    data_used_name.clear();   
    data.clear(); 
    data0.clear(); 
    data3.clear();
@@ -3932,7 +4036,7 @@ reader.close();
   
  
     private void open_choose_used_axis() {
-         
+        insert_used_only_names();
         if(int_loop_part_1==0){
          int_loop_part_1=1;
          set_check_box();

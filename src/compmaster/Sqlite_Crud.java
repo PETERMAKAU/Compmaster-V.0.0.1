@@ -20,11 +20,9 @@ import net.proteanit.sql.DbUtils;
  * @author peter
  */
 public class Sqlite_Crud extends javax.swing.JFrame {
-Connection conn = null;
-
-//Connection conn = null;
-    ResultSet rs = null;
-    PreparedStatement pst = null;
+ Connection conn = null;
+  PreparedStatement pst =null;
+  ResultSet rs =null;
     /**
      * Creates new form Sqlite_Crud
      */
@@ -104,9 +102,9 @@ Connection conn = null;
         // TODO add your handling code here:
         
         
-      conn = Sqliteconnection.ConnectDb();
+      conn = DbConnection.ConnectrDb();
       //  conn=Connect.connect();
-       create_sqlite_db();
+      // create_sqlite_db();
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
@@ -182,7 +180,7 @@ Connection conn = null;
         Statement stat;
     try {
         stat = conn.createStatement();
-          stat.executeUpdate("drop table if exists people;");
+           stat.executeUpdate("drop table if exists people;");
            stat.executeUpdate("create table people (name, tel, email);");
     } catch (SQLException ex) {
         Logger.getLogger(Sqlite_Crud.class.getName()).log(Level.SEVERE, null, ex);

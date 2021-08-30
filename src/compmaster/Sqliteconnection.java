@@ -6,44 +6,30 @@
 package compmaster;
 
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import javax.swing.JOptionPane;
 
-import java.io.File;
-import java.sql.*;
-import javax.swing.*;
-public class Sqliteconnection {
-    //Connection conn = null;
-    private static Statement st;
-    public static Connection conn;
-    
-    public static Connection ConnectDb(){
+/**
+ *
+ * @author peter
+ */
+public class Sqliteconnection{
+    Connection conn =null;
+    public static Connection ConnectrDb(){
     try{
-        
-        File file = new File ("temp.db");
-
-  if(file.exists()) //here's how to check
-     {
-       conn = DriverManager.getConnection("jdbc:sqlite:temp.db");
-         System.out.print("This database name already exists");
-     }
-     else{
-           Class.forName("org.sqlite.JDBC");   
-           conn = DriverManager.getConnection("jdbc:sqlite:temp.db");
-            st = conn.createStatement(); 
-           JOptionPane.showMessageDialog(null, "Successful !!");        
-           
-         
-     }
-        //jdbc:mysql://192.168.15.25:3306/yourdatabase
-        
+       
+        Class.forName("org.sqlite.JDBC");   
+       Connection  conn = DriverManager.getConnection("jdbc:sqlite:temp.db");
+      //  Connection conn = DriverManager.getConnection("jdbc:sqlite:Users.sqlite");
+        JOptionPane.showMessageDialog(null, "Connected");
         return conn;
-    }catch (Exception e){
-         System.out.println(e.getMessage());
-        JOptionPane.showMessageDialog(null, "Ops!! failed to connect.");
-       // System.out.println("No network connection");
+    }catch(Exception e)
+    {
+        JOptionPane.showMessageDialog(null, e);
         return null;
     }
-    
-    }   
-    
+  //  return null;
+    }
     
 }

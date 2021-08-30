@@ -42,6 +42,7 @@ import java.io.*;
 import static java.lang.Thread.interrupted;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.UUID;
 import java.sql.ResultSet;
@@ -58,6 +59,8 @@ import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -79,7 +82,8 @@ import test.CustomOutputStream;
 
 public class Arc_Import extends javax.swing.JFrame {
 
-   
+      SwingWorker SW1;
+      SwingWorker SW2;
      String loop1_global_count="";
      int int_data_chabdata_count=0;
      int stop_timer_status=0;
@@ -174,7 +178,7 @@ public class Arc_Import extends javax.swing.JFrame {
         initComponents();
         
      full_scren();
-     
+      setIcon();
      // upate_action();
     }
 
@@ -242,7 +246,7 @@ public class Arc_Import extends javax.swing.JFrame {
             }
         });
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Output Title"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Output Table"));
         jPanel2.setToolTipText("");
 
         SqliteDataTable.setBackground(new java.awt.Color(0, 0, 0));
@@ -272,8 +276,7 @@ public class Arc_Import extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+                .addComponent(jScrollPane1))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -326,7 +329,6 @@ public class Arc_Import extends javax.swing.JFrame {
         });
 
         path.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        path.setText("C:\\Users\\peter\\Desktop\\COMPMASTER_INPUT_SOURCE\\Compensation\\20191022_ELHA_5318.arc");
         path.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pathActionPerformed(evt);
@@ -340,7 +342,7 @@ public class Arc_Import extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("FILTER BY PARAMETER");
+        jButton4.setText("Search");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -364,18 +366,19 @@ public class Arc_Import extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btn_normalize, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbl_per, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(path)
-                            .addComponent(txtpatid, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addContainerGap())
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                            .addComponent(btn_normalize, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbl_per, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtpatid, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                            .addComponent(path, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -386,7 +389,7 @@ public class Arc_Import extends javax.swing.JFrame {
                         .addComponent(txtpatid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4)
-                        .addGap(2, 2, 2))
+                        .addGap(7, 7, 7))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1)
@@ -395,17 +398,16 @@ public class Arc_Import extends javax.swing.JFrame {
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_normalize)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton3)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbl_per, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lbl_per, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39))
         );
 
-        CheckBoxes.setBorder(javax.swing.BorderFactory.createTitledBorder("Choose Used Axes"));
+        CheckBoxes.setBorder(javax.swing.BorderFactory.createTitledBorder("Choose axes to display."));
 
         chk16.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -636,55 +638,60 @@ public class Arc_Import extends javax.swing.JFrame {
             CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CheckBoxesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(chk1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chk2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chk3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chk4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chk5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(chk6, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(chk6, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(chk7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chk8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chk9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chk10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chk11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(chk12, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(chk12, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(chk13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chk14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chk15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chk16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chk17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(chk18, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(chk18, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(chk19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chk20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chk21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chk22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chk23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(chk24, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(chk24, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(chk25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(chk26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(chk27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(chk28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(chk29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(chk30, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnContinue)
-                .addContainerGap())
+                .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(CheckBoxesLayout.createSequentialGroup()
+                        .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(chk25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(chk26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(chk27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(chk28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(chk29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(40, 40, 40)
+                        .addComponent(chk30)
+                        .addGap(1, 1, 1))
+                    .addGroup(CheckBoxesLayout.createSequentialGroup()
+                        .addComponent(btnContinue, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                        .addGap(91, 91, 91)))
+                .addGap(2, 2, 2))
         );
         CheckBoxesLayout.setVerticalGroup(
             CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CheckBoxesLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(CheckBoxesLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(chk1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(chk2)
@@ -698,19 +705,8 @@ public class Arc_Import extends javax.swing.JFrame {
                         .addComponent(chk6))
                     .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(CheckBoxesLayout.createSequentialGroup()
-                            .addComponent(chk25)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(chk26)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(chk27)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(chk28)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(chk29)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(chk30)
-                                .addComponent(btnContinue)))
+                            .addComponent(chk30)
+                            .addGap(163, 163, 163))
                         .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, CheckBoxesLayout.createSequentialGroup()
                                 .addComponent(chk7)
@@ -737,17 +733,32 @@ public class Arc_Import extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(chk18))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, CheckBoxesLayout.createSequentialGroup()
-                                .addComponent(chk19)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(chk20)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(chk21)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(chk22)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(chk23)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(chk24)))))
+                                .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(CheckBoxesLayout.createSequentialGroup()
+                                        .addComponent(chk19)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(chk20)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(chk21)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(chk22)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(chk23)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CheckBoxesLayout.createSequentialGroup()
+                                        .addComponent(chk25)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(chk26)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(chk27)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(chk28)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(chk29)
+                                        .addGap(9, 9, 9)))
+                                .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnContinue)
+                                    .addComponent(chk24))))))
                 .addContainerGap())
         );
 
@@ -756,21 +767,21 @@ public class Arc_Import extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(CheckBoxes, javax.swing.GroupLayout.PREFERRED_SIZE, 816, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(CheckBoxes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(CheckBoxes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CheckBoxes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
+
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {CheckBoxes, jPanel1});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -779,19 +790,20 @@ public class Arc_Import extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(6, 6, 6))
         );
 
-        setSize(new java.awt.Dimension(1611, 615));
+        setSize(new java.awt.Dimension(920, 615));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -800,7 +812,7 @@ public class Arc_Import extends javax.swing.JFrame {
           process_continuing=1;         
                  
               
-         
+                 reset_variables();
                  start_program(); 
               
      
@@ -842,9 +854,11 @@ lbl_per.setText("0%");
             @Override
             public void actionPerformed(ActionEvent event) {
                // current.setText(now());
-                System.out.println("Called");
+                //System.out.println("Called");
                 // txtpatid.setText(str_global_count);
                  lbl_per.setText(str_global_count);
+                 
+                 UpdateJTable();
         // update_progress();
                  
                 // update_table_2();
@@ -873,6 +887,7 @@ lbl_per.setText("0%");
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
+       
        datacheckbox=new ArrayList<String>(); 
         data = new ArrayList<String>();                                  
                                  data11 = new ArrayList<String>(); 
@@ -889,9 +904,13 @@ lbl_per.setText("0%");
         int_loop_part_1=0;
         btnContinue.setVisible(false);
        hide_all_checkboxes();
-        conn = mysqlconnect.ConnectDb();
+        // create_myDB() 
+          
+         conn = mysqlconnect.ConnectDb();  
+       
+     
         update_table_2();
-         set_jtables();
+       //  set_jtables();
        // UpdateJTable();
         //update_combo();
       // 
@@ -922,7 +941,7 @@ lbl_per.setText("0%");
 
     private void btn_normalizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_normalizeMouseClicked
         // TODO add your handling code here:
-        
+        open_result_Jframe();
         //UpdateJTable();
     }//GEN-LAST:event_btn_normalizeMouseClicked
 
@@ -943,8 +962,13 @@ lbl_per.setText("0%");
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+       // Thread.getAllStackTraces().keySet().forEach((t) -> System.out.println("id "+t.getId() +" "+t.getName() + "\nIs Daemon " + t.isDaemon() + "\nIs Alive " + t.isAlive()));
+       // search_table();
+      stop_threads();
+    // cont_2();
         
-        search_table();
+         
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void chk6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk6ActionPerformed
@@ -1459,6 +1483,38 @@ lbl_per.setText("0%");
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Arc_Import().setVisible(true);
+                
+                
+                
+               // set_theme();
+            }
+
+            private void set_theme() {
+                try {
+               // UIManager.setLookAndFeel("com.jtattoo.plaf.texture.TextureLookAndFeel");//good
+                   // UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
+                    //UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
+                   // UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
+                  //  UIManager.setLookAndFeel("com.jtattoo.plaf.aero.AeroLookAndFeel");
+                    UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");//good
+                     //UIManager.setLookAndFeel("com.jtattoo.plaf.bernstein.BernsteinLookAndFeel");
+                     
+                    // UIManager.setLookAndFeel("com.jtattoo.plaf.fast.FastLookAndFeel");
+                    //UIManager.setLookAndFeel("com.jtattoo.plaf.graphite.GraphiteLookAndFeel");
+                   // UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
+                   // UIManager.setLookAndFeel("com.jtattoo.plaf.luna.LunaLookAndFeel");
+                   // UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");//good
+                   // UIManager.setLookAndFeel("com.jtattoo.plaf.mint.MintLookAndFeel");
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(HomepageWindow.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InstantiationException ex) {
+                    Logger.getLogger(HomepageWindow.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(HomepageWindow.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (UnsupportedLookAndFeelException ex) {
+                    Logger.getLogger(HomepageWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
         
@@ -1514,29 +1570,110 @@ lbl_per.setText("0%");
     private javax.swing.JTextField txtpatid;
     // End of variables declaration//GEN-END:variables
    
-  private void create_sqlite_db() {
-        
-         Statement stat;
+  private void create_tbl_chandata() {
+        Statement stat;
     try {
         stat = conn.createStatement();
-          stat.executeUpdate("drop table if exists tbl_chandata;");
-           stat.executeUpdate("create table tbl_chandata (chandata_code, chandata, asset_number,str_asset_body, asset_status);");
+         String sql1="CREATE TABLE IF NOT EXISTS tbl_chandata (\n" +
+"    id INTEGER NOT NULL CONSTRAINT id PRIMARY KEY AUTOINCREMENT,\n" +
+"  chandata_code varchar(100) NOT NULL,\n" +
+"  chandata varchar(100) NOT NULL,\n" +
+"  asset_number varchar(400) NOT NULL,\n" +
+"  str_asset_body varchar(100) NOT NULL,\n" +
+"  str_def_asset_body varchar(100) NOT NULL,\n" +
+"  asset_status varchar(100) NOT NULL,\n" +
+"  pos_counter varchar(8) NOT NULL\n" +
+
+");";
+          // stat.executeUpdate("create table IF NOT EXISTS  people (name, tel, email);");
+             stat.executeUpdate(sql1);
     } catch (SQLException ex) {
-        Logger.getLogger(Sqlite_Crud.class.getName()).log(Level.SEVERE, null, ex);
-    }
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+      //  Logger.getLogger(Sqlite_Crud.class.getName()).log(Level.SEVERE, null, ex);
+    }}
+  private void create_tbl_channel_names() {
+        Statement stat;
+    try {
+        stat = conn.createStatement();
+         
+           stat.executeUpdate("CREATE TABLE IF NOT EXISTS tbl_channel_names (\n" +
+"    id INTEGER NOT NULL CONSTRAINT id PRIMARY KEY AUTOINCREMENT,\n" +
+"  chandata varchar(100) NOT NULL,\n" +
+"  chan_name varchar(100) NOT NULL\n" +
+
+");");
+         
+    } catch (SQLException ex) {
+       // Logger.getLogger(Sqlite_Crud.class.getName()).log(Level.SEVERE, null, ex);
+    }}
+  private void create_tbl_col_size() {
+        Statement stat;
+    try {
+        stat = conn.createStatement();
+         
+          stat.executeUpdate("CREATE TABLE IF NOT EXISTS tbl_col_size (\n" +
+"    id INTEGER NOT NULL CONSTRAINT id PRIMARY KEY AUTOINCREMENT,\n" +
+"  count int(30) DEFAULT NULL\n" +
+
+");");
+          
+    } catch (SQLException ex) {
+       // Logger.getLogger(Sqlite_Crud.class.getName()).log(Level.SEVERE, null, ex);
+    }}
+  private void create_tbl_processed_table() {
+        Statement stat;
+    try {
+        stat = conn.createStatement();
+         String sql="CREATE TABLE IF NOT EXISTS tbl_processed_table (\n" +
+                "    id INTEGER NOT NULL CONSTRAINT id PRIMARY KEY AUTOINCREMENT,\n" +
+               "  col1 varchar(100) NOT NULL,\n" +
+                "  col2 varchar(100) NOT NULL,\n" +
+                "  col3 varchar(100) NOT NULL,\n" +
+                "  col4 varchar(100) NOT NULL,\n" +
+                "  col5 varchar(100) NOT NULL,\n" +
+                "  col6 varchar(100) NOT NULL,\n" +
+                "  col7 varchar(100) NOT NULL,\n" +
+                "  col8 varchar(100) NOT NULL,\n" +
+                "  col9 varchar(100) NOT NULL,\n" +
+                "  col10 varchar(100) NOT NULL,\n" +
+                 "  col11 varchar(100) NOT NULL,\n" +
+                    "  col12 varchar(100) NOT NULL,\n" +
+                    "  col13 varchar(100) NOT NULL,\n" +
+                    "  col14 varchar(100) NOT NULL,\n" +
+                    "  col15 varchar(100) NOT NULL,\n" +
+                    "  col16 varchar(100) NOT NULL,\n" +
+                    "  col17 varchar(100) NOT NULL,\n" +
+                    "  col18 varchar(100) NOT NULL,\n" +
+                    "  col19 varchar(100) NOT NULL,\n" +
+                    "  col20 varchar(100) NOT NULL,\n" +
+                    "  col21 varchar(100) NOT NULL,\n" +
+                    "  col22 varchar(100) NOT NULL,\n" +
+                    "  col23 varchar(100) NOT NULL,\n" +
+                    "  col24 varchar(100) NOT NULL,\n" +
+                    "  col25 varchar(100) NOT NULL,\n" +
+                    "  col26 varchar(100) NOT NULL,\n" +
+                    "  col27 varchar(100) NOT NULL,\n" +
+                    "  col28 varchar(100) NOT NULL,\n" +
+                    "  col29 varchar(100) NOT NULL,\n" +
+                    "  col30 varchar(100) NOT NULL\n" +
+
+                ");";
+          // stat.executeUpdate("create table IF NOT EXISTS  people (name, tel, email);");
+           stat.executeUpdate(sql);
+    } catch (SQLException ex) {
+       // Logger.getLogger(Sqlite_Crud.class.getName()).log(Level.SEVERE, null, ex);
+    }}
+  
     static void UpdateJTable(){
         
         //SqliteDataTable = new javax.swing.JTable();
-     String sql = "select id AS 'ID' ,chandata AS 'CHANDATA', asset_number AS 'CHANNEL DESC',str_def_asset_body AS 'CHANNEL DESC', asset_status AS 'CHANNEL VALUE', pos_counter as 'INDEX' from tbl_chandata ORDER BY str_def_asset_body";
+     String sql = "select id AS '..' ,chandata AS '..', asset_number AS '..',str_def_asset_body AS '..', asset_status AS '..', pos_counter as '..' from tbl_chandata";
      try{
     pst = conn.prepareStatement(sql);
     rs = pst.executeQuery();
     SqliteDataTable.setModel(DbUtils.resultSetToTableModel(rs));    
 }
      catch (Exception e){
-     JOptionPane.showMessageDialog(null, e);
+    // JOptionPane.showMessageDialog(null, e);
      }
  }  
     private void update_combo(){
@@ -1549,7 +1686,7 @@ lbl_per.setText("0%");
     
 }
      catch (Exception e){
-     JOptionPane.showMessageDialog(null, e);
+  //   JOptionPane.showMessageDialog(null, e);
      }
  }  
     private void search_table() {
@@ -1560,7 +1697,7 @@ lbl_per.setText("0%");
     SqliteDataTable.setModel(DbUtils.resultSetToTableModel(rs));    
 }
      catch (Exception e){
-     JOptionPane.showMessageDialog(null, e);
+    // JOptionPane.showMessageDialog(null, e);
      }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     } 
@@ -1683,7 +1820,7 @@ lbl_per.setText("0%");
     SqliteDataTable.setModel(DbUtils.resultSetToTableModel(rs));    
 }
      catch (Exception e){
-     JOptionPane.showMessageDialog(null, e);
+    // JOptionPane.showMessageDialog(null, e);
      }
      set_jtables();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -1706,7 +1843,7 @@ lbl_per.setText("0%");
         
         }
         catch (Exception e){
-            JOptionPane.showMessageDialog(null, e); 
+           // JOptionPane.showMessageDialog(null, e); 
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -1864,7 +2001,7 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
         String removedStr_index = data_used_only_indices.remove(int_checkbox_index);
         String removedStr_index_store = size_store.remove(int_checkbox_index);
          String removedStr_index_name = data_used_name.remove(int_checkbox_index);
-        
+        btnContinue.setVisible(true);
         
         
       //  JOptionPane.showMessageDialog(null, datacheckbox.size()+" removed");
@@ -2057,7 +2194,7 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
     }
 
    private boolean start_loop_par1(){
-    new SwingWorker(){
+   SW1= new SwingWorker(){
 
             @Override
             protected Object doInBackground() throws Exception {
@@ -2066,7 +2203,7 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
                  ///////////////////////////////
                              int_data_chabdata_count=data_chabdata_count.size();
                              
-                              for(ixx =ixx; ixx<data_chabdata_count.size(); ixx++)
+                              for(ixx =ixx; ixx<int_data_chabdata_count; ixx++)
                                      {
                                          
                                     // count_number_of_loops=count_number_of_loops;
@@ -2095,9 +2232,9 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
        
-       }.execute();
+       };
                             
-                             
+        SW1.execute();                     
                               return true;
     
     }
@@ -2105,7 +2242,7 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
    public boolean continue_with_loop(){
       // str_asset_status=str.replaceAll("[^a-zA-Z0-9]", "");
     // data_used_name.clear();
-       new SwingWorker(){
+   SW2= new SwingWorker(){
 
             @Override
             protected Object doInBackground() throws Exception {
@@ -2139,7 +2276,8 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
                                           jProgressBar1.setString(String.valueOf(PROGRESS_VALUE));
                                         //  update_progress_bar();
                                       count_number_of_loops=1;
-                                      JOptionPane.showMessageDialog(null, "Finished successfully!");
+                                      open_result_Jframe();
+                                      ///JOptionPane.showMessageDialog(null, "Finished successfully!");
                                     reset_varaiables();
                                     clear_arrays();
                                     data_chabdata_count.clear();
@@ -2163,9 +2301,11 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
                             
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
+
+          
        
-       }.execute();
-                                       
+       };
+       SW2.execute();                                
                                       
                               
                               
@@ -2175,7 +2315,14 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
     
      return true;
     }
-    
+    private void open_result_Jframe() {
+              
+              External_jframe ResultFrame = new External_jframe();
+              ResultFrame.setVisible(true);
+              
+             // close();
+             // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+          }
     private void restart_process(){
     start_loop_par1();
     }
@@ -2201,7 +2348,7 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
             
             
         }catch (Exception e){
-            JOptionPane.showMessageDialog(null, e);
+           // JOptionPane.showMessageDialog(null, e);
         
         }   
         
@@ -2391,7 +2538,7 @@ reader.close();
                // str_global_count="["+chandata_loop+"]"+""+row_of_rows;
               
        //  System.out.println("["+chandata_loop+"]"+""+row_of_rows); 
-              if(firstFourChars.equals("CHANDATA") || first6Char.equals("N20070")  ){
+              if(firstFourChars.equals("CHANDATA") || first6Char.equals("N20000") || first6Char.equals("N20070") ){
               if(firstFourChars.equals("CHANDATA")){
             // txt_percentage.setText("0.00");
                 str_chandata_code = UUID.randomUUID().toString();
@@ -2419,7 +2566,7 @@ reader.close();
     //SqliteDataTable.setModel(DbUtils.resultSetToTableModel(rs));    
 }
      catch (Exception e){
-     JOptionPane.showMessageDialog(null, e);
+   //  JOptionPane.showMessageDialog(null, e);
      }
                  ////////////////end filter multiple blank chandata(1) entries///////////////
                     
@@ -2469,6 +2616,7 @@ reader.close();
                          int_str_pos_counter_1=int_str_pos_counter-1;
                         str_pos_counter=int_str_pos_counter+"";
                         str_pos_counter_1=int_str_pos_counter_1+"";
+                        str_pos_counter_1=int_str_pos_counter_1+"";
                         }
                         ////////////////////////////////////
                         if(int_str_asset_status!=0){
@@ -2497,7 +2645,13 @@ reader.close();
                              //////////used channel loop finished insert////////////
                          // insert_used_values_row();
                           
-                          open_choose_used_axis();
+                         if(str_chandata.equals(chandata_loop) && used_chennel_count !=0){
+                    
+                   // insert_used_values_row();
+                    open_choose_used_axis(); 
+                    return true;
+                           
+                 }
                          return true;
                             
                         }
@@ -2535,7 +2689,7 @@ reader.close();
                
                 if(end_used_only==0 && old_str_asset_def_body.equals("$MC_AXCONF_MACHAX_USED")){
                 used_chennel_count=data_used_only_xx.size();
-                if(str_chandata.equals(chandata_loop)){
+                if(str_chandata.equals(chandata_loop) && used_chennel_count !=0){
                     
                    // insert_used_values_row();
                     open_choose_used_axis(); 
@@ -2553,13 +2707,19 @@ reader.close();
     }catch(Exception e){}
          
         reset_dble(); 
-       if(used_inserted_status==0){
+      // if(used_inserted_status==0){
             //  insert_used_values_row();
                          
-             open_choose_used_axis();   
-             return true;
-       }
-       
+             if(str_chandata.equals(chandata_loop) && used_chennel_count !=0){
+                    
+                   // insert_used_values_row();
+                    open_choose_used_axis(); 
+                    return true;
+                           
+                 } 
+            // return true;
+      // }
+  //  used_inserted_status=0;   
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         return true;
     }
@@ -2949,7 +3109,7 @@ reader.close();
     //SqliteDataTable.setModel(DbUtils.resultSetToTableModel(rs));    
 }
      catch (Exception e){
-     JOptionPane.showMessageDialog(null, e);
+   //  JOptionPane.showMessageDialog(null, e);
      }                 ////////////////end filter multiple blank chandata(1) entries///////////////
                  
               // System.out.println(line +"   "+row_of_rows);         
@@ -3357,12 +3517,13 @@ reader.close();
       reset_dble();
     }
     }catch(Exception e){}    
+         SW1.cancel(true);           
+         SW2.cancel(true);
+        // SW1.addPropertyChangeListener(null);
          
          finish_loops();
-      
-          Arc_Import mainClass = new Arc_Import(); 
-          mainClass.update_table_2();
-          //mainClass.stop_timer();
+        
+         stop_threads();
       
          reset_varaiables();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -3853,7 +4014,7 @@ reader.close();
                                 pst.execute();  
                                 //JOptionPane.showMessageDialog(null, "Patient Registered");
                             }catch (Exception e){
-                                JOptionPane.showMessageDialog(null, e);
+                               // JOptionPane.showMessageDialog(null, e);
                             }  
         ///////////////////end insert chan_name///////////////////////////////////
                    
@@ -4037,32 +4198,7 @@ reader.close();
  
     private void open_choose_used_axis() {
         insert_used_only_names();
-        if(int_loop_part_1==0){
-         int_loop_part_1=1;
-         set_check_box();
-       // AI.set_complete_part1();
-        
-        }
-        set_check_box();
-        stop_timer();
-        int p = JOptionPane.showConfirmDialog(null,"Do you want to choose axes for "+chandata_loop+" ?");
-if (p==0){
-    set_check_box();
- btnContinue.setVisible(true);
-}else if(p==1)
-{
-  continue_with_loop();
-}else if(p==2)
-{
-continue_with_loop();
-}
-else{}
-    // JOptionPane.showMessageDialog(null, "Choose axes and press continue button!!");
-  // JOptionPane.showMessageDialog(null, p+"");
-       // Checkbox_control c_cont = new Checkbox_control();
-        //c_cont.setVisible(true);
-        
-       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        cont_2();
     }
 
     private void upate_action() {
@@ -4075,13 +4211,108 @@ else{}
         };
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    private void cont_2(){
+       // set_check_box();
+        stop_timer();
+        int p = JOptionPane.showConfirmDialog(null,"Do you want to choose axes for "+chandata_loop+" ?");
+          if (p==0){
+          set_check_box();
+         btnContinue.setVisible(true);
+          }else if(p==1)
+          {
+          continue_with_loop();
+          }else if(p==2)
+          {
+         continue_with_loop();
+         }
+    else{}
+    }
     private void reset_variables() {
         
       reset_varaiables();  
         
       //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("imag_small_2.png")));
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void create_db() {
+       
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void stop_threads() {
+          for (Thread t : Thread.getAllStackTraces().keySet()) 
+          { 
+              
+            String xx =  t.getName();
+            if(     xx.equals("Java2D Disposer")
+                    || xx.equals("Reference Handler")     
+                    || xx.equals("DestroyJavaVM")  
+                    || xx.equals("Attach Listener")  
+                    || xx.equals("Swing-Shell")  
+                    || xx.equals("Signal Dispatcher")  
+                    || xx.equals("TimerQueue")  
+                    || xx.equals("MySQL Statement Cancellation Timer")  
+                    || xx.equals("Finalizer")  
+                    || xx.equals("AWT-Windows")  
+                    || xx.equals("AWT-EventQueue-0")  
+                    || xx.equals("AWT-Shutdown")  
+                      || xx.equals("org.netbeans.modules.debugger.jpda.visual AWT Access Loop") 
+                    
+                    ){
+                
+               
+                
+                }else{
+             try{
+                  System.out.println(xx+"----------------------------------------------------------------------------"+xx);            
+              //if (t.getState()==Thread.State.RUNNABLE) 
+                 t.interrupt();
+                
+                }catch(Exception e){
+            }
+           
+                     }
+             
+          } 
+      //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void create_myDB() {
+         String url = "jdbc:mysql://127.0.0.1:3306";
+ //Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/compmaster", "root", "");
+        // Defines username and password to connect to database server.
+        String username = "root";
+        String password = "";
+
+        // SQL command to create a database in MySQL.
+        String sql = "CREATE DATABASE IF NOT EXISTS compmaster3";
+
+        try (Connection conn = DriverManager.getConnection(url, username, password);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.execute();
+            JOptionPane.showMessageDialog(null, "CREATED!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void create_myTBL() {
+        create_tbl_chandata();
+create_tbl_channel_names();
+create_tbl_col_size();
+create_tbl_processed_table();
+        update_table_2();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+   
 
     
 

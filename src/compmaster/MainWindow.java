@@ -7,8 +7,12 @@ package compmaster;
 
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -24,6 +28,7 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         initComponents();
         setIcon();
+       // create_database();
     }
   public void close(){
         
@@ -63,6 +68,11 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
         setTitle("Compmaster Version 1.0.0");
         setAlwaysOnTop(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(40, 40, 40));
@@ -77,30 +87,65 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
 
         lbl_8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icon4.png"))); // NOI18N
+        lbl_8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_8MouseClicked(evt);
+            }
+        });
         jPanel1.add(lbl_8, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 180, 60, 60));
 
         lbl_7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icon8.png"))); // NOI18N
+        lbl_7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_7MouseClicked(evt);
+            }
+        });
         jPanel1.add(lbl_7, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 180, 60, 60));
 
         lbl_3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icon3.png"))); // NOI18N
+        lbl_3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_3MouseClicked(evt);
+            }
+        });
         jPanel1.add(lbl_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, 60, 60));
 
         lbl_6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icon7.png"))); // NOI18N
+        lbl_6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_6MouseClicked(evt);
+            }
+        });
         jPanel1.add(lbl_6, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, 60, 60));
 
         lbl_5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icon6.png"))); // NOI18N
+        lbl_5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_5MouseClicked(evt);
+            }
+        });
         jPanel1.add(lbl_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 60, 60));
 
         lbl_4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icon5.png"))); // NOI18N
+        lbl_4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_4MouseClicked(evt);
+            }
+        });
         jPanel1.add(lbl_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 110, 60, 60));
 
         lbl_2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icon2.png"))); // NOI18N
+        lbl_2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_2MouseClicked(evt);
+            }
+        });
         jPanel1.add(lbl_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, 60, 60));
 
         lbl_1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -164,11 +209,51 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
 
     private void lbl_1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_1MouseClicked
         // TODO add your handling code here
-         close();//
-        HomepageWindow print = new HomepageWindow();
-        print.setVisible(true);
+        next_window();
         
     }//GEN-LAST:event_lbl_1MouseClicked
+
+    private void lbl_2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_2MouseClicked
+        // TODO add your handling code here:
+        next_window();
+    }//GEN-LAST:event_lbl_2MouseClicked
+
+    private void lbl_3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_3MouseClicked
+        // TODO add your handling code here:
+        
+        next_window();
+    }//GEN-LAST:event_lbl_3MouseClicked
+
+    private void lbl_4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_4MouseClicked
+        // TODO add your handling code here:
+        next_window();
+    }//GEN-LAST:event_lbl_4MouseClicked
+
+    private void lbl_5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_5MouseClicked
+        // TODO add your handling code here:
+        next_window();
+    }//GEN-LAST:event_lbl_5MouseClicked
+
+    private void lbl_6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_6MouseClicked
+        // TODO add your handling code here:
+        next_window();
+    }//GEN-LAST:event_lbl_6MouseClicked
+
+    private void lbl_7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_7MouseClicked
+        // TODO add your handling code here:
+        next_window();
+    }//GEN-LAST:event_lbl_7MouseClicked
+
+    private void lbl_8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_8MouseClicked
+        // TODO add your handling code here:
+        next_window();
+    }//GEN-LAST:event_lbl_8MouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -201,17 +286,23 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 
+               // themes();
+        //new Test_Jtatto();
+                new MainWindow().setVisible(true);
+            }
+
+            private void themes() {
                 try {
                  //UIManager.setLookAndFeel("com.jtattoo.plaf.texture.TextureLookAndFeel");
                     //UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
-                    UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
+                   UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
                     //UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
-                    //UIManager.setLookAndFeel("com.jtattoo.plaf.aero.AeroLookAndFeel");
+                   /// UIManager.setLookAndFeel("com.jtattoo.plaf.aero.AeroLookAndFeel");
                    // UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
                     // UIManager.setLookAndFeel("com.jtattoo.plaf.bernstein.BernsteinLookAndFeel");
                      
                     /// UIManager.setLookAndFeel("com.jtattoo.plaf.fast.FastLookAndFeel");
-                    //UIManager.setLookAndFeel("com.jtattoo.plaf.graphite.GraphiteLookAndFeel");
+                   // UIManager.setLookAndFeel("com.jtattoo.plaf.graphite.GraphiteLookAndFeel");
                   //UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
                    // UIManager.setLookAndFeel("com.jtattoo.plaf.luna.LunaLookAndFeel");
                     //UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
@@ -225,8 +316,7 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
                 } catch (UnsupportedLookAndFeelException ex) {
                     Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
                 }
-        //new Test_Jtatto();
-                new MainWindow().setVisible(true);
+               // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
     }
@@ -255,5 +345,35 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
 
    private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("imag_small_2.png")));
+    }
+
+    private void next_window() {
+        
+         close();//
+        Arc_Import print = new Arc_Import();
+        print.setVisible(true);
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void create_database() {
+        String url = "jdbc:mysql://127.0.0.1:3306";
+ //Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/compmaster", "root", "");
+        // Defines username and password to connect to database server.
+        String username = "root";
+        String password = "";
+
+        // SQL command to create a database in MySQL.
+        String sql = "CREATE DATABASE IF NOT EXISTS compmaster3";
+
+        try (Connection conn = DriverManager.getConnection(url, username, password);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.execute();
+            JOptionPane.showMessageDialog(null, "CREATED!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

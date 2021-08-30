@@ -1,4 +1,0 @@
-compmaster.CA
-compmaster.YourTask
-compmaster.MyTask
-compmaster.Compmaster_multithreading

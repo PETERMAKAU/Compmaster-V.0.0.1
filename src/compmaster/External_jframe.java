@@ -5,13 +5,15 @@
  */
 package compmaster;
 
+
 import static compmaster.Arc_Import.conn;
-import static compmaster.Arc_Import.pst;
-import static compmaster.Arc_Import.update_table_2;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.TableColumnModel;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -23,11 +25,37 @@ public class External_jframe extends javax.swing.JFrame {
    static Connection conn = null;
     static ResultSet rs = null; 
    static PreparedStatement pst = null; 
+
+     private static void set_jtables() {
+        TableColumnModel columnModel = SqliteDataTable.getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(300);
+        columnModel.getColumn(0).setMaxWidth(300);
+        columnModel.getColumn(1).setPreferredWidth(150);
+        columnModel.getColumn(1).setMaxWidth(150);
+      
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private static void select_col_size() {
+         try{
+        
+                    Statement stmt2;  
+                    stmt2= conn.createStatement();
+                    String sql112="Select *  from  tbl_col_size order by count DESC LIMIT 1";
+                    rs=stmt2.executeQuery(sql112);
+                    if(rs.next()){
+                       non_zero_columns = Integer.parseInt(rs.getString("count"));
+                    }
+                    }catch(Exception e){}
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     /**
      * Creates new form External_jframe
      */
     public External_jframe() {
         initComponents();
+        
+        // full_scren();
     }
 
     /**
@@ -39,16 +67,28 @@ public class External_jframe extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        SqliteDataTable = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        tbl_raw = new javax.swing.JButton();
+        tbl_processed = new javax.swing.JButton();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Output");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Output Table"));
+        jPanel2.setToolTipText("");
+
+        SqliteDataTable.setBackground(new java.awt.Color(0, 0, 0));
+        SqliteDataTable.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        SqliteDataTable.setForeground(new java.awt.Color(255, 255, 255));
+        SqliteDataTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -59,31 +99,122 @@ public class External_jframe extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        SqliteDataTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SqliteDataTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(SqliteDataTable);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Controls"));
+
+        tbl_raw.setText("RAW TABLE");
+        tbl_raw.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_rawMouseClicked(evt);
+            }
+        });
+
+        tbl_processed.setText("PROCESSED TABLE");
+        tbl_processed.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_processedMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(1, 1, 1)
+                .addComponent(tbl_raw)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tbl_processed)
+                .addContainerGap(36, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tbl_raw)
+                    .addComponent(tbl_processed))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(427, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(342, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGap(78, 78, 78)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
-        pack();
+        setSize(new java.awt.Dimension(757, 465));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
+       // conn = DbConnection.ConnectrDb();  
         conn = mysqlconnect.ConnectDb();
-        update_table_2_2();
+        update_table_2();
         
     }//GEN-LAST:event_formWindowOpened
+   
+
+    private void SqliteDataTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SqliteDataTableMouseClicked
+        // TODO add your handling code here:
+        // fetch_field_id();
+        
+        update_table_2();
+    }//GEN-LAST:event_SqliteDataTableMouseClicked
+
+    private void tbl_processedMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_processedMouseClicked
+        // TODO add your handling code here:
+        
+        update_table_2();
+    }//GEN-LAST:event_tbl_processedMouseClicked
+
+    private void tbl_rawMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_rawMouseClicked
+        // TODO add your handling code here:
+        update_table_2_2();
+    }//GEN-LAST:event_tbl_rawMouseClicked
 
     /**
      * @param args the command line arguments
@@ -121,20 +252,153 @@ public class External_jframe extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private static javax.swing.JTable SqliteDataTable;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JButton tbl_processed;
+    private javax.swing.JButton tbl_raw;
     // End of variables declaration//GEN-END:variables
-
+static void update_table_2() {
+         select_col_size();
+         non_zero_columns=non_zero_columns+1;
+        String sql="";
+             if(non_zero_columns==1){
+        
+          sql = "select col1 as '..',col30 as '..' from  tbl_processed_table order by col30 ASC";
+        }else if (non_zero_columns==2){
+        sql = "select col1 as '..',col30 as '..',col2 as '..' from  tbl_processed_table";     
+        }
+        else if (non_zero_columns==3){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..' from  tbl_processed_table";     
+        }
+         else if (non_zero_columns==4){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..' from  tbl_processed_table";     
+        }
+         else if (non_zero_columns==5){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..' from  tbl_processed_table";     
+        }
+         else if (non_zero_columns==6){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..' from  tbl_processed_table";     
+         }
+           else if (non_zero_columns==7){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..' from  tbl_processed_table";     
+         }
+            else if (non_zero_columns==8){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..' from  tbl_processed_table";     
+         }
+             else if (non_zero_columns==9){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..' from  tbl_processed_table";     
+         }
+             else if (non_zero_columns==10){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..' from  tbl_processed_table";     
+         }
+             else if (non_zero_columns==11){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..' from  tbl_processed_table";     
+         }
+             else if (non_zero_columns==12){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..' from  tbl_processed_table";     
+         }
+             else if (non_zero_columns==13){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..' from  tbl_processed_table";     
+         }
+             else if (non_zero_columns==14){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..' from  tbl_processed_table";     
+         }
+             else if (non_zero_columns==15){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..' from  tbl_processed_table";     
+         }
+             else if (non_zero_columns==16){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..' from  tbl_processed_table";     
+         }
+             else if (non_zero_columns==17){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..' from  tbl_processed_table";     
+         }
+             else if (non_zero_columns==18){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..' from  tbl_processed_table";     
+         }
+             else if (non_zero_columns==19){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..' from  tbl_processed_table";     
+         }
+              else if (non_zero_columns==20){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..' from  tbl_processed_table";     
+         }
+              else if (non_zero_columns==21){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..' from  tbl_processed_table";     
+         }
+              else if (non_zero_columns==22){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..' from  tbl_processed_table";     
+         }
+              else if (non_zero_columns==23){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..' from  tbl_processed_table";     
+         }
+              else if (non_zero_columns==24){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..' from  tbl_processed_table";     
+         }
+              else if (non_zero_columns==25){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..' from  tbl_processed_table";     
+         }
+              else if (non_zero_columns==26){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..' from  tbl_processed_table";     
+         }
+              else if (non_zero_columns==27){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..' from  tbl_processed_table";     
+         }
+              else if (non_zero_columns==28){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..',col28 as '..' from  tbl_processed_table";     
+         }
+              else if (non_zero_columns==29){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..',col28 as '..',col29 as '..' from  tbl_processed_table";     
+         }
+              else if (non_zero_columns==30){
+        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..',col28 as '..',col29 as '..',col30 as '..' from  tbl_processed_table";     
+         }             
+        else{
+        
+        }
+        
+     try{
+    pst = conn.prepareStatement(sql);
+    rs = pst.executeQuery();
+    SqliteDataTable.setModel(DbUtils.resultSetToTableModel(rs));    
+}
+     catch (Exception e){
+     JOptionPane.showMessageDialog(null, e);
+     }
+     set_jtables();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     private void update_table_2_2() {
-     String sql = "select id AS 'ID' ,chandata AS 'CHANDATA', asset_number AS 'CHANNEL DESC',str_def_asset_body AS 'CHANNEL DESC', asset_status AS 'CHANNEL VALUE', pos_counter as 'INDEX' from tbl_chandata ORDER BY str_def_asset_body";
+     String sql = "select id AS '..' ,chandata AS '..', asset_number AS '..',str_def_asset_body AS '..', asset_status AS '..', pos_counter as '..' from tbl_chandata";
      try{
      pst = conn.prepareStatement(sql);
      rs = pst.executeQuery();
-     jTable1.setModel(DbUtils.resultSetToTableModel(rs));    
+     SqliteDataTable.setModel(DbUtils.resultSetToTableModel(rs));    
         }
      catch (Exception e){
      JOptionPane.showMessageDialog(null, e);
      }
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void full_scren() {
+        
+        setExtendedState(JFrame.MAXIMIZED_BOTH); 
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

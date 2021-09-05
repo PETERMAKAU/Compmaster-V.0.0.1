@@ -1,4 +1,4 @@
-/*
+   /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -81,12 +81,13 @@ import test.CustomOutputStream;
 /////////////////end thread 3////////////////////
 
 public class Arc_Import extends javax.swing.JFrame {
-
+      int active_state=0;
       SwingWorker SW1;
       SwingWorker SW2;
      String loop1_global_count="";
      int int_data_chabdata_count=0;
      int stop_timer_status=0;
+     int compesation_segments=0;
      String str_data_chabdata_count="";
      static int non_zero_columns=0; 
      Timer timer_universal;
@@ -94,8 +95,10 @@ public class Arc_Import extends javax.swing.JFrame {
     static ResultSet rs = null;     
     static int ixx_1=0;
    static PreparedStatement pst = null;    
+   
     //static String pathx ="n/a";     
    public  String pathxx="";
+   public  String pathxx2="";
   //  static String pathxx_1="";
     String str_progress_bar_str="0";
     ArrayList<String> datacheckbox;   
@@ -148,6 +151,9 @@ public class Arc_Import extends javax.swing.JFrame {
     static  ArrayList<String> data_used_only_xx;
    static  ArrayList<String> data_used_only_indices;     
    static  ArrayList<String> data_used_name;
+    static  ArrayList<String> compesation_data_1;
+    static  ArrayList<String> compesation_data_2;
+    static  ArrayList<String> compesation_errors;
      String str_pos_counter_1="";
      int  int_array_size_for_used=0;    
      int int_positon_to_insert=0;   
@@ -173,7 +179,12 @@ public class Arc_Import extends javax.swing.JFrame {
     String str_asset_def_body="n/a",str_row_1_or_0="",old_str_asset_def_body="n/a",str_chandata_code="n/a", str_chandata="n/a", str_asset_number="n/a", str_asset_body="n/a", str_asset_status="n/a",str_pos_counter="n/a";
      // int countxx=7;
     int status_used_sess_2 =0;
-   
+   String  header_part1="",header_part2="",header_part3="",header_part4="";
+   String  body_part1="",body_part2="",body_part3="",body_part4="";
+   String  footer_1_1="",footer_1_2="",footer_1_3="",footer_1_4="",footer_1_5="";
+   String footer_2_1="", footer_2_2="",footer_2_3="",footer_2_4="";
+   String comp_body="", int_max="",int_min="",int_step="";
+   int  error_collect_status=0;
     public Arc_Import() {
         initComponents();
         
@@ -196,13 +207,12 @@ public class Arc_Import extends javax.swing.JFrame {
         SqliteDataTable = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btn_conf_file = new javax.swing.JButton();
+        btn_raw_tbl = new javax.swing.JButton();
+        btn_impo_compesation = new javax.swing.JButton();
         btn_normalize = new javax.swing.JButton();
         path = new javax.swing.JTextField();
-        txtpatid = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        txt_path2 = new javax.swing.JTextField();
         lbl_per = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
         CheckBoxes = new javax.swing.JPanel();
@@ -250,7 +260,7 @@ public class Arc_Import extends javax.swing.JFrame {
         jPanel2.setToolTipText("");
 
         SqliteDataTable.setBackground(new java.awt.Color(0, 0, 0));
-        SqliteDataTable.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        SqliteDataTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         SqliteDataTable.setForeground(new java.awt.Color(255, 255, 255));
         SqliteDataTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -288,35 +298,35 @@ public class Arc_Import extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Input Controls"));
 
-        jButton1.setBackground(new java.awt.Color(204, 204, 204));
-        jButton1.setText("IMPORT DATA");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_conf_file.setBackground(new java.awt.Color(204, 204, 204));
+        btn_conf_file.setText("Import Configuration file.");
+        btn_conf_file.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_conf_fileActionPerformed(evt);
             }
         });
 
-        jButton3.setText("RAW TABLE");
-        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+        btn_raw_tbl.setText("View raw table");
+        btn_raw_tbl.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton3MouseClicked(evt);
+                btn_raw_tblMouseClicked(evt);
             }
         });
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btn_raw_tbl.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btn_raw_tblActionPerformed(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(204, 204, 204));
-        jButton2.setText("EXTRACT DATA");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btn_impo_compesation.setBackground(new java.awt.Color(204, 204, 204));
+        btn_impo_compesation.setText("Import ENC compesation file");
+        btn_impo_compesation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btn_impo_compesationActionPerformed(evt);
             }
         });
 
-        btn_normalize.setText("PROCESSED TABLE");
+        btn_normalize.setText("View processed table");
         btn_normalize.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btn_normalizeMouseClicked(evt);
@@ -329,23 +339,18 @@ public class Arc_Import extends javax.swing.JFrame {
         });
 
         path.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        path.setText("Path");
         path.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pathActionPerformed(evt);
             }
         });
 
-        txtpatid.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        txtpatid.addActionListener(new java.awt.event.ActionListener() {
+        txt_path2.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        txt_path2.setText("Path 2");
+        txt_path2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtpatidActionPerformed(evt);
-            }
-        });
-
-        jButton4.setText("Search");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                txt_path2ActionPerformed(evt);
             }
         });
 
@@ -364,44 +369,38 @@ public class Arc_Import extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-                            .addComponent(btn_normalize, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE))
+                            .addComponent(btn_impo_compesation, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_normalize, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_conf_file, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lbl_per, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtpatid, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
-                            .addComponent(path, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_path2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(path, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_raw_tbl, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lbl_per, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btn_normalize, btn_raw_tbl});
+
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtpatid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)
-                        .addGap(7, 7, 7))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(path))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_normalize)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_conf_file)
+                    .addComponent(path, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
-                    .addComponent(lbl_per, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_impo_compesation)
+                    .addComponent(txt_path2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_normalize)
+                    .addComponent(btn_raw_tbl))
+                .addComponent(lbl_per, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39))
@@ -807,8 +806,19 @@ public class Arc_Import extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-         if(process_continuing==0){
+    private void btn_impo_compesationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_impo_compesationActionPerformed
+         path.setText("Path");
+      //  extract_data();
+        select_file_2();
+        //trigger_thread();
+           //JOptionPane.showMessageDialog(null, "Not Running");
+       
+      // new Thread(new Compmaster_Loop2()).start();
+        
+       
+    }//GEN-LAST:event_btn_impo_compesationActionPerformed
+ private void extract_data(){
+ if(process_continuing==0){
           process_continuing=1;         
                  
               
@@ -820,16 +830,22 @@ public class Arc_Import extends javax.swing.JFrame {
          JOptionPane.showMessageDialog(null, "Similar Process is Running !");
          
          }
-        
-        
-        //trigger_thread();
-           //JOptionPane.showMessageDialog(null, "Not Running");
-       
-      // new Thread(new Compmaster_Loop2()).start();
-        
-       
-    }//GEN-LAST:event_jButton2ActionPerformed
-  private void  reset_progress_componenevts(){
+ }
+   private void extract_data_2(){
+ if(process_continuing==0){
+          process_continuing=1;         
+                 
+            //  herer
+               //  reset_variables();
+                 start_program_2(); 
+              
+     
+         }else{
+         JOptionPane.showMessageDialog(null, "Similar Process is Running !");
+         
+         }
+ } 
+    private void  reset_progress_componenevts(){
 jProgressBar1.setString(String.valueOf(0));
 lbl_per.setText("0%");
   }
@@ -847,7 +863,20 @@ lbl_per.setText("0%");
   
   
   }
-   
+   private void start_program_2(){
+                              stop_timer_status=1;
+                              pathxx2=txt_path2.getText().toString().trim();
+                              starts_progress_bar();                     // reset_varaiables();
+                              start_timer2();   
+                              
+                            //  clearx();
+                             // clearx2();
+                              //clear_col_size();                              
+                             // count_chandata_types();
+                              start_loop_par1_2();
+  
+  
+  } 
     public void start_timer2(){
         
      timer_universal = new Timer (500, new ActionListener() {
@@ -858,10 +887,10 @@ lbl_per.setText("0%");
                 // txtpatid.setText(str_global_count);
                  lbl_per.setText(str_global_count);
                  
-                 UpdateJTable();
+                // UpdateJTable();
         // update_progress();
                  
-                // update_table_2();
+                 update_table_2();
                 update_progress_bar();
             }
         });
@@ -876,13 +905,29 @@ lbl_per.setText("0%");
       //  lbl_per.setText("Copleted");
    // Timer.
     }
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_conf_fileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_conf_fileActionPerformed
         // TODO add your handling code here:
-        select_file();
-    }//GEN-LAST:event_jButton1ActionPerformed
+       // disable_btns();
+        
+       
+        if(active_state==0){
+               select_file();
+               // clear_arrays();
+
+        }else if(active_state > 0){
+                clear_arrays();
+                select_file();
+                
+        }else{
+                
+                }
+        active_state=active_state+1;
+    }//GEN-LAST:event_btn_conf_fileActionPerformed
 
     private void pathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pathActionPerformed
         // TODO add your handling code here:
+                
+             JOptionPane.showMessageDialog(null, "Called");
     }//GEN-LAST:event_pathActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -896,6 +941,10 @@ lbl_per.setText("0%");
                                  data_used_only_xx= new ArrayList<String>();
                                  data_used_only_indices= new ArrayList<String>();
                                  data_used_name= new ArrayList<String>();
+                                 compesation_data_1 = new ArrayList<String>();
+                                 compesation_data_2 = new ArrayList<String>();
+                                 
+                                 compesation_errors= new ArrayList<String>();
                                  used_inserted_status=0;
                               //  List<Integer> myArrayList = new ArrayList<>(100);                           
                                   used_chennel_count=0;
@@ -910,6 +959,7 @@ lbl_per.setText("0%");
        
      
         update_table_2();
+        //disable_btns();
        //  set_jtables();
        // UpdateJTable();
         //update_combo();
@@ -921,27 +971,27 @@ lbl_per.setText("0%");
            // fetch_field_id();
     }//GEN-LAST:event_SqliteDataTableMouseClicked
 
-    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+    private void btn_raw_tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_raw_tblMouseClicked
         // TODO add your handling code here:
         
         UpdateJTable();
-    }//GEN-LAST:event_jButton3MouseClicked
+    }//GEN-LAST:event_btn_raw_tblMouseClicked
  private static void set_jtables() {
         TableColumnModel columnModel = SqliteDataTable.getColumnModel();
-        columnModel.getColumn(0).setPreferredWidth(300);
-        columnModel.getColumn(0).setMaxWidth(300);
+        columnModel.getColumn(0).setPreferredWidth(350);
+        columnModel.getColumn(0).setMaxWidth(350);
         columnModel.getColumn(1).setPreferredWidth(150);
         columnModel.getColumn(1).setMaxWidth(150);
       
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btn_raw_tblActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_raw_tblActionPerformed
         // TODO add your handling code here: 
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btn_raw_tblActionPerformed
 
     private void btn_normalizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_normalizeMouseClicked
         // TODO add your handling code here:
-        open_result_Jframe();
+       // open_result_Jframe();
         //UpdateJTable();
     }//GEN-LAST:event_btn_normalizeMouseClicked
 
@@ -956,20 +1006,9 @@ lbl_per.setText("0%");
        
     }//GEN-LAST:event_btn_normalizeActionPerformed
 
-    private void txtpatidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpatidActionPerformed
+    private void txt_path2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_path2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtpatidActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-       // Thread.getAllStackTraces().keySet().forEach((t) -> System.out.println("id "+t.getId() +" "+t.getName() + "\nIs Daemon " + t.isDaemon() + "\nIs Alive " + t.isAlive()));
-       // search_table();
-      stop_threads();
-    // cont_2();
-        
-         
-        
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_txt_path2ActionPerformed
 
     private void chk6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk6ActionPerformed
         // TODO add your handling code here:
@@ -1525,7 +1564,10 @@ lbl_per.setText("0%");
     private javax.swing.JPanel CheckBoxes;
     private static javax.swing.JTable SqliteDataTable;
     private javax.swing.JButton btnContinue;
+    private javax.swing.JButton btn_conf_file;
+    private javax.swing.JButton btn_impo_compesation;
     private javax.swing.JButton btn_normalize;
+    private javax.swing.JButton btn_raw_tbl;
     private javax.swing.JCheckBox chk1;
     private javax.swing.JCheckBox chk10;
     private javax.swing.JCheckBox chk11;
@@ -1556,10 +1598,6 @@ lbl_per.setText("0%");
     private javax.swing.JCheckBox chk7;
     private javax.swing.JCheckBox chk8;
     private javax.swing.JCheckBox chk9;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1567,7 +1605,7 @@ lbl_per.setText("0%");
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_per;
     private javax.swing.JTextField path;
-    private javax.swing.JTextField txtpatid;
+    private javax.swing.JTextField txt_path2;
     // End of variables declaration//GEN-END:variables
    
   private void create_tbl_chandata() {
@@ -1690,7 +1728,7 @@ lbl_per.setText("0%");
      }
  }  
     private void search_table() {
-         String sql = "select id,chandata, asset_number,str_def_asset_body as asset_def_error_body, asset_status, pos_counter as position from tbl_chandata where chandata = '"+txtpatid.getText()+"'";
+         String sql = "select id,chandata, asset_number,str_def_asset_body as asset_def_error_body, asset_status, pos_counter as position from tbl_chandata where chandata = '"+txt_path2.getText()+"'";
      try{
     pst = conn.prepareStatement(sql);
     rs = pst.executeQuery();
@@ -1837,7 +1875,7 @@ lbl_per.setText("0%");
             if(rs.next());
             
             String add1=rs.getString("col30");
-            txtpatid.setText(add1);
+            txt_path2.setText(add1);
             
            
         
@@ -1872,7 +1910,7 @@ lbl_per.setText("0%");
     }
 
     private void update_progress() {
-        txtpatid.setText(loop1_global_count);
+        txt_path2.setText(loop1_global_count);
         lbl_per.setText(loop1_global_count);
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         
@@ -1894,7 +1932,17 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
          close();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+private void select_file_2() {
+        process_continuing=0;
+        JFileChooser chooser =new JFileChooser();
+        chooser.showOpenDialog(null);
+        File f = chooser.getSelectedFile();
+        String filename=f.getAbsolutePath();
+        pathxx2 =filename;
+        txt_path2.setText(filename);
+         extract_data_2();       
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     private void select_file() {
         process_continuing=0;
         JFileChooser chooser =new JFileChooser();
@@ -1903,6 +1951,7 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
         String filename=f.getAbsolutePath();
         pathxx =filename;
         path.setText(filename);
+         extract_data();       
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
      private void starts_progress_bar(){
@@ -2192,7 +2241,371 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
        // JOptionPane.showMessageDialog(null, "Choose axes!"); 
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+private boolean start_loop_par1_2(){
+   SW1= new SwingWorker(){
 
+            @Override
+            protected Object doInBackground() throws Exception {
+                //your code here
+                
+                 ///////////////////////////////
+                             int_data_chabdata_count=data_chabdata_count.size();
+                             
+                            
+                                         
+                                    // count_number_of_loops=count_number_of_loops;
+                                     //start_timer();
+                                     insert_table_transition_2();
+                                     countLines();
+                                     insert_used_compesation(); 
+                                    
+                                     
+                               
+                              
+                              ///////////////insert_used_compesation()////////////////
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+      
+       
+       };
+                            
+        SW1.execute();                     
+                              return true;
+    
+    }
+
+ private boolean insert_used_compesation() {
+           
+         
+         // String part5="$AA_ENC_COMP";
+     //
+         try{        
+         String pxx=pathxx2;     
+         FileReader fileReader = new FileReader(pathxx2);
+         try (BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+      //String line;
+         while((line = bufferedReader.readLine()) != null) {
+         
+                str_global_count="Compensating data.";
+               // String input = line;     //input string
+                 comp_body=line.replaceAll("\\s+","");
+                 comp_body=comp_body.toLowerCase();
+                 if(comp_body.contains("referenceposition"))
+                 {
+                 
+                 }else if(comp_body.contains("compensationstart"))
+                 {
+                   int_min=comp_body.replaceAll("([a-z])", "");
+                 ///  JOptionPane.showMessageDialog(null, int_min+"Min");
+                 }
+                 else if(comp_body.contains("compensationend"))
+                 {
+                   int_max=comp_body.replaceAll("([a-z])", "");
+                 //  JOptionPane.showMessageDialog(null, int_max+"Max");
+                 }
+                 else if(comp_body.contains("compensationspacing"))
+                 {
+                   int_step=comp_body.replaceAll("([a-z])", "");
+                   //JOptionPane.showMessageDialog(null, int_step+"Step");
+                 }
+                 else if(comp_body.contains("axisposition"))
+                 {
+                   error_collect_status=1;
+                   //JOptionPane.showMessageDialog(null, int_step+"Step");
+                 }
+                 else if(comp_body.contains("compensationoutput"))
+                 {
+                   error_collect_status=0;
+                   //JOptionPane.showMessageDialog(null, int_step+"Step");
+                 }
+                 else if (error_collect_status==1 && !comp_body.equals("")){
+                 compesation_errors.add(comp_body);
+                 }
+                 else{
+                 
+                 }
+                 
+                 //System.out.println(comp_body);
+               // JOptionPane.showMessageDialog(null, comp_body);
+      }  
+        // JOptionPane.showMessageDialog(null, "My errors "+compesation_errors);
+         calculate_segments();
+         select_row();
+         select_row_0();
+         add_header_array();
+         add_body_array();
+         add_footer_1_array();
+         add_footer_2_array();
+         
+         insert_compes();
+         
+    }
+    }catch(Exception e){
+    
+    }
+         
+       
+        return true;
+     
+        
+       }
+ private void calculate_segments(){
+     String int_min_xc=int_min.replaceAll("[^0-9]", "");
+    String int_max_xc=int_max.replaceAll("[^0-9]", "");
+    String int_step_xc=int_step.replaceAll("[^0-9]", "");
+     
+     int mincc = Integer.parseInt(int_min_xc);
+     int maxcc = Integer.parseInt(int_max_xc);
+     int stepcc = Integer.parseInt(int_step_xc);
+     //int_min
+     //int_max
+     ///int_step
+compesation_segments=(mincc+mincc)/stepcc;
+ }
+ private void select_row_0(){
+     
+     
+     try{
+            String sql = "select * from tbl_enc_comp_compesation WHERE comp_min_0='"+int_min+"' AND comp_max_0='"+int_max+"' AND  comp_step_1='"+int_step+"' ";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();    
+            if (rs.next()) {
+                
+                String minxx = rs.getString("comp_min_0");  
+                   String maxxx = rs.getString("comp_max_0"); 
+                   String stepxx = rs.getString("comp_step_0"); 
+                   String ax =rs.getString("logic_machax");
+                   String modulo =rs.getString("enc_comp_is_modulo");
+                   String backlash =rs.getString("ma_backlash");
+                     String str_enc_com_ena =rs.getString("ma_enc_comp_enabled");
+                   
+                   
+                  header_part1="$MA_ENC_COMP_ENABLED[0]="; 
+                  header_part2="NEWCONF";
+                  header_part3="";
+                  header_part4=rs.getString("chandata"); 
+                  
+                   body_part2="0";
+                   body_part3 = rs.getString("logic_machax");
+                   body_part1="$AA_ENC_COMP";
+                   body_part4="";
+                   
+                    footer_1_1="$AA_ENC_COMP_STEP[0,"+ax+ "]="+stepxx;
+                   footer_1_2="$AA_ENC_COMP_MIN[0]="+minxx ;
+                   footer_1_3="$AA_ENC_COMP_MAX[0]="+maxxx;
+                   footer_1_4="$AA_ENC_COMP_IS_MODULO[0]="+modulo;
+                   footer_1_5="";
+                   
+                   
+                   
+                   footer_2_1="$MA_BACKLASH[0,"+ax+"]="+backlash;
+                   footer_2_2="$MA_ENC_COMP_ENABLE[0]="+str_enc_com_ena;
+                   footer_2_3="NEWCONF";
+                   footer_2_4="M17";
+                  // JOptionPane.showMessageDialog(null, minxx+" "+maxxx+" "+stepxx);
+            
+               }else{
+           // JOptionPane.showMessageDialog(null, "No data");
+            }    
+   }
+   catch (SQLException ex){
+System.out.println(ex.getMessage());
+JOptionPane.showMessageDialog(null, ex.getMessage());
+     }}
+ private void select_row(){
+     
+     
+     try{
+         
+         //String sql = "select * from tbl_enc_comp_compesation";
+            String sql = "select * from tbl_enc_comp_compesation WHERE comp_min_1='"+int_min+"' AND comp_max_1='"+int_max+"' AND  comp_step_1='"+int_step+"' ";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();  
+         //   String minxxg = rs.getString("comp_min_1");  
+                 //  String maxxxg = rs.getString("comp_max_1");
+            if (rs.next()) {
+                   String minxx = rs.getString("comp_min_1");  
+                   String maxxx = rs.getString("comp_max_1"); 
+                   String stepxx = rs.getString("comp_step_1"); 
+                   String ax =rs.getString("logic_machax");
+                   String modulo =rs.getString("enc_comp_is_modulo");
+                   String backlash =rs.getString("ma_backlash");
+                     String str_enc_com_ena =rs.getString("ma_enc_comp_enabled");
+                   
+                   
+                  header_part1="$MA_ENC_COMP_ENABLED[1]="+str_enc_com_ena; 
+                  header_part2="NEWCONF";
+                  header_part3="";
+                  header_part4=rs.getString("chandata"); 
+                  
+                   body_part2="1";
+                   body_part3 = rs.getString("logic_machax");
+                   body_part1="$AA_ENC_COMP";
+                   body_part4="";
+                   
+                    footer_1_1="$AA_ENC_COMP_STEP[1,"+ax+ "]="+stepxx;
+                   footer_1_2="$AA_ENC_COMP_MIN[1]="+minxx ;
+                   footer_1_3="$AA_ENC_COMP_MAX[1]="+maxxx;
+                   footer_1_4="$AA_ENC_COMP_IS_MODULO[1]="+modulo;
+                   footer_1_5="";
+                   
+                   
+                   
+                   footer_2_1="$MA_BACKLASH[1,"+ax+"]="+backlash;
+                   footer_2_2="$MA_ENC_COMP_ENABLE[1]="+str_enc_com_ena;
+                   footer_2_3="NEWCONF";
+                   footer_2_4="M17";
+                   
+                   
+                 
+            
+                  // JOptionPane.showMessageDialog(null, minxx+" "+maxxx+" "+stepxx);
+            
+               }else{
+           // JOptionPane.showMessageDialog(null, "No data");
+            }    
+   }
+   catch (SQLException ex){
+System.out.println(ex.getMessage());
+JOptionPane.showMessageDialog(null, ex.getMessage());
+     }
+     
+     
+     
+    /* String sql = "select * from tbl_enc_comp_compesation WHERE comp_min_1=?,comp_max_1=?, comp_step_1=? ";
+       
+        try{
+            pst = conn.prepareStatement(sql);            
+            pst.setString(1, int_min);
+            pst.setString(2, int_max);
+            pst.setString(3, int_step);
+            rs = pst.executeQuery();  
+           
+            if (rs.next()) {
+            String min = rs.getString("comp_min_1");  
+            String max = rs.getString("comp_max_1"); 
+            String step = rs.getString("comp_step_1"); 
+            
+            JOptionPane.showMessageDialog(null, min+" "+max+" "+step);
+            }else{
+            JOptionPane.showMessageDialog(null, "No data found");
+            }
+            }
+            catch (Exception e)
+            {
+            }*/
+     
+     
+    
+         }
+ private void add_header_array(){
+     
+     
+         /* String header_part1="$MA_ENC_COMP_ENABLED[0]=0";
+          String header_part2="NEWCONF";
+          String header_part3="";
+          String header_part4="CHANDATA(1)";*/
+          int ixx=5;
+         for(int i=0; i <ixx; i++){
+         String dataxx="";
+         if(i==0){
+            dataxx=header_part1;
+         }else if(i==1){
+            dataxx=header_part2;
+         }
+         else if(i==2){
+          dataxx=header_part3;
+         }
+          else if(i==3){
+             dataxx=header_part4;
+         }
+         else{
+         dataxx="";
+         }
+        compesation_data_1.add(dataxx);
+       // System.out.println(compesation_data_1);
+        }
+ System.out.println("Header"+compesation_data_1);
+ }
+ private void add_body_array(){
+     
+        /*  String body_part1="$AA_ENC_COMP";
+          String body_part2="1";
+          String body_part3="AX1";
+          String body_part4="0";*/
+          int ixxb=compesation_segments;
+ for(int i=0; i <ixxb+1; i++){
+          String error_value =compesation_errors.get(i);
+          String dataxx=body_part1+"["+body_part2+","+i+","+body_part3+"]"+"="+error_value;
+        
+        compesation_data_1.add(dataxx);
+        
+        }
+  compesation_data_1.add("");
+ System.out.println("body"+compesation_data_1);
+ }
+ 
+ private void add_footer_1_array(){
+     
+         /* String footer_1_1="$AA_ENC_COMP_STEP[0,AX1]=50";
+          String footer_1_2="$AA_ENC_COMP_MIN[0]=100";
+          String footer_1_3="$AA_ENC_COMP_MAX[0]=800";
+          String footer_1_4="$AA_ENC_COMP_IS_MODULO[0]=0";
+           String footer_1_5="";*/
+          int ixx=5;
+         for(int i=0; i <ixx; i++){
+         String dataxx="";
+         if(i==0){
+            dataxx=footer_1_1;
+         }else if(i==1){
+            dataxx=footer_1_2;
+         }
+         else if(i==2){
+          dataxx=footer_1_3;
+         }
+          else if(i==3){
+             dataxx=footer_1_4;
+         }
+          else if(i==4){
+             dataxx=footer_1_5;
+         }
+         else{
+         dataxx="";
+         }
+        compesation_data_1.add(dataxx);
+       // System.out.println(compesation_data_1);
+        }
+         System.out.println("footer_1"+compesation_data_1);
+ }
+ private void add_footer_2_array(){
+     
+        /*  String footer_2_1="$MA_BACKLASH[0,AX1]=0";
+          String footer_2_2="$MA_ENC_COMP_ENABLE[0]=1";
+          String footer_2_3="NEWCONF";
+          String footer_2_4="M17";*/
+         int ixx=5;
+         for(int i=0; i <ixx; i++){
+         String dataxx="";
+         if(i==0){
+            dataxx=footer_2_1;
+         }else if(i==1){
+            dataxx=footer_2_2;
+         }
+         else if(i==2){
+          dataxx=footer_2_3;
+         }
+          else if(i==3){
+             dataxx=footer_2_4;
+         }
+         else{
+         dataxx="";
+         }
+        compesation_data_1.add(dataxx);
+      //  System.out.println(compesation_data_1);
+        }
+         System.out.println("footer_2"+compesation_data_1);
+ }
    private boolean start_loop_par1(){
    SW1= new SwingWorker(){
 
@@ -2276,11 +2689,13 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
                                           jProgressBar1.setString(String.valueOf(PROGRESS_VALUE));
                                         //  update_progress_bar();
                                       count_number_of_loops=1;
-                                      open_result_Jframe();
+                                     // open_result_Jframe();
                                       ///JOptionPane.showMessageDialog(null, "Finished successfully!");
                                     reset_varaiables();
                                     clear_arrays();
                                     data_chabdata_count.clear();
+                                    JOptionPane.showMessageDialog(null, "Finished successfully!");
+                                    // enable_btns();
                                    /// Arc_Import
                                     //close();
                                     return true;
@@ -3526,6 +3941,7 @@ reader.close();
          stop_threads();
       
          reset_varaiables();
+        
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 
         
@@ -4134,6 +4550,74 @@ reader.close();
        str_chan_name="";
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    private void insert_table_transition_2() {
+        pick_chan_name();
+        String xxx=chandata_loop;
+        String xxx2=str_chan_name;
+        String strs_parent_insert="";
+       for(int i=0; i<3; i++ ){
+           if(i==0){
+             ///  strs_parent_insert="";
+          // chandata_loop="";
+          // str_chan_name="";
+           }else if(i==1){
+         //  strs_parent_insert=xxx;
+          // str_chan_name="";
+           }else{
+           //chandata_loop="";
+        /// strs_parent_insert=xxx2;
+           }
+           
+            String sql = "insert into tbl_processed_table(col1, col2, col3, col4,col5,col6, col7, col8, col9,col10,col11, col12,col13, col14, col15,col16, col17, col18, col19,col20,col21, col22, col23, col24,col25,col26, col27, col28, col29, col30) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+     
+  
+    try {
+       pst = conn.prepareStatement(sql);
+            pst.setString(1, "");
+            pst.setString(2, "");
+            pst.setString(3, "");      
+            pst.setString(4, ""); 
+            pst.setString(5, "");
+            pst.setString(6, "");
+            pst.setString(7, "");
+            pst.setString(8, "");
+            pst.setString(9, "");
+            pst.setString(10, "");     
+            pst.setString(11, ""); 
+            pst.setString(12, "");            
+            pst.setString(13, "");       
+            pst.setString(14, ""); 
+            pst.setString(15, ""); 
+            pst.setString(16, "");
+            pst.setString(17, "");
+            pst.setString(18, "");
+            pst.setString(19, "");
+            pst.setString(20, "");      
+            pst.setString(21, "");
+            pst.setString(22, "");            
+            pst.setString(23, "");
+            pst.setString(24, "");
+            pst.setString(25, "");
+            pst.setString(26, "");     
+            pst.setString(27, ""); 
+            pst.setString(28, "");
+            pst.setString(29, ""); 
+            pst.setString(30, "");   
+           
+
+            pst.execute();  
+      
+         pst.close();         
+         data.clear();
+    }catch(Exception e){
+    
+    }      
+       
+       }
+       str_chan_name="";
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     private void insert_used_indices() {
                            old_str_asset_def_body ="INDEX";  
                          //  used_chennel_count=data_used_only_xx.size();
@@ -4312,8 +4796,91 @@ create_tbl_processed_table();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-   
+    private void disable_btns() {
+        btn_impo_compesation.setEnabled(false);
+        txt_path2.setEnabled(false);
+        btn_normalize.setEnabled(false);
+        btn_raw_tbl.setEnabled(false);
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
+   
+private void enable_btns() {
+        btn_impo_compesation.setEnabled(true);
+        txt_path2.setEnabled(true);
+        btn_normalize.setEnabled(true);
+        btn_raw_tbl.setEnabled(true);
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void insert_compes() {
+        
+        for(int i =0; i < compesation_data_1.size(); i++ ){
+        String  str_compesation_data_1=compesation_data_1.get(i);
+         String sql = "insert into tbl_processed_table(col1, col2, col3, col4,col5,col6, col7, col8, col9,col10,col11, col12,col13, col14, col15,col16, col17, col18, col19,col20,col21, col22, col23, col24,col25,col26, col27, col28, col29, col30) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+     
+  
+    try {
+       pst = conn.prepareStatement(sql);
+            pst.setString(1, str_compesation_data_1);
+            pst.setString(2, "");
+            pst.setString(3, "");      
+            pst.setString(4, ""); 
+            pst.setString(5, "");
+            pst.setString(6, "");
+            pst.setString(7, "");
+            pst.setString(8, "");
+            pst.setString(9, "");
+            pst.setString(10, "");     
+            pst.setString(11, ""); 
+            pst.setString(12, "");            
+            pst.setString(13, "");       
+            pst.setString(14, ""); 
+            pst.setString(15, ""); 
+            pst.setString(16, "");
+            pst.setString(17, "");
+            pst.setString(18, "");
+            pst.setString(19, "");
+            pst.setString(20, "");      
+            pst.setString(21, "");
+            pst.setString(22, "");            
+            pst.setString(23, "");
+            pst.setString(24, "");
+            pst.setString(25, "");
+            pst.setString(26, "");     
+            pst.setString(27, ""); 
+            pst.setString(28, "");
+            pst.setString(29, ""); 
+            pst.setString(30, "");   
+           
+
+            pst.execute();  
+      
+         pst.close();         
+        // data.clear();
+    }catch(Exception e){
+    
+    }      
+        }
+        compesation_data_1.clear();
+       
+compesation_errors.clear();
+        clear_compesation_varia();
+       JOptionPane.showMessageDialog(null, "Finished !!");
+       stop_timer();
+         
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void clear_compesation_varia() {
+         header_part1="";header_part2="";header_part3="";header_part4="";
+   body_part1="";body_part2="";body_part3="";body_part4="";
+   footer_1_1="";footer_1_2="";footer_1_3="";footer_1_4="";footer_1_5="";
+  footer_2_1=""; footer_2_2="";footer_2_3="";footer_2_4="";
+  comp_body=""; int_max="";int_min="";int_step="";
+   error_collect_status=0;
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 
 

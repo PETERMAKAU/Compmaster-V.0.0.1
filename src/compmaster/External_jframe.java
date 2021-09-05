@@ -86,7 +86,7 @@ public class External_jframe extends javax.swing.JFrame {
         jPanel2.setToolTipText("");
 
         SqliteDataTable.setBackground(new java.awt.Color(0, 0, 0));
-        SqliteDataTable.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        SqliteDataTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         SqliteDataTable.setForeground(new java.awt.Color(255, 255, 255));
         SqliteDataTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

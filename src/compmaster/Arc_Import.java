@@ -40,6 +40,7 @@ import static sun.misc.Version.print;
 import java.lang.*;
 import java.io.*;
 import static java.lang.Thread.interrupted;
+import java.sql.Array;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -95,7 +96,7 @@ public class Arc_Import extends javax.swing.JFrame {
     static ResultSet rs = null;     
     static int ixx_1=0;
    static PreparedStatement pst = null;    
-   
+   ArrayList<String> arr1;
     //static String pathx ="n/a";     
    public  String pathxx="";
    public  String pathxx2="";
@@ -406,7 +407,7 @@ public class Arc_Import extends javax.swing.JFrame {
                 .addGap(39, 39, 39))
         );
 
-        CheckBoxes.setBorder(javax.swing.BorderFactory.createTitledBorder("Choose axes to display."));
+        CheckBoxes.setBorder(javax.swing.BorderFactory.createTitledBorder("Select axes."));
 
         chk16.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -857,6 +858,7 @@ lbl_per.setText("0%");
                               
                               clearx();
                               clearx2();
+                              clearx3();
                               clear_col_size();                              
                               count_chandata_types();
                               start_loop_par1();
@@ -943,7 +945,7 @@ lbl_per.setText("0%");
                                  data_used_name= new ArrayList<String>();
                                  compesation_data_1 = new ArrayList<String>();
                                  compesation_data_2 = new ArrayList<String>();
-                                 
+                                 arr1 = new ArrayList<String>();
                                  compesation_errors= new ArrayList<String>();
                                  used_inserted_status=0;
                               //  List<Integer> myArrayList = new ArrayList<>(100);                           
@@ -2376,9 +2378,9 @@ compesation_segments=(mincc+mincc)/stepcc;
                    String maxxx = rs.getString("comp_max_0"); 
                    String stepxx = rs.getString("comp_step_0"); 
                    String ax =rs.getString("logic_machax");
-                   String modulo =rs.getString("enc_comp_is_modulo");
-                   String backlash =rs.getString("ma_backlash");
-                     String str_enc_com_ena =rs.getString("ma_enc_comp_enabled");
+                    String modulo =rs.getString("enc_comp_is_modulo_0");
+                   String backlash =rs.getString("ma_backlash_0");
+                     String str_enc_com_ena =rs.getString("ma_enc_comp_enabled_0");
                    
                    
                   header_part1="$MA_ENC_COMP_ENABLED[0]="; 
@@ -2429,9 +2431,9 @@ JOptionPane.showMessageDialog(null, ex.getMessage());
                    String maxxx = rs.getString("comp_max_1"); 
                    String stepxx = rs.getString("comp_step_1"); 
                    String ax =rs.getString("logic_machax");
-                   String modulo =rs.getString("enc_comp_is_modulo");
-                   String backlash =rs.getString("ma_backlash");
-                     String str_enc_com_ena =rs.getString("ma_enc_comp_enabled");
+                   String modulo =rs.getString("enc_comp_is_modulo_1");
+                   String backlash =rs.getString("ma_backlash_1");
+                     String str_enc_com_ena =rs.getString("ma_enc_comp_enabled_1");
                    
                    
                   header_part1="$MA_ENC_COMP_ENABLED[1]="+str_enc_com_ena; 
@@ -2790,6 +2792,28 @@ reader.close();
     
     return cnt;
 }
+     
+     
+      private void clearx3() {
+        
+         String sql = " delete from  tbl_enc_comp_compesation where id > ?";
+        //String sql = "TRUNCATE TABLE tbl_chandata";
+         
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, "0");            
+            pst.execute();
+           // JOptionPane.showMessageDialog(null, "Drug Deleted");
+          
+            
+        }
+        catch (Exception e){
+            //JOptionPane.showMessageDialog(null, e);        
+        }
+        // Arc_Import mainClass = new Arc_Import();                 
+        // mainClass.UpdateJTable();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     private void clearx2() {
         
          String sql = " delete from  tbl_processed_table where id > ?";
@@ -3935,7 +3959,7 @@ reader.close();
          SW1.cancel(true);           
          SW2.cancel(true);
         // SW1.addPropertyChangeListener(null);
-         
+         create_muliti_dimentional_array();
          finish_loops();
         
          stop_threads();
@@ -4553,7 +4577,7 @@ reader.close();
     
     private void insert_table_transition_2() {
         pick_chan_name();
-        String xxx=chandata_loop;
+        String xxx="";
         String xxx2=str_chan_name;
         String strs_parent_insert="";
        for(int i=0; i<3; i++ ){
@@ -4561,10 +4585,13 @@ reader.close();
              ///  strs_parent_insert="";
           // chandata_loop="";
           // str_chan_name="";
+               xxx="";
            }else if(i==1){
+               xxx=".";
          //  strs_parent_insert=xxx;
           // str_chan_name="";
            }else{
+               xxx="";
            //chandata_loop="";
         /// strs_parent_insert=xxx2;
            }
@@ -4574,36 +4601,36 @@ reader.close();
   
     try {
        pst = conn.prepareStatement(sql);
-            pst.setString(1, "");
-            pst.setString(2, "");
-            pst.setString(3, "");      
-            pst.setString(4, ""); 
-            pst.setString(5, "");
-            pst.setString(6, "");
-            pst.setString(7, "");
-            pst.setString(8, "");
-            pst.setString(9, "");
-            pst.setString(10, "");     
-            pst.setString(11, ""); 
-            pst.setString(12, "");            
-            pst.setString(13, "");       
-            pst.setString(14, ""); 
-            pst.setString(15, ""); 
-            pst.setString(16, "");
-            pst.setString(17, "");
-            pst.setString(18, "");
-            pst.setString(19, "");
-            pst.setString(20, "");      
-            pst.setString(21, "");
-            pst.setString(22, "");            
-            pst.setString(23, "");
-            pst.setString(24, "");
-            pst.setString(25, "");
-            pst.setString(26, "");     
-            pst.setString(27, ""); 
-            pst.setString(28, "");
-            pst.setString(29, ""); 
-            pst.setString(30, "");   
+           pst.setString(1, xxx);
+            pst.setString(2, xxx);
+            pst.setString(3, xxx);      
+            pst.setString(4, xxx); 
+            pst.setString(5, xxx);
+            pst.setString(6, xxx);
+            pst.setString(7, xxx);
+            pst.setString(8, xxx);
+            pst.setString(9, xxx);
+            pst.setString(10, xxx);     
+            pst.setString(11, xxx); 
+            pst.setString(12, xxx);            
+            pst.setString(13, xxx);       
+            pst.setString(14, xxx); 
+            pst.setString(15, xxx); 
+            pst.setString(16, xxx);
+            pst.setString(17, xxx);
+            pst.setString(18, xxx);
+            pst.setString(19, xxx);
+            pst.setString(20, xxx);      
+            pst.setString(21, xxx);
+            pst.setString(22, xxx);            
+            pst.setString(23, xxx);
+            pst.setString(24, xxx);
+            pst.setString(25, xxx);
+            pst.setString(26, xxx);     
+            pst.setString(27, xxx); 
+            pst.setString(28, xxx);
+            pst.setString(29, xxx); 
+            pst.setString(30, xxx); 
            
 
             pst.execute();  
@@ -4885,6 +4912,110 @@ compesation_errors.clear();
 
 
 
+
+    private void create_muliti_dimentional_array() {
+          
+        String input="";
+        for(int i=0; i<data5.size(); i++){
+           
+            input=data12.get(i);
+            arr1.add(input);
+            input=data5.get(i);
+            arr1.add(input);
+            input=data6.get(i);
+            arr1.add(input);
+            input=data20.get(i);
+            arr1.add(input);
+            input=data24.get(i);
+            arr1.add(input);
+            input=data21.get(i);
+            arr1.add(input);
+            input=data21_a.get(i);
+            arr1.add(input);
+            input=data22.get(i);
+            arr1.add(input);
+            input=data22_a.get(i);
+            arr1.add(input);
+            input=data23.get(i);
+            arr1.add(input);
+            input=data23_a.get(i);
+            arr1.add(input);
+            input=data16.get(i);
+            arr1.add(input);
+            input=data17.get(i);
+            arr1.add(input);
+             insert_compesations(); 
+        
+        }
+        
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void insert_compesations() {
+       // String compes_1,
+          int lengx = arr1.size();      
+        
+     if(lengx > 0){
+        String sql = "insert into tbl_enc_comp_compesation(logic_machax, comp_step_0, comp_step_1, comp_min_0,comp_min_1, comp_max_0, comp_max_1, chandata,ma_enc_comp_enabled_0,ma_enc_comp_enabled_1, new_conf,ma_backlash_0, ma_backlash_1,enc_comp_is_modulo_0,enc_comp_is_modulo_1,active_0_or_1) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+       // String //sql = "INSERT INTO nameTable (name) values (?)";
+  
+    try {
+       pst = conn.prepareStatement(sql);
+       
+       
+ 
+    String[] stringArray = arr1.toArray(new String[arr1.size()]);
     
+             
+                  try {    var1x=stringArray[0]; } catch (IndexOutOfBoundsException e) { var1x="n/a"; }
+                  try {    var2x=stringArray[1]; } catch (IndexOutOfBoundsException e) { var2x="n/a"; }
+                  try {    var3x=stringArray[2]; } catch (IndexOutOfBoundsException e) { var3x="n/a"; }
+                  try {    var4x=stringArray[3]; } catch (IndexOutOfBoundsException e) { var4x="n/a"; }
+                  try {    var5x=stringArray[4]; } catch (IndexOutOfBoundsException e) { var5x="n/a"; }
+                  try {    var6x=stringArray[5]; } catch (IndexOutOfBoundsException e) { var6x="n/a"; }
+                  try {    var7x=stringArray[6]; } catch (IndexOutOfBoundsException e) { var7x="n/a"; }
+                  try {    var8x=stringArray[7]; } catch (IndexOutOfBoundsException e) { var8x="n/a"; }
+                  try {    var9x=stringArray[8]; } catch (IndexOutOfBoundsException e) { var9x="n/a"; }
+                  try {    var10x=stringArray[9]; } catch (IndexOutOfBoundsException e) { var10x="n/a"; }
+                  try {    var11x=stringArray[10]; } catch (IndexOutOfBoundsException e) { var11x="n/a"; }
+                  try {    var12x=stringArray[11]; } catch (IndexOutOfBoundsException e) { var12x="n/a"; }
+                  try {    var13x=stringArray[12]; } catch (IndexOutOfBoundsException e) { var13x="n/a"; }
+                   try {    var14x=stringArray[10]; } catch (IndexOutOfBoundsException e) { var14x="n/a"; }
+                  try {    var15x=stringArray[11]; } catch (IndexOutOfBoundsException e) { var15x="n/a"; }
+                  try {    var16x=stringArray[12]; } catch (IndexOutOfBoundsException e) { var16x="n/a"; }
+                 
+            pst.setString(1, var1x);
+            pst.setString(2, var4x);
+            pst.setString(3, var5x);       
+            pst.setString(4, var6x);  
+            pst.setString(5, var7x); 
+            pst.setString(6, var8x);  
+            pst.setString(7, var9x);
+            pst.setString(8, chandata_loop);
+            pst.setString(9, var2x);       
+            pst.setString(10, var3x);  
+            pst.setString(11, "NEWCONF"); 
+            pst.setString(12, var12x); 
+            pst.setString(13, var13x); 
+             pst.setString(14, var10x); 
+            pst.setString(15, var11x); 
+            pst.setString(16, "n/a"); 
+      
+         
+           
+
+            pst.execute();  
+      
+            pst.close();         
+             
+         
+    } catch (SQLException ex) {
+        System.err.println("Error = " + ex);
+    }
+     
+     }
+    arr1.clear();
+     
+    }
     
 }

@@ -6,6 +6,7 @@
 package compmaster;
 
 
+import java.awt.Desktop;
 import static sun.misc.Version.print;
 
 import javax.swing.Timer;
@@ -52,6 +53,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
+import java.util.StringJoiner;
 
 import java.util.TimerTask;
 
@@ -85,6 +87,7 @@ public class Arc_Import extends javax.swing.JFrame {
       int active_state=0;
       SwingWorker SW1;
       SwingWorker SW2;
+      String filenamex="";
      String loop1_global_count="";
      int int_data_chabdata_count=0;
      int stop_timer_status=0;
@@ -101,7 +104,7 @@ public class Arc_Import extends javax.swing.JFrame {
    public  String pathxx="";
    public  String pathxx2="";
   //  static String pathxx_1="";
-    String str_progress_bar_str="0";
+    String str_progress_bar_str="0",filenamexx="";
     ArrayList<String> datacheckbox;   
     String checkbox_index="";
      int int_checkbox_index=0;
@@ -186,6 +189,7 @@ public class Arc_Import extends javax.swing.JFrame {
    String footer_2_1="", footer_2_2="",footer_2_3="",footer_2_4="";
    String comp_body="", int_max="",int_min="",int_step="";
    int  error_collect_status=0;
+   String txt_file_path="";
     public Arc_Import() {
         initComponents();
         
@@ -216,6 +220,7 @@ public class Arc_Import extends javax.swing.JFrame {
         txt_path2 = new javax.swing.JTextField();
         lbl_per = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
+        jButton1 = new javax.swing.JButton();
         CheckBoxes = new javax.swing.JPanel();
         chk16 = new javax.swing.JCheckBox();
         chk3 = new javax.swing.JCheckBox();
@@ -293,7 +298,7 @@ public class Arc_Import extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -363,6 +368,13 @@ public class Arc_Import extends javax.swing.JFrame {
 
         jProgressBar1.setBackground(new java.awt.Color(255, 255, 255));
 
+        jButton1.setText("Export Table");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -370,18 +382,22 @@ public class Arc_Import extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_per, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_impo_compesation, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_normalize, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_conf_file, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_path2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(path, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_raw_tbl, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(lbl_per, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btn_impo_compesation, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btn_normalize, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btn_conf_file, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txt_path2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(path, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btn_raw_tbl, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButton1))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btn_normalize, btn_raw_tbl});
@@ -404,7 +420,9 @@ public class Arc_Import extends javax.swing.JFrame {
                 .addComponent(lbl_per, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
 
         CheckBoxes.setBorder(javax.swing.BorderFactory.createTitledBorder("Select axes."));
@@ -759,7 +777,7 @@ public class Arc_Import extends javax.swing.JFrame {
                                 .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnContinue)
                                     .addComponent(chk24))))))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -775,13 +793,11 @@ public class Arc_Import extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(CheckBoxes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(CheckBoxes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {CheckBoxes, jPanel1});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1492,7 +1508,110 @@ lbl_per.setText("0%");
     private void btnContinueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinueActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnContinueActionPerformed
-   
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+      
+        JFileChooser chooser =new JFileChooser();
+        chooser.showOpenDialog(null);
+        File f = chooser.getSelectedFile();
+        filenamex=f.getAbsolutePath();
+       // JOptionPane.showMessageDialog(null, filename+".mdf");
+        txt_file_path=filenamex+".mdf";
+       // save_txt_2();
+        try {
+      File myObj = new File(txt_file_path);
+      if (myObj.createNewFile()) {
+         // JOptionPane.showMessageDialog(null, "File created: " );
+          save_txt_2();
+      //  System.out.println("File created: " + myObj.getName());
+      } else {
+        //  JOptionPane.showMessageDialog(null, "File already exists." );
+          save_txt_2();
+        //System.out.println("File already exists.");
+      }
+    } catch (IOException e) {
+      //System.out.println("An error occurred.");
+      JOptionPane.showMessageDialog(null, "An error occurred." );
+      e.printStackTrace();
+    }
+    }//GEN-LAST:event_jButton1ActionPerformed
+  
+    
+    private void open_explorer(){
+    Desktop desktop = Desktop.getDesktop();
+        File dirToOpen = null;
+        try {
+                        System.out.println(filenamex);
+           // filenamexx  = filenamex.substring(0, filenamex.lastIndexOf(""));   
+            //////////////////////////////////
+           String pp="\\"; 
+      filenamexx = filenamex.substring(0, filenamex.lastIndexOf(pp));
+      System.out.println(filenamexx);
+            ///////////////////
+            filenamexx=filenamexx+"\\";
+            System.out.println(filenamexx);
+            dirToOpen = new File(filenamexx);
+    try {
+        desktop.open(dirToOpen);
+    } catch (IOException ex) {
+        Logger.getLogger(Arc_Import.class.getName()).log(Level.SEVERE, null, ex);
+    }
+        } catch (IllegalArgumentException iae) {
+            System.out.println("File Not Found");
+        }
+    }
+    private void save_txt(){
+    try{
+        File file = new File(txt_file_path);
+        if(!file.exists()){
+        file.createNewFile();
+        }
+        FileWriter fw = new FileWriter(file.getAbsoluteFile());
+        BufferedWriter bw = new BufferedWriter(fw);
+        for(int i=0; i < SqliteDataTable.getRowCount(); i++){
+            for(int j=0; j < SqliteDataTable.getColumnCount(); j++){
+            bw.write(SqliteDataTable.getModel().getValueAt(i,  j)+" ");
+            }
+            bw.write("\n____________\n");
+        }
+        bw.close();
+        fw.close();
+        JOptionPane.showMessageDialog(null, "");
+        }catch (Exception e){
+        e.printStackTrace();
+        }
+   }
+     private void save_txt_2(){
+    try (BufferedWriter bw = new BufferedWriter(new FileWriter(new File(txt_file_path)))) {
+    StringJoiner joiner = new StringJoiner(",");
+    for (int col = 0; col < SqliteDataTable.getColumnCount(); col++) {
+        joiner.add(SqliteDataTable.getColumnName(col));
+    }
+    System.out.println(joiner.toString());
+    bw.write(joiner.toString());
+    bw.newLine();
+    for (int row = 0; row < SqliteDataTable.getRowCount(); row++) {
+        joiner = new StringJoiner(",");
+        for (int col = 0; col < SqliteDataTable.getColumnCount(); col++) {
+            Object obj = SqliteDataTable.getValueAt(row, col);
+            String value = obj == null ? "null" : obj.toString();
+            joiner.add(value);
+        }
+        System.out.println(joiner.toString());
+        bw.write(joiner.toString());
+        bw.newLine();
+    }
+} catch (IOException exp) {
+    exp.printStackTrace();
+}
+    JOptionPane.showMessageDialog(null, "File Created Successfully!" );
+    open_explorer();
+   }
+     
+     private void open_folder_p(){
+     
+     }
     /**
      * @param args the command line arguments
      */
@@ -1600,6 +1719,7 @@ lbl_per.setText("0%");
     private javax.swing.JCheckBox chk7;
     private javax.swing.JCheckBox chk8;
     private javax.swing.JCheckBox chk9;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -5016,6 +5136,10 @@ compesation_errors.clear();
      }
     arr1.clear();
      
+    }
+
+    private void open_foler() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

@@ -3427,6 +3427,7 @@ reader.close();
                                 if(str_base_id==1){
                                     data_used_only_xx.add(str_asset_status);
                                     data_used_only_indices.add("("+str_pos_counter_1+")");
+                                    System.out.println(data_used_only_indices);
                                     size_store.add(str_pos_counter);
                                     str_base_id=0;
                                 }else if (str_base_id==2){
@@ -3445,7 +3446,7 @@ reader.close();
                            if(str_base_id==0){
                            if(str_chandata.equals(chandata_loop) && used_chennel_count !=0){  
                              open_choose_used_axis(); 
-                        //  return true;
+                          return true;
                          }                       
                          
                          //return true;
@@ -3460,11 +3461,12 @@ reader.close();
                                 }
                          
                           if(str_base_id==1){
-                                    data_used_only_xx.add(str_asset_status);
-                                    data_used_only_indices.add("("+str_pos_counter_1+")");
-                                    size_store.add(str_pos_counter);
-                                  str_base_id=0;
-                                  old_str_asset_def_body =str_asset_def_body;
+                                   // data_used_only_xx.add(str_asset_status);
+                                  ///  data_used_only_indices.add("("+str_pos_counter_1+")");
+                                  //  size_store.add(str_pos_counter);
+                                  //  System.out.println(data_used_only_indices);
+                                 str_base_id=0;
+                                 old_str_asset_def_body =str_asset_def_body;
                                 }
                             
                         }
@@ -3476,6 +3478,7 @@ reader.close();
                           if(str_base_id==1){
                                     data_used_only_xx.add(str_asset_status);
                                     data_used_only_indices.add("("+str_pos_counter_1+")");
+                                     System.out.println(data_used_only_indices);
                                     size_store.add(str_pos_counter);
                                 
                                 }else if (str_base_id==2){
@@ -5862,9 +5865,9 @@ reader.close();
   
  
     private void open_choose_used_axis() {
-        JOptionPane.showMessageDialog(null, cec_data_used_only_xx);
-        JOptionPane.showMessageDialog(null, cec_data_used_only_indices);
-        JOptionPane.showMessageDialog(null, cec_size_store);
+       // JOptionPane.showMessageDialog(null, cec_data_used_only_xx);
+      //  JOptionPane.showMessageDialog(null, cec_data_used_only_indices);
+      //  JOptionPane.showMessageDialog(null, cec_size_store);
         //cec_data_used_only_indices cec_size_store
         insert_used_only_names();
         cont_2();

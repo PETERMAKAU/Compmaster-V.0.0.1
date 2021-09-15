@@ -74,7 +74,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="233" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="220" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -157,31 +157,28 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lbl_per" max="32767" attributes="0"/>
-                          <Component id="jProgressBar1" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="jProgressBar1" min="-2" pref="484" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="btn_impo_compesation" alignment="0" min="-2" pref="236" max="-2" attributes="0"/>
-                                          <Component id="btn_normalize" linkSize="3" alignment="0" min="-2" pref="236" max="-2" attributes="0"/>
-                                          <Component id="btn_conf_file" alignment="0" min="-2" pref="236" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="txt_path2" alignment="0" min="-2" pref="236" max="-2" attributes="0"/>
-                                          <Component id="path" alignment="0" min="-2" pref="236" max="-2" attributes="0"/>
-                                          <Component id="btn_raw_tbl" linkSize="3" alignment="0" min="-2" pref="180" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Component id="jButton1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btn_impo_compesation" alignment="0" min="-2" pref="236" max="-2" attributes="0"/>
+                                  <Component id="btn_normalize" alignment="0" min="-2" pref="236" max="-2" attributes="0"/>
+                                  <Component id="btn_conf_file" alignment="0" min="-2" pref="236" max="-2" attributes="0"/>
+                                  <Component id="jButton1" alignment="0" min="-2" pref="236" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="txt_path2" alignment="0" min="-2" pref="236" max="-2" attributes="0"/>
+                                  <Component id="path" alignment="0" min="-2" pref="236" max="-2" attributes="0"/>
+                                  <Component id="jButton2" alignment="0" min="-2" pref="236" max="-2" attributes="0"/>
+                                  <Component id="btn_raw_tbl" min="-2" pref="236" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
+                          <Component id="lbl_per" alignment="0" min="-2" pref="484" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -201,14 +198,18 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btn_normalize" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btn_raw_tbl" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="lbl_per" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jProgressBar1" min="-2" pref="23" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbl_per" min="-2" pref="24" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jProgressBar1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="34" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -219,7 +220,7 @@
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Import Configuration file."/>
+                <Property name="text" type="java.lang.String" value="Import Machine Data file"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_conf_fileActionPerformed"/>
@@ -247,7 +248,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="btn_normalize">
               <Properties>
-                <Property name="text" type="java.lang.String" value="View processed table"/>
+                <Property name="text" type="java.lang.String" value="View ENC processed table"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_normalizeMouseClicked"/>
@@ -300,10 +301,18 @@
             </Component>
             <Component class="javax.swing.JButton" name="jButton1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Export Table"/>
+                <Property name="text" type="java.lang.String" value="Export MDF File"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButton2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="View CEC processed table"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton2MouseClicked"/>
               </Events>
             </Component>
           </SubComponents>
@@ -315,6 +324,7 @@
                 <TitledBorder title="Select axes."/>
               </Border>
             </Property>
+            <Property name="opaque" type="boolean" value="false"/>
           </Properties>
 
           <Layout>

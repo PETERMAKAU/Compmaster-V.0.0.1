@@ -111,7 +111,7 @@ public class Arc_Import extends javax.swing.JFrame {
      int process_continuing=0;
    private Thread PROGRESS_THREAD;
    private int PROGRESS_VALUE;
-     
+     int str_base_id=0;
     static String str_global_count="0%";
     String chandata_loop="";
     int used_inserted_status=0;
@@ -149,15 +149,39 @@ public class Arc_Import extends javax.swing.JFrame {
       ArrayList<String> data23_a;  
      ArrayList<String> data24;
      ArrayList<String> data25; //Used second insert
-     
+     	String var35x="", var36x="", var37x="",	 var38x="", var39x="", 	 var40x="",  var41x="",  var42x="",  var43x="",	 var44x="",
+                   var45x="", var46x="", var47x="", var48x="",var49x="", var50x="", var51x="", var52x="", var53x="",                 
+                  var54x="", var55x="", var56x="", var57x="", var58x="", var59x="",  var60x="",    var61x="";
     static ArrayList<String> size_store;
+    static ArrayList<String> cec_size_store;
+    
     static ArrayList<String> data_chabdata_count;
     static  ArrayList<String> data_used_only_xx;
-   static  ArrayList<String> data_used_only_indices;     
+    static  ArrayList<String> cec_data_used_only_xx;
+   static  ArrayList<String> data_used_only_indices;  
+   static  ArrayList<String> cec_data_used_only_indices;  
+   
    static  ArrayList<String> data_used_name;
     static  ArrayList<String> compesation_data_1;
     static  ArrayList<String> compesation_data_2;
     static  ArrayList<String> compesation_errors;
+    
+    ArrayList<String> cec_data_1;
+    ArrayList<String> cec_data_2;
+    ArrayList<String> cec_data_3;
+    ArrayList<String> cec_data_4;
+    ArrayList<String> cec_data_5;
+    ArrayList<String> cec_data_6;
+     ArrayList<String> cec_data_7;
+     
+     ArrayList<String> cec_data_8;
+    ArrayList<String> cec_data_9;
+    ArrayList<String> cec_data_10;
+    ArrayList<String> cec_data_11;
+    ArrayList<String> cec_data_12;
+    ArrayList<String> cec_data_13;
+     ArrayList<String> cec_data_14;
+    
      String str_pos_counter_1="";
      int  int_array_size_for_used=0;    
      int int_positon_to_insert=0;   
@@ -221,6 +245,7 @@ public class Arc_Import extends javax.swing.JFrame {
         lbl_per = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         CheckBoxes = new javax.swing.JPanel();
         chk16 = new javax.swing.JCheckBox();
         chk3 = new javax.swing.JCheckBox();
@@ -298,14 +323,14 @@ public class Arc_Import extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Input Controls"));
 
         btn_conf_file.setBackground(new java.awt.Color(204, 204, 204));
-        btn_conf_file.setText("Import Configuration file.");
+        btn_conf_file.setText("Import Machine Data file");
         btn_conf_file.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_conf_fileActionPerformed(evt);
@@ -332,7 +357,7 @@ public class Arc_Import extends javax.swing.JFrame {
             }
         });
 
-        btn_normalize.setText("View processed table");
+        btn_normalize.setText("View ENC processed table");
         btn_normalize.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btn_normalizeMouseClicked(evt);
@@ -368,10 +393,17 @@ public class Arc_Import extends javax.swing.JFrame {
 
         jProgressBar1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton1.setText("Export Table");
+        jButton1.setText("Export MDF File");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("View CEC processed table");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
             }
         });
 
@@ -381,27 +413,23 @@ public class Arc_Import extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbl_per, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btn_impo_compesation, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btn_normalize, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btn_conf_file, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txt_path2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(path, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btn_raw_tbl, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jButton1))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(btn_impo_compesation, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_normalize, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_conf_file, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_path2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(path, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_raw_tbl, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lbl_per, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0))
         );
-
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btn_normalize, btn_raw_tbl});
-
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -416,16 +444,20 @@ public class Arc_Import extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_normalize)
-                    .addComponent(btn_raw_tbl))
-                .addComponent(lbl_per, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(btn_raw_tbl))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbl_per, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         CheckBoxes.setBorder(javax.swing.BorderFactory.createTitledBorder("Select axes."));
+        CheckBoxes.setOpaque(false);
 
         chk16.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -867,20 +899,22 @@ jProgressBar1.setString(String.valueOf(0));
 lbl_per.setText("0%");
   }
     private void start_program(){
+        
                               stop_timer_status=1;
                               pathxx=path.getText().toString().trim();
                               starts_progress_bar();                     // reset_varaiables();
-                              start_timer2();   
-                              
+                              start_timer2();  
                               clearx();
                               clearx2();
                               clearx3();
-                              clear_col_size();                              
+                              clear_cec_x2();
+                              clear_col_size();   
+                              clear_cec_col_size(); 
                               count_chandata_types();
                               start_loop_par1();
   
   
-  }
+                                 }
    private void start_program_2(){
                               stop_timer_status=1;
                               pathxx2=txt_path2.getText().toString().trim();
@@ -955,9 +989,13 @@ lbl_per.setText("0%");
         data = new ArrayList<String>();                                  
                                  data11 = new ArrayList<String>(); 
                                  size_store= new ArrayList<String>(); 
+                                    cec_size_store= new ArrayList<String>(); 
                                  data_chabdata_count= new ArrayList<String>();
                                  data_used_only_xx= new ArrayList<String>();
+                                 cec_data_used_only_xx= new ArrayList<String>();
                                  data_used_only_indices= new ArrayList<String>();
+                                 cec_data_used_only_indices= new ArrayList<String>();
+                                 
                                  data_used_name= new ArrayList<String>();
                                  compesation_data_1 = new ArrayList<String>();
                                  compesation_data_2 = new ArrayList<String>();
@@ -1514,6 +1552,7 @@ lbl_per.setText("0%");
       
         JFileChooser chooser =new JFileChooser();
         chooser.showOpenDialog(null);
+        chooser.setDialogTitle("Name MDF file");
         File f = chooser.getSelectedFile();
         filenamex=f.getAbsolutePath();
        // JOptionPane.showMessageDialog(null, filename+".mdf");
@@ -1536,6 +1575,12 @@ lbl_per.setText("0%");
       e.printStackTrace();
     }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+        
+        update_table_cec_2();
+    }//GEN-LAST:event_jButton2MouseClicked
   
     
     private void open_explorer(){
@@ -1720,6 +1765,7 @@ lbl_per.setText("0%");
     private javax.swing.JCheckBox chk8;
     private javax.swing.JCheckBox chk9;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1985,6 +2031,132 @@ lbl_per.setText("0%");
      set_jtables();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    
+     static void update_table_cec_2() {
+         select_cec_col_size();
+         non_zero_columns=non_zero_columns+1;
+        String sql="";
+             if(non_zero_columns==1){
+        
+          sql = "select col1 as '..',col61 as '..' from  tbl_processed_cec_table";
+        }else if (non_zero_columns==2){
+        sql = "select col1 as '..',col61 as '..',col2 as '..' from  tbl_processed_cec_table";     
+        }
+        else if (non_zero_columns==3){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..' from  tbl_processed_cec_table";     
+        }
+         else if (non_zero_columns==4){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..' from  tbl_processed_cec_table";     
+        }
+         else if (non_zero_columns==5){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..' from  tbl_processed_cec_table";     
+        }
+         else if (non_zero_columns==6){
+        sql = "select col1 as '..',co61 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..' from  tbl_processed_cec_table";     
+         }
+           else if (non_zero_columns==7){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..' from  tbl_processed_cec_table";     
+         }
+            else if (non_zero_columns==8){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..' from  tbl_processed_cec_table";     
+         }
+             else if (non_zero_columns==9){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..' from  tbl_processed_cec_table";     
+         }
+             else if (non_zero_columns==10){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..' from  tbl_processed_cec_table";     
+         }
+             else if (non_zero_columns==11){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..' from  tbl_processed_cec_table";     
+         }
+             else if (non_zero_columns==12){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..' from  tbl_processed_cec_table";     
+         }
+             else if (non_zero_columns==13){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..' from  tbl_processed_cec_table";     
+         }
+             else if (non_zero_columns==14){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..' from  tbl_processed_cec_table";     
+         }
+             else if (non_zero_columns==15){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..' from  tbl_processed_cec_table";     
+         }
+             else if (non_zero_columns==16){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..' from  tbl_processed_cec_table";     
+         }
+             else if (non_zero_columns==17){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..' from  tbl_processed_cec_table";     
+         }
+             else if (non_zero_columns==18){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..' from  tbl_processed_cec_table";     
+         }
+             else if (non_zero_columns==19){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..' from  tbl_processed_cec_table";     
+         }
+              else if (non_zero_columns==20){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..' from  tbl_processed_cec_table";     
+         }
+              else if (non_zero_columns==21){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..' from  tbl_processed_cec_table";     
+         }
+              else if (non_zero_columns==22){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..' from  tbl_processed_cec_table";     
+         }
+              else if (non_zero_columns==23){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..' from  tbl_processed_cec_table";     
+         }
+              else if (non_zero_columns==24){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..' from  tbl_processed_cec_table";     
+         }
+              else if (non_zero_columns==25){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..' from  tbl_processed_cec_table";     
+         }
+              else if (non_zero_columns==26){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..' from  tbl_processed_cec_table";     
+         }
+              else if (non_zero_columns==27){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..' from  tbl_processed_cec_table";     
+         }
+              else if (non_zero_columns==28){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..',col28 as '..' from  tbl_processed_cec_table";     
+         }
+              else if (non_zero_columns==29){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..',col28 as '..',col29 as '..' from  tbl_processed_cec_table";     
+         }
+              else if (non_zero_columns==30){
+        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..',col28 as '..',col29 as '..',col30 as '..' from  tbl_processed_cec_table";     
+         }             
+        else{
+        
+        }
+        
+     try{
+    pst = conn.prepareStatement(sql);
+    rs = pst.executeQuery();
+    SqliteDataTable.setModel(DbUtils.resultSetToTableModel(rs));    
+}
+     catch (Exception e){
+    // JOptionPane.showMessageDialog(null, e);
+     }
+     set_jtables();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     private void fetch_field_id() {
           int row = SqliteDataTable.getSelectedRow();
             String par1=(SqliteDataTable.getModel().getValueAt(row, 0).toString());  
@@ -2022,7 +2194,20 @@ lbl_per.setText("0%");
                     }catch(Exception e){}
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+static void select_cec_col_size() {
+        
+                   try{
+        
+                    Statement stmt2;  
+                    stmt2= conn.createStatement();
+                    String sql112="Select *  from  tbl_cec_col_size order by count DESC LIMIT 1";
+                    rs=stmt2.executeQuery(sql112);
+                    if(rs.next()){
+                       non_zero_columns = Integer.parseInt(rs.getString("count"));
+                    }
+                    }catch(Exception e){}
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     void stop_thread() {
         
        // new Thread(new Compmaster_Loop()).stop();
@@ -2431,7 +2616,7 @@ private boolean start_loop_par1_2(){
                    int_step=comp_body.replaceAll("([a-z])", "");
                    //JOptionPane.showMessageDialog(null, int_step+"Step");
                  }
-                 else if(comp_body.contains("axisposition"))
+                 else if(comp_body.contains("compensationoutput"))
                  {
                    error_collect_status=1;
                    //JOptionPane.showMessageDialog(null, int_step+"Step");
@@ -2954,6 +3139,26 @@ reader.close();
         // mainClass.UpdateJTable();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+     private void clear_cec_x2() {
+        
+         String sql = " delete from  tbl_processed_cec_table where id > ?";
+        //String sql = "TRUNCATE TABLE tbl_chandata";
+         
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, "0");            
+            pst.execute();
+           // JOptionPane.showMessageDialog(null, "Drug Deleted");
+          
+            
+        }
+        catch (Exception e){
+            //JOptionPane.showMessageDialog(null, e);        
+        }
+        // Arc_Import mainClass = new Arc_Import();                 
+        // mainClass.UpdateJTable();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     private void clearx() {
         
          String sql = " delete from tbl_chandata where id > ?";
@@ -3056,10 +3261,12 @@ reader.close();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         return true;
     }
+    
     private boolean insert_used_only() {
        // array_size_for_size_store=7;
         end_used_only =0;
         loop_id=1;
+        int used_count=0;
         reset_dble();
          try{        
          String pxx=pathxx;     
@@ -3067,7 +3274,20 @@ reader.close();
          try (BufferedReader bufferedReader = new BufferedReader(fileReader)) {
       //String line;
          while((line = bufferedReader.readLine()) != null) {
+           used_count=used_count+1;  
+        // int     
+             
+            // GSGSGS
+         double fl_row_number = (double) used_count;
          
+         if (fl_row_number >= 60720){
+         
+         // JOptionPane.showMessageDialog(null, "Reached" + fl_row_number+line);
+         
+         }
+         //  System.out.println("Reached " + fl_row_number+" "+line);
+         //  System.out.println("Reached " + fl_row_number+" "+line);
+           
                str_global_count="Rendering file. Please wait !";
                 String input = line;     //input string
                 String firstFourChars = "";
@@ -3097,7 +3317,15 @@ reader.close();
                // str_global_count="["+chandata_loop+"]"+""+row_of_rows;
               
        //  System.out.println("["+chandata_loop+"]"+""+row_of_rows); 
-              if(firstFourChars.equals("CHANDATA") || first6Char.equals("N20000") || first6Char.equals("N20070") ){
+              if(firstFourChars.equals("CHANDATA") || first6Char.equals("N20000") || first6Char.equals("N20070") || first6Char.equals("N41300") ){
+               if(first6Char.equals("N20070")){
+                    str_base_id=1;  
+               }   
+                if(first6Char.equals("N41300")){
+                    
+                    str_base_id=2;
+               }  
+                  
               if(firstFourChars.equals("CHANDATA")){
             // txt_percentage.setText("0.00");
                 str_chandata_code = UUID.randomUUID().toString();
@@ -3195,31 +3423,70 @@ reader.close();
                             old_str_asset_def_body =str_asset_def_body;
                          ///////////add data to arraylist////////////
                             if(str_chandata.equals(chandata_loop)){
-                        data_used_only_xx.add(str_asset_status);
-                        data_used_only_indices.add("("+str_pos_counter_1+")");
-                        size_store.add(str_pos_counter);
+                                
+                                if(str_base_id==1){
+                                    data_used_only_xx.add(str_asset_status);
+                                    data_used_only_indices.add("("+str_pos_counter_1+")");
+                                    size_store.add(str_pos_counter);
+                                    str_base_id=0;
+                                }else if (str_base_id==2){
+                                     cec_data_used_only_xx.add(str_asset_status);
+                                    cec_data_used_only_indices.add("41300"+"["+str_pos_counter_1+"]");
+                                    cec_size_store.add(str_pos_counter); 
+                                     str_base_id=0;
+                                }else{
+                                
+                                }
+                    
                             }
                         ////////////end add data to arraylist//////////////
                         }else{
-                             //////////used channel loop finished insert////////////
-                         // insert_used_values_row();
-                          
-                         if(str_chandata.equals(chandata_loop) && used_chennel_count !=0){
-                    
-                   // insert_used_values_row();
-                    open_choose_used_axis(); 
-                    return true;
+                         
+                           if(str_base_id==0){
+                           if(str_chandata.equals(chandata_loop) && used_chennel_count !=0){  
+                             open_choose_used_axis(); 
+                        //  return true;
+                         }                       
+                         
+                         //return true;
                            
-                 }
-                         return true;
+                           }
+                         if (str_base_id==2){
+                                      cec_data_used_only_xx.add(str_asset_status);
+                                      cec_data_used_only_indices.add("("+str_pos_counter_1+")");
+                                      cec_size_store.add(str_pos_counter); 
+                                     str_base_id=0;
+                                      old_str_asset_def_body =str_asset_def_body;
+                                }
+                         
+                          if(str_base_id==1){
+                                    data_used_only_xx.add(str_asset_status);
+                                    data_used_only_indices.add("("+str_pos_counter_1+")");
+                                    size_store.add(str_pos_counter);
+                                  str_base_id=0;
+                                  old_str_asset_def_body =str_asset_def_body;
+                                }
                             
                         }
                          }else{
                             old_str_asset_def_body =str_asset_def_body;
                            if(str_chandata.equals(chandata_loop)){
-                         data_used_only_xx.add(str_asset_status);
-                         data_used_only_indices.add("("+str_pos_counter_1+")");
-                         size_store.add(str_pos_counter);
+                               
+                         
+                          if(str_base_id==1){
+                                    data_used_only_xx.add(str_asset_status);
+                                    data_used_only_indices.add("("+str_pos_counter_1+")");
+                                    size_store.add(str_pos_counter);
+                                
+                                }else if (str_base_id==2){
+                                     cec_data_used_only_xx.add(str_asset_status);
+                                     cec_data_used_only_indices.add("("+str_pos_counter_1+")");
+                                     cec_size_store.add(str_pos_counter); 
+                                
+                                }else{
+                                
+                                }
+                         
                             }
                             }
                         ////////////////
@@ -3245,7 +3512,7 @@ reader.close();
         }else{
                //used_index=old_str_asset_def_body;
               // old_str_asset_def_body="n/a";
-               
+                 if(data_used_only_xx.size() != 0 && cec_data_used_only_xx.size() != 0){
                 if(end_used_only==0 && old_str_asset_def_body.equals("$MC_AXCONF_MACHAX_USED")){
                 used_chennel_count=data_used_only_xx.size();
                 if(str_chandata.equals(chandata_loop) && used_chennel_count !=0){
@@ -3257,7 +3524,7 @@ reader.close();
                  }
               
                }
-           
+                 }
            }   
         
       }
@@ -3396,6 +3663,11 @@ reader.close();
     }
      
      }
+     if(!old_str_asset_def_body.equals("n/a")){
+    // JOptionPane.showMessageDialog(null, old_str_asset_def_body+" Is blank "+chandata_loop);
+     }
+      
+     
     // data.clear();
      ss = data_used_only_xx.size();
      end_used_only =1;
@@ -3405,6 +3677,191 @@ reader.close();
      }
   
     }
+    
+    
+      private void insert_array_cc() {
+        leng = data.size();
+      int ss = data_used_only_xx.size();
+      
+        
+     if(leng > 0){
+        String sql = "insert into tbl_processed_cec_table(col1, col2, col3, col4,col5,col6, col7, col8, col9,col10,col11, col12,col13, col14, col15,col16, col17, col18, col19,col20,col21, col22, col23, col24,col25,col26, col27, col28, col29, col30,col31, col32, col33, col34,col35,col36, col37, col38, col39,col40,col41, col42,col43, col44, col45,col46, col47, col48, col49,col50,col51, col52, col53, col54,col55,col56, col57, col58, col59, col60, col61) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+       // String //sql = "INSERT INTO nameTable (name) values (?)";
+  
+    try {
+       pst = conn.prepareStatement(sql);
+       
+       
+ 
+    String[] stringArray = data.toArray(new String[data.size()]);
+    // if(str_chandata.equals(chandata_loop)){
+                  var1x=old_str_asset_def_body; 
+                 // if(leng == leng){
+                  if(leng == used_chennel_count){
+                  try {    var2x=stringArray[0]; } catch (IndexOutOfBoundsException e) { var2x=""; }
+                  try {    var3x=stringArray[1]; } catch (IndexOutOfBoundsException e) { var3x=""; }
+                  try {    var4x=stringArray[2]; } catch (IndexOutOfBoundsException e) { var4x=""; }
+                  try {    var5x=stringArray[3]; } catch (IndexOutOfBoundsException e) { var5x=""; }
+                  try {    var6x=stringArray[4]; } catch (IndexOutOfBoundsException e) { var6x=""; }
+                  try {    var7x=stringArray[5]; } catch (IndexOutOfBoundsException e) { var7x=""; }
+                  try {    var8x=stringArray[6]; } catch (IndexOutOfBoundsException e) { var8x=""; }
+                  try {    var9x=stringArray[7]; } catch (IndexOutOfBoundsException e) { var9x=""; }
+                  try {    var10x=stringArray[8]; } catch (IndexOutOfBoundsException e) { var10x=""; }
+                  try {    var11x=stringArray[9]; } catch (IndexOutOfBoundsException e) { var11x=""; }
+                  try {    var12x=stringArray[10]; } catch (IndexOutOfBoundsException e) { var12x=""; }                  
+                  try {    var13x=stringArray[11]; } catch (IndexOutOfBoundsException e) { var13x=""; }
+                  try {    var14x=stringArray[12]; } catch (IndexOutOfBoundsException e) { var14x=""; }
+                  try {    var15x=stringArray[13]; } catch (IndexOutOfBoundsException e) { var15x=""; }
+                   try {    var16x=stringArray[14]; } catch (IndexOutOfBoundsException e) { var16x=""; }
+                  try {    var17x=stringArray[15]; } catch (IndexOutOfBoundsException e) { var17x=""; }
+                  try {    var18x=stringArray[16]; } catch (IndexOutOfBoundsException e) { var18x=""; }
+                  try {    var19x=stringArray[17]; } catch (IndexOutOfBoundsException e) { var19x=""; }
+                  try {    var20x=stringArray[18]; } catch (IndexOutOfBoundsException e) { var20x=""; }
+                  try {    var21x=stringArray[19]; } catch (IndexOutOfBoundsException e) { var21x=""; }
+                  try {    var22x=stringArray[20]; } catch (IndexOutOfBoundsException e) { var22x=""; }
+                  try {    var23x=stringArray[21]; } catch (IndexOutOfBoundsException e) { var23x=""; }
+                  try {    var24x=stringArray[22]; } catch (IndexOutOfBoundsException e) { var24x=""; }                  
+                  try {    var25x=stringArray[23]; } catch (IndexOutOfBoundsException e) { var25x=""; }
+                  try {    var26x=stringArray[24]; } catch (IndexOutOfBoundsException e) { var26x=""; }
+                  try {    var27x=stringArray[25]; } catch (IndexOutOfBoundsException e) { var27x=""; }
+                  try {    var28x=stringArray[26]; } catch (IndexOutOfBoundsException e) { var28x=""; }
+                  try {    var29x=stringArray[27]; } catch (IndexOutOfBoundsException e) { var29x=""; }
+                  try {    var30x=stringArray[28]; } catch (IndexOutOfBoundsException e) { var30x=""; } 
+                  try {    var31x=stringArray[29]; } catch (IndexOutOfBoundsException e) { var31x=""; }
+                  try {    var32x=stringArray[30]; } catch (IndexOutOfBoundsException e) { var32x=""; }
+                  try {    var33x=stringArray[31]; } catch (IndexOutOfBoundsException e) { var33x=""; }
+                  try {    var34x=stringArray[32]; } catch (IndexOutOfBoundsException e) { var34x=""; }
+                  try {    var35x=stringArray[33]; } catch (IndexOutOfBoundsException e) { var35x=""; }
+                  try {    var36x=stringArray[34]; } catch (IndexOutOfBoundsException e) { var36x=""; }
+                  try {    var37x=stringArray[35]; } catch (IndexOutOfBoundsException e) { var37x=""; }
+                  try {    var38x=stringArray[36]; } catch (IndexOutOfBoundsException e) { var38x=""; }
+                  try {    var39x=stringArray[37]; } catch (IndexOutOfBoundsException e) { var39x=""; }
+                  try {    var40x=stringArray[38]; } catch (IndexOutOfBoundsException e) { var40x=""; }
+                  try {    var41x=stringArray[39]; } catch (IndexOutOfBoundsException e) { var41x=""; }                  
+                  try {    var42x=stringArray[40]; } catch (IndexOutOfBoundsException e) { var42x=""; }
+                  try {    var43x=stringArray[41]; } catch (IndexOutOfBoundsException e) { var43x=""; }
+                  try {    var44x=stringArray[42]; } catch (IndexOutOfBoundsException e) { var44x=""; }
+                   try {    var45x=stringArray[43]; } catch (IndexOutOfBoundsException e) { var45x=""; }
+                  try {    var46x=stringArray[44]; } catch (IndexOutOfBoundsException e) { var46x=""; }
+                  try {    var47x=stringArray[45]; } catch (IndexOutOfBoundsException e) { var47x=""; }
+                  try {    var48x=stringArray[46]; } catch (IndexOutOfBoundsException e) { var48x=""; }
+                  try {    var49x=stringArray[47]; } catch (IndexOutOfBoundsException e) { var49x=""; }
+                  try {    var50x=stringArray[48]; } catch (IndexOutOfBoundsException e) { var50x=""; }
+                  try {    var51x=stringArray[49]; } catch (IndexOutOfBoundsException e) { var51x=""; }
+                  try {    var52x=stringArray[50]; } catch (IndexOutOfBoundsException e) { var52x=""; }
+                  try {    var53x=stringArray[51]; } catch (IndexOutOfBoundsException e) { var53x=""; }                  
+                  try {    var54x=stringArray[52]; } catch (IndexOutOfBoundsException e) { var54x=""; }
+                  try {    var55x=stringArray[53]; } catch (IndexOutOfBoundsException e) { var55x=""; }
+                  try {    var56x=stringArray[54]; } catch (IndexOutOfBoundsException e) { var56x=""; }
+                  try {    var57x=stringArray[55]; } catch (IndexOutOfBoundsException e) { var57x=""; }
+                  try {    var58x=stringArray[56]; } catch (IndexOutOfBoundsException e) { var58x=""; }
+                  try {    var59x=stringArray[57]; } catch (IndexOutOfBoundsException e) { var59x=""; }
+                  try {    var60x=stringArray[58]; } catch (IndexOutOfBoundsException e) { var60x=""; }
+                  try {    var61x=stringArray[59]; } catch (IndexOutOfBoundsException e) { var61x=""; }
+                   /*try {    var31x=stringArray[28]; } catch (IndexOutOfBoundsException e) { var31x=""; }
+                  try {    var32x=stringArray[29]; } catch (IndexOutOfBoundsException e) { var32x=""; }
+                  try {    var33x=stringArray[30]; } catch (IndexOutOfBoundsException e) { var33x=""; }*/
+                  
+                  
+            pst.setString(1, var1x);
+            pst.setString(2, var2x);
+            pst.setString(3, var3x);       
+            pst.setString(4, var4x);  
+            pst.setString(5, var5x); 
+            pst.setString(6, var6x);
+            pst.setString(7, var7x);
+            pst.setString(8, var8x);
+            pst.setString(9, var9x);
+            pst.setString(10, var10x);       
+            pst.setString(11, var11x);  
+            pst.setString(12, var12x);             
+            pst.setString(13, var13x);       
+            pst.setString(14, var14x);  
+            pst.setString(15, var15x); 
+            pst.setString(16, var16x);
+            pst.setString(17, var17x);
+            pst.setString(18, var18x);
+            pst.setString(19, var19x);
+            pst.setString(20, var20x);       
+            pst.setString(21, var21x);  
+            pst.setString(22, var22x);             
+            pst.setString(23, var23x);
+            pst.setString(24, var24x);
+            pst.setString(25, var25x);
+            pst.setString(26, var26x);       
+            pst.setString(27, var27x);  
+            pst.setString(28, var28x); 
+            pst.setString(29, var29x); 
+            pst.setString(30, var30x);          
+            pst.setString(31, var31x);
+            pst.setString(32, var32x);
+            pst.setString(33, var33x);       
+            pst.setString(34, var34x);  
+            pst.setString(35, var35x); 
+            pst.setString(36, var36x);
+            pst.setString(37, var37x);
+            pst.setString(38, var38x);
+            pst.setString(39, var39x);
+            pst.setString(40, var40x);       
+            pst.setString(41, var41x);  
+            pst.setString(42, var42x);             
+            pst.setString(43, var43x);       
+            pst.setString(44, var44x);  
+            pst.setString(45, var45x); 
+            pst.setString(46, var46x);
+            pst.setString(47, var47x);
+            pst.setString(48, var48x);
+            pst.setString(49, var49x);
+            pst.setString(50, var50x);       
+            pst.setString(51, var51x);  
+            pst.setString(52, var52x);             
+            pst.setString(53, var53x);
+            pst.setString(54, var54x);
+            pst.setString(55, var55x);
+            pst.setString(56, var56x);       
+            pst.setString(57, var57x);  
+            pst.setString(58, var58x); 
+            pst.setString(59, var59x); 
+             pst.setString(60, var60x); 
+            pst.setString(61, chandata_loop); 
+
+            pst.execute();  
+      
+         pst.close();         
+      //   data.clear();
+          ss = data_used_only_xx.size();        
+                  
+                }else{
+                  
+                 // var2x="";
+                  }
+             
+            
+          
+         
+         old_str_asset_def_body="n/a";
+       // conn.close();
+    } catch (SQLException ex) {
+        System.err.println("Error = " + ex);
+    }
+     
+     }
+     if(!old_str_asset_def_body.equals("n/a")){
+    // JOptionPane.showMessageDialog(null, old_str_asset_def_body+" Is blank "+chandata_loop);
+     }
+      
+     
+    // data.clear();
+     ss = data_used_only_xx.size();
+     end_used_only =1;
+     old_str_asset_def_body="n/a";
+     if(!old_str_asset_def_body.equals(str_asset_def_body) && loop_id==2){
+     data.add(str_asset_status);
+     }
+  
+    }
+    
+    
     private void insert_array_2() {
         leng = data.size();
       int leng2 = data_used_only_xx.size();
@@ -3613,8 +4070,8 @@ reader.close();
                 int int_data_chabdata_count= data_chabdata_count.size(); 
               ///////////////////////////////////
               str_global_count="Step "+count_number_of_loops+" of " +int_data_chabdata_count+" "+"["+chandata_loop+"]"+""+row_of_rows;
-         System.out.println("["+chandata_loop+"]"+""+row_of_rows); 
-         
+         System.out.println("["+chandata_loop+"]"+""+row_of_rows+" "+fl_row_number); 
+       //  System.out.println(fl_row_number);
           ////////////////////////////////////////////
       //  System.out.println(line +"   "+row_of_rows);  
            if(      
@@ -3695,7 +4152,9 @@ reader.close();
                     ||str_asset_def_body.equals("$MA_CEC_ENABLE") 
                     ||str_asset_def_body.equals("$MA_IS_ROT_AX")
                     
-                     //$MN_AXCONF_LOGIC_MACHAX_TAB  $MN_AXCONF_MACHAX_NAME_TAB  $MA_IS_ROT_AX  $MN_MM_CEC_MAX_POINTS    
+                     ||str_asset_def_body.equals("$MN_MM_CEC_MAX_POINTS")
+                    ||str_asset_def_body.equals("$SN_CEC_TABLE_ENABLE") 
+                    ||str_asset_def_body.equals("$SN_CEC_TABLE_WEIGHT") 
                     ){
                  str_pos_counter = str_pos_counter_compound.replaceAll("[^0-9]", "");
                      
@@ -3708,7 +4167,26 @@ reader.close();
                  str_pos_counter=int_pos+"";
                  
                  }
+                 /////////////////////////////3RD OPTION/////////////////////////////
+                 else if(str_asset_def_body.equals("$AN_CEC_INPUT_NCU")
+                    ||str_asset_def_body.equals("$AN_CEC_INPUT_AXIS")                   
+                    ||str_asset_def_body.equals("$AN_CEC_OUTPUT_NCU")                         
+                     ||str_asset_def_body.equals("$AN_CEC_STEP")                   
+                    ||str_asset_def_body.equals("$AN_CEC_MIN")    
+                     ||str_asset_def_body.equals("$AN_CEC_MAX")                   
+                    ||str_asset_def_body.equals("$AN_CEC_DIRECTION")
+                    ||str_asset_def_body.equals("$AN_CEC_MULT_BY_TABLE")                   
+                    ||str_asset_def_body.equals("$AN_CEC_IS_MODULO")
+                    ||str_asset_def_body.equals("$AN_CEC_TYPE")   
+                         
+                         )
+                 {
+                 str_pos_counter = str_pos_counter_compound.replaceAll("[^0-9]", "");
+                 int int_pos = Integer.parseInt(str_pos_counter)+1;
+                 str_pos_counter=int_pos+"";
                  
+                 }
+                 ///////////////////////////3RD ////////////////////////////////
                  else{
                    str_row_1_or_0=str_asset_body.substring(str_asset_body.indexOf("[") + 1, str_asset_body.indexOf(",")); 
                    str_pos_counter=str_asset_body.substring(str_asset_body.indexOf(",") + 1, str_asset_body.indexOf("]")); 
@@ -3817,6 +4295,9 @@ reader.close();
                                                      String  ppx =data_used_only_xx.get(i);
                                                        int_positon_to_insert=data_used_only_xx.indexOf(ppx);
                                                       data25.set(int_positon_to_insert, ppx);
+                                                    //  data_used_only_indices_keeper.set(int_positon_to_insert, ppx);
+                                                      
+                                                     // herer
                                                          }
                                             
                                           }
@@ -4045,6 +4526,135 @@ reader.close();
                                             
                                         }
                                         ////////////////////////////last loop////////////////////////////
+                                       ///////////////////////////////CEC///////////////////////////////////////     
+                                            
+                                             else if(str_asset_def_body.equals("$MN_MM_CEC_MAX_POINTS")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        cec_data_1.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                           else if(str_asset_def_body.equals("$SN_CEC_TABLE_ENABLE")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        cec_data_2.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                            else if(str_asset_def_body.equals("$SN_CEC_TABLE_WEIGHT")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        cec_data_3.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                             else if(str_asset_def_body.equals("$AN_CEC_INPUT_NCU")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        cec_data_4.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                              else if(str_asset_def_body.equals("$AN_CEC_INPUT_AXIS")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        cec_data_5.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                               else if(str_asset_def_body.equals("$AN_CEC_OUTPUT_NCU")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        cec_data_6.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                                else if(str_asset_def_body.equals("$AN_CEC_OUTPUT_AXIS")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        cec_data_7.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                                 else if(str_asset_def_body.equals("$AN_CEC_STEP")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        cec_data_8.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                                  else if(str_asset_def_body.equals("$AN_CEC_MIN")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        cec_data_9.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                                   else if(str_asset_def_body.equals("$AN_CEC_MAX")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                       cec_data_10.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                                    else if(str_asset_def_body.equals("$AN_CEC_DIRECTION")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        cec_data_11.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                                     else if(str_asset_def_body.equals("$AN_CEC_MULT_BY_TABLE")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        cec_data_12.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                                      else if(str_asset_def_body.equals("$AN_CEC_IS_MODULO")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        cec_data_13.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                                       else if(str_asset_def_body.equals("$AN_CEC_TYPE")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        cec_data_14.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                       
+                                            
                                         else{
                                              // old_str_asset_def_body =str_asset_def_body;
                                            // old_str_asset_def_body="";
@@ -4078,6 +4688,7 @@ reader.close();
     }catch(Exception e){}    
          SW1.cancel(true);           
          SW2.cancel(true);
+       //  JOptionPane.showMessageDialog(null, ""); 
         // SW1.addPropertyChangeListener(null);
          create_muliti_dimentional_array();
          finish_loops();
@@ -4287,16 +4898,131 @@ reader.close();
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+         
+         
+            private void cec_transition1() {
+        old_str_asset_def_body="CEC STARTS";  
+        data.clear();
+        data=data25;
+       insert_array_cc();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    } 
+         ////////////////////CEC//////////////////////////////////////
+       private void cec_data_1() {
+        old_str_asset_def_body="N18342 $MN_MM_CEC_MAX_POINTS";  
+        data.clear();
+        data=cec_data_1;
+       insert_array_cc();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }   
+         
+     private void cec_data_2() {
+        old_str_asset_def_body="N41300 $SN_CEC_TABLE_ENABLE";  
+        data.clear();
+        data=cec_data_2;
+       insert_array_cc();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }      
+     private void cec_data_3() {
+        old_str_asset_def_body="N41310 $SN_CEC_TABLE_WEIGHT";  
+        data.clear();
+        data=cec_data_3;
+        insert_array_cc();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    } 
+     
+     private void cec_data_4() {
+        old_str_asset_def_body="$AN_CEC_INPUT_NCU";  
+        data.clear();
+        data=cec_data_4;
+        insert_array_cc();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }  
+     
+     private void cec_data_5() {
+        old_str_asset_def_body="$AN_CEC_INPUT_AXIS";  
+        data.clear();
+        data=cec_data_5;
+       insert_array_cc();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }  
+     
+     private void cec_data_6() {
+        old_str_asset_def_body="$AN_CEC_OUTPUT_NCU";  
+        data.clear();
+        data=cec_data_6;
+        insert_array_cc();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+     private void cec_data_7() {
+        old_str_asset_def_body="$AN_CEC_OUTPUT_AXIS";  
+        data.clear();
+        data=cec_data_7;
+        insert_array_cc();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+     private void cec_data_8() {
+        old_str_asset_def_body="$AN_CEC_STEP";  
+        data.clear();
+        data=cec_data_8;
+        insert_array_cc();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    } 
+     private void cec_data_9() {
+        old_str_asset_def_body="$AN_CEC_MIN";  
+        data.clear();
+        data=cec_data_9;
+       insert_array_cc();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }  
+     
+     private void cec_data_10() {
+        old_str_asset_def_body="$AN_CEC_MAX";  
+        data.clear();
+        data=cec_data_10;
+        insert_array_cc();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    } 
+     
+     private void cec_data_11() {
+        old_str_asset_def_body="$AN_CEC_DIRECTION";  
+        data.clear();
+        data=cec_data_11;
+        insert_array_cc();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }  
+     private void cec_data_12() {
+        old_str_asset_def_body="$AN_CEC_MULT_BY_TABLE";  
+        data.clear();
+        data=cec_data_12;
+        insert_array_cc();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }  
+     
+     private void cec_data_13() {
+        old_str_asset_def_body="$AN_CEC_IS_MODULO";  
+        data.clear();
+        data=cec_data_13;
+        insert_array_cc();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+     private void cec_data_14() {
+        old_str_asset_def_body="$AN_CEC_TYPE";  
+        data.clear();
+        data=cec_data_14;
+       insert_array_cc();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }  
        private void insert_used() {
          //  here
         old_str_asset_def_body="N20070 $MC_AXCONF_MACHAX_USED";  
         //data.clear();
         data=data25;
-        insert_array();
+       insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }    
      private void delete_old_used(){
-     String sql = " delete from  tbl_processed_table where col1 = ? AND col30 = ? ";
+     String sql = "delete from  tbl_processed_table where col1 = ? AND col30 = ? ";
         //String sql = "TRUNCATE TABLE tbl_chandata";
          
         try {
@@ -4313,36 +5039,153 @@ reader.close();
         }
      }    
     private void finish_loops() {
-                               
-                               insert_13();
-                               insert_12();
-                               insert_15();
-                               delete_old_used();
-                               insert_used();
-                               insert_4();
-                               insert_14();
-                               insert_1();
-                               insert_2();
-                               insert_16();
-                               insert_17();                            
-                                
-                                insert_5();
-                                insert_6();  
-                               insert_3();
-                               insert_0();
-                               insert_6();
-                               insert_7();
-                               insert_8();
-                               insert_18();
-                               insert_19();                             
-                               insert_20();
-                               insert_24();
-                               insert_21();
-                               insert_21_a();
-                               insert_22();
-                                 insert_22_a();
-                               insert_23();
-                               insert_23_a();
+                              
+        
+        for(int i=0; i < 43; i++){
+        
+        if(i==0){
+        insert_13();
+        }else if(i==1){
+        insert_12();
+        }
+        else if(i==2){
+        insert_15();
+        }
+        else if(i==3){
+        delete_old_used();
+        }
+        else if(i==4){
+        insert_used();
+        }
+        else if(i==5){
+        insert_4();
+        }
+        else if(i==6){
+        insert_14();
+        }
+        else if(i==7){
+        insert_1();
+        }
+        else if(i==8){
+        insert_2();
+        }
+        else if(i==9){
+        insert_16();
+        }
+        else if(i==10){
+        insert_17();
+        }
+        
+        else if(i==11){
+        insert_5();
+        }
+        else if(i==12){
+        insert_6(); 
+        }
+        else if(i==13){
+        insert_3();
+        }
+        else if(i==14){
+        insert_0();
+        }
+        else if(i==15){
+        insert_6();
+        }
+        else if(i==16){
+        insert_7();
+        }
+        else if(i==17){
+        insert_8();
+        }
+        else if(i==18){
+        insert_18();
+        }
+        else if(i==19){
+        insert_19();
+        }
+        else if(i==20){
+        insert_20();
+        }
+        
+        
+        
+        else if(i==21){
+        insert_24();
+       
+        }
+        else if(i==22){
+       insert_21();
+        }
+        else if(i==23){
+        insert_21_a();
+        }
+        else if(i==24){
+        insert_22();
+        }
+        else if(i==25){
+        insert_22_a();
+        }
+        else if(i==26){
+        insert_23();
+        }
+        else if(i==27){
+        insert_23_a();
+        }
+        else if(i==28){
+            
+             
+             insert_cec_table_transition();
+             cec_transition1();
+        cec_data_1();
+        }
+        else if(i==29){
+        cec_data_2();
+        }
+        else if(i==30){
+        cec_data_3();
+        }
+        
+        else if(i==31){
+        cec_data_4();
+        }
+        else if(i==32){
+        cec_data_5();
+        }
+        else if(i==33){
+        cec_data_6();
+        }
+        else if(i==34){
+        cec_data_7();
+        }
+        else if(i==35){
+        cec_data_8();
+        }
+        else if(i==36){
+        cec_data_9();
+        }
+        else if(i==37){
+        cec_data_10();
+        }
+        else if(i==38){
+        cec_data_11();
+        }
+        else if(i==39){
+        cec_data_12();
+        }
+        else if(i==40){
+        cec_data_13();
+        }
+        else if(i==41){
+         cec_data_14();
+        }
+       
+        else{
+        
+        }
+        
+        
+        }
+                              
                                 
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -4367,8 +5210,44 @@ reader.close();
         loop_id=0;
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    private void insert_cec_column_size() {
+       
+       
+       String col_size=data_used_only_xx.size()+"";
+       String sql = "insert into tbl_cec_col_size(count) values(?) ";
+     
+        try{
+            pst = conn.prepareStatement(sql);            
+            pst.setString(1, col_size);
+           
+            pst.execute();  
+            //JOptionPane.showMessageDialog(null, "Patient Registered");
+            
+            
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        
+        }  
+        loop_id=0;
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     private void clear_col_size() {
         String sql = " delete from tbl_col_size where Id > ?";
+        //String sql = "TRUNCATE TABLE tbl_chandata";
+         
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, "0");            
+            pst.execute();    
+        }
+        catch (Exception e){//JOptionPane.showMessageDialog(null, e);        
+        }
+        
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+     private void clear_cec_col_size() {
+        String sql = " delete from tbl_cec_col_size where Id > ?";
         //String sql = "TRUNCATE TABLE tbl_chandata";
          
         try {
@@ -4441,6 +5320,23 @@ reader.close();
                                  
                                  data24 = new ArrayList<String>(int_array_size_for_used);
                                  data25 = new ArrayList<String>(int_array_size_for_used);
+                                 
+                                 cec_data_1= new ArrayList<String>();
+                                 cec_data_2= new ArrayList<String>();
+                                 cec_data_3= new ArrayList<String>();
+                                 cec_data_4= new ArrayList<String>();
+                                 cec_data_5= new ArrayList<String>();
+                                 cec_data_6= new ArrayList<String>();
+                                 cec_data_7= new ArrayList<String>();
+                                 
+                                 
+                                  cec_data_8= new ArrayList<String>();
+                                 cec_data_9= new ArrayList<String>();
+                                 cec_data_10= new ArrayList<String>();
+                                 cec_data_11= new ArrayList<String>();
+                                 cec_data_12= new ArrayList<String>();
+                                 cec_data_13= new ArrayList<String>();
+                                 cec_data_14= new ArrayList<String>();
                                  // 
                                  for (int i = 0; i <= int_array_size_for_used-1; i = i+1) {
                                      int bb =i;
@@ -4472,6 +5368,23 @@ reader.close();
                                           data23_a.add("");
                                          data24.add("");
                                          data25.add("");
+                                         
+                                         cec_data_1.add("");
+                                         cec_data_2.add("");
+                                         cec_data_3.add("");
+                                         cec_data_4.add("");
+                                         cec_data_5.add("");
+                                         cec_data_6.add("");
+                                         cec_data_7.add("");
+                                         
+                                         cec_data_8.add("");
+                                         cec_data_9.add("");
+                                         cec_data_10.add("");
+                                         cec_data_11.add("");
+                                         cec_data_12.add("");
+                                         cec_data_13.add("");
+                                         cec_data_14.add("");
+                                         
                                             }
                                 int xx =data_used_only_xx.size(); 
                                  int cc=data5.size();
@@ -4620,12 +5533,32 @@ reader.close();
    data22.clear(); 
    data23.clear(); 
    data24.clear();   
+    cec_data_1.clear();
+                                         cec_data_2.clear();
+                                         cec_data_3.clear();
+                                         cec_data_4.clear();
+                                         cec_data_5.clear();
+                                         cec_data_6.clear();
+                                         cec_data_7.clear();                                         
+                                         cec_data_8.clear();
+                                         cec_data_9.clear();
+                                         cec_data_10.clear();
+                                         cec_data_11.clear();
+                                         cec_data_12.clear();
+                                         cec_data_13.clear();
+                                         cec_data_14.clear();
+                                         
    data_used_only_indices.clear(); 
    data_used_only_xx.clear();
    //data11.clear();
    size_store.clear();
    //size_store.clear();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+   
+   
+                                        
+   
+   
     }
     private void insert_table_transition() {
         pick_chan_name();
@@ -4694,7 +5627,105 @@ reader.close();
        str_chan_name="";
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    private void insert_cec_table_transition() {
+        //pick_chan_name();
+        String xxx="CEC "+chandata_loop;
+        String xxx2="";
+        String strs_parent_insert="";
+       for(int i=0; i<3; i++ ){
+           if(i==0){
+               strs_parent_insert="";
+          // chandata_loop="";
+          // str_chan_name="";
+           }else if(i==1){
+           strs_parent_insert=xxx;
+          // str_chan_name="";
+           }else{
+           //chandata_loop="";
+         strs_parent_insert=xxx2;
+           }
+           //here
+            String sql = "insert into tbl_processed_cec_table(col1, col2, col3, col4,col5,col6, col7, col8, col9,col10,col11, col12,col13, col14, col15,col16, col17, col18, col19,col20,col21, col22, col23, col24,col25,col26, col27, col28, col29, col30,col31, col32, col33, col34,col35,col36, col37, col38, col39,col40,col41, col42,col43, col44, col45,col46, col47, col48, col49,col50,col51, col52, col53, col54,col55,col56, col57, col58, col59, col60, col61) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+     
+  
+    try {
+       pst = conn.prepareStatement(sql);
+            pst.setString(1, strs_parent_insert);
+            pst.setString(2, "");
+            pst.setString(3, "");      
+            pst.setString(4, ""); 
+            pst.setString(5, "");
+            pst.setString(6, "");
+            pst.setString(7, "");
+            pst.setString(8, "");
+            pst.setString(9, "");
+            pst.setString(10, "");     
+            pst.setString(11, ""); 
+            pst.setString(12, "");            
+            pst.setString(13, "");       
+            pst.setString(14, ""); 
+            pst.setString(15, ""); 
+            pst.setString(16, "");
+            pst.setString(17, "");
+            pst.setString(18, "");
+            pst.setString(19, "");
+            pst.setString(20, "");      
+            pst.setString(21, "");
+            pst.setString(22, "");            
+            pst.setString(23, "");
+            pst.setString(24, "");
+            pst.setString(25, "");
+            pst.setString(26, "");     
+            pst.setString(27, ""); 
+            pst.setString(28, "");
+            pst.setString(29, ""); 
+            pst.setString(30, ""); 
+            
+             pst.setString(31, "");
+            pst.setString(32, "");
+            pst.setString(33, "");       
+            pst.setString(34, "");
+            pst.setString(35, "");
+            pst.setString(36, "");
+            pst.setString(37, "");
+            pst.setString(38, "");
+            pst.setString(39, "");
+            pst.setString(40, "");     
+            pst.setString(41, ""); 
+            pst.setString(42, "");           
+            pst.setString(43, "");      
+            pst.setString(44, "");
+            pst.setString(45, "");
+            pst.setString(46, "");
+            pst.setString(47, "");
+            pst.setString(48, "");
+            pst.setString(49, "");
+            pst.setString(50, "");      
+            pst.setString(51, "");  
+            pst.setString(52, "");           
+            pst.setString(53, "");
+            pst.setString(54, "");
+            pst.setString(55, "");
+            pst.setString(56, "");       
+            pst.setString(57, ""); 
+            pst.setString(58, ""); 
+            pst.setString(59, ""); 
+             pst.setString(60, "");
+            pst.setString(61, ""); 
+           
+
+            pst.execute();  
+      
+         pst.close();         
+         data.clear();
+    }catch(Exception e){
     
+    }      
+       
+       }
+       str_chan_name="";
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     private void insert_table_transition_2() {
         pick_chan_name();
         String xxx="";
@@ -4770,6 +5801,8 @@ reader.close();
                          //  used_chennel_count=data_used_only_xx.size();
                            // data_used_only_indices=data_used_only_indices_1;
                             System.out.println(data_used_only_indices);
+                          //  data_used_only_indices_keeper.clear();
+                          //  data_used_only_indices_keeper=data_used_only_indices;
                            data=data_used_only_indices;
                           // insert_column_size();                                
                            insert_array_2();
@@ -4784,7 +5817,8 @@ reader.close();
                            old_str_asset_def_body ="$MC_AXCONF_MACHAX_USED";  
                            used_chennel_count=data_used_only_xx.size();
                            data=data_used_only_xx;
-                           insert_column_size();                                
+                           insert_column_size();  
+                           insert_cec_column_size();
                            insert_array();
                            
                            used_inserted_status=1;
@@ -4828,6 +5862,10 @@ reader.close();
   
  
     private void open_choose_used_axis() {
+        JOptionPane.showMessageDialog(null, cec_data_used_only_xx);
+        JOptionPane.showMessageDialog(null, cec_data_used_only_indices);
+        JOptionPane.showMessageDialog(null, cec_size_store);
+        //cec_data_used_only_indices cec_size_store
         insert_used_only_names();
         cont_2();
     }

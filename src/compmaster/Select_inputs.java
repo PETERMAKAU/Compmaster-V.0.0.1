@@ -15,7 +15,7 @@ import java.awt.event.WindowEvent;
  * @author peter
  */
 public class Select_inputs extends javax.swing.JFrame {
-
+static String path2="";
     /**
      * Creates new form Select_inputs
      */
@@ -325,7 +325,7 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
     private void open_extact_2() {
         
         Arc_Import AI = new Arc_Import();
-        AI.extract_data_2(); 
+        AI.extract_data_2(path2); 
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

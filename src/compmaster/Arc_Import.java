@@ -900,8 +900,9 @@ public class Arc_Import extends javax.swing.JFrame {
          
          }
  }
-   public void extract_data_2(){
-       pathxx2=txt_path2.getText().toString();
+   public void extract_data_2(String tt){
+       pathxx2=tt;
+       //pathxx2=txt_path2.getText().toString();
  if(process_continuing==0){
           process_continuing=1;         
                  
@@ -2273,9 +2274,10 @@ private void select_file_2() {
         
         
          Select_inputs si = new Select_inputs();
+         si.path2=pathxx2;
+       
         si.setVisible(true);
-        // extract_data_2();       
-       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
     }
     private void select_file() {
         process_continuing=0;

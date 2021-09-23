@@ -88,6 +88,8 @@ public class Arc_Import extends javax.swing.JFrame {
       SwingWorker SW1;
       SwingWorker SW2;
       String filenamex="";
+      String str_index="";
+      String last_chandata_loop="";
      String loop1_global_count="";
      int int_data_chabdata_count=0;
      int stop_timer_status=0;
@@ -98,11 +100,15 @@ public class Arc_Import extends javax.swing.JFrame {
    static Connection conn = null;
     static ResultSet rs = null;     
     static int ixx_1=0;
+    int skip_all_id=0;
    static PreparedStatement pst = null;    
    ArrayList<String> arr1;
     //static String pathx ="n/a";     
    public  String pathxx="";
    public  String pathxx2="";
+   int str_base_id_count_1=0;
+   int str_base_id_count_2=0;
+   String str_chan_name_2="";
   //  static String pathxx_1="";
     String str_progress_bar_str="0",filenamexx="";
     ArrayList<String> datacheckbox;   
@@ -278,6 +284,7 @@ public class Arc_Import extends javax.swing.JFrame {
         chk12 = new javax.swing.JCheckBox();
         chk1 = new javax.swing.JCheckBox();
         btnContinue = new javax.swing.JButton();
+        btnRemoveAll = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Configuration");
@@ -323,7 +330,7 @@ public class Arc_Import extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -370,7 +377,7 @@ public class Arc_Import extends javax.swing.JFrame {
         });
 
         path.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        path.setText("Path");
+        path.setFocusable(false);
         path.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pathActionPerformed(evt);
@@ -378,7 +385,7 @@ public class Arc_Import extends javax.swing.JFrame {
         });
 
         txt_path2.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        txt_path2.setText("Path 2");
+        txt_path2.setFocusable(false);
         txt_path2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_path2ActionPerformed(evt);
@@ -393,7 +400,7 @@ public class Arc_Import extends javax.swing.JFrame {
 
         jProgressBar1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton1.setText("Export MDF File");
+        jButton1.setText("Export MPF File");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -427,8 +434,7 @@ public class Arc_Import extends javax.swing.JFrame {
                             .addComponent(path, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn_raw_tbl, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(lbl_per, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0))
+                    .addComponent(lbl_per, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -453,7 +459,7 @@ public class Arc_Import extends javax.swing.JFrame {
                 .addComponent(lbl_per, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         CheckBoxes.setBorder(javax.swing.BorderFactory.createTitledBorder("Select axes."));
@@ -682,6 +688,19 @@ public class Arc_Import extends javax.swing.JFrame {
             }
         });
 
+        btnRemoveAll.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        btnRemoveAll.setText("Remove All");
+        btnRemoveAll.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRemoveAllMouseClicked(evt);
+            }
+        });
+        btnRemoveAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveAllActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout CheckBoxesLayout = new javax.swing.GroupLayout(CheckBoxes);
         CheckBoxes.setLayout(CheckBoxesLayout);
         CheckBoxesLayout.setHorizontalGroup(
@@ -721,20 +740,19 @@ public class Arc_Import extends javax.swing.JFrame {
                     .addComponent(chk24, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(chk25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chk26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chk27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chk28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chk29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(CheckBoxesLayout.createSequentialGroup()
-                        .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(chk25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(chk26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(chk27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(chk28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(chk29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(40, 40, 40)
-                        .addComponent(chk30)
-                        .addGap(1, 1, 1))
-                    .addGroup(CheckBoxesLayout.createSequentialGroup()
-                        .addComponent(btnContinue, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                        .addGap(91, 91, 91)))
-                .addGap(2, 2, 2))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnRemoveAll)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnContinue)))
+                .addGap(40, 40, 40)
+                .addComponent(chk30)
+                .addGap(3, 3, 3))
         );
         CheckBoxesLayout.setVerticalGroup(
             CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -806,9 +824,11 @@ public class Arc_Import extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(chk29)
                                         .addGap(9, 9, 9)))
-                                .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnContinue)
-                                    .addComponent(chk24))))))
+                                .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(chk24)
+                                    .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(btnContinue)
+                                        .addComponent(btnRemoveAll)))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -827,8 +847,8 @@ public class Arc_Import extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(CheckBoxes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(CheckBoxes, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -856,17 +876,17 @@ public class Arc_Import extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_impo_compesationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_impo_compesationActionPerformed
-         path.setText("Path");
-      //  extract_data();
-        select_file_2();
-        //trigger_thread();
-           //JOptionPane.showMessageDialog(null, "Not Running");
-       
-      // new Thread(new Compmaster_Loop2()).start();
         
+        
+        select_compensation_path();
        
     }//GEN-LAST:event_btn_impo_compesationActionPerformed
- private void extract_data(){
+ private void select_compensation_path(){
+      path.setText("");     
+        select_file_2();
+ }
+    
+    private void extract_data(){
  if(process_continuing==0){
           process_continuing=1;         
                  
@@ -880,7 +900,8 @@ public class Arc_Import extends javax.swing.JFrame {
          
          }
  }
-   private void extract_data_2(){
+   public void extract_data_2(){
+       pathxx2=txt_path2.getText().toString();
  if(process_continuing==0){
           process_continuing=1;         
                  
@@ -917,7 +938,7 @@ lbl_per.setText("0%");
                                  }
    private void start_program_2(){
                               stop_timer_status=1;
-                              pathxx2=txt_path2.getText().toString().trim();
+                             // pathxx2=txt_path2.getText().toString().trim();
                               starts_progress_bar();                     // reset_varaiables();
                               start_timer2();   
                               
@@ -995,7 +1016,7 @@ lbl_per.setText("0%");
                                  cec_data_used_only_xx= new ArrayList<String>();
                                  data_used_only_indices= new ArrayList<String>();
                                  cec_data_used_only_indices= new ArrayList<String>();
-                                 
+                                 cec_data_2= new ArrayList<String>();
                                  data_used_name= new ArrayList<String>();
                                  compesation_data_1 = new ArrayList<String>();
                                  compesation_data_2 = new ArrayList<String>();
@@ -1008,6 +1029,7 @@ lbl_per.setText("0%");
                                   
         int_loop_part_1=0;
         btnContinue.setVisible(false);
+        btnRemoveAll.setVisible(false);
        hide_all_checkboxes();
         // create_myDB() 
           
@@ -1092,28 +1114,13 @@ lbl_per.setText("0%");
 
     private void btnContinueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnContinueMouseClicked
         // TODO add your handling code here:
-        
-        //Compmaster_Loop loop1=new Compmaster_Loop();
-       // loop1.continue_with_loop();
-        //  if(process_continuing!=2){
-       //  process_continuing=2; 
-         
+             
                 
-              data_used_name.clear();
-              //JOptionPane.showMessageDialog(null, data_used_name.size());
-                 continue_with_loop();
+               data_used_name.clear();             
+               continue_with_loop();
                btnContinue.setVisible(false);
-            // JOptionPane.showMessageDialog(null, "Check responsiveness !");
-         // }else{
-       //  JOptionPane.showMessageDialog(null, "Similar Process is Running !");
-         
-       //  }
-        
-        
-        
-      
-        
-    //return null;
+                btnRemoveAll.setVisible(false);
+           
     }//GEN-LAST:event_btnContinueMouseClicked
 
     private void chk1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chk1ItemStateChanged
@@ -1581,21 +1588,36 @@ lbl_per.setText("0%");
         
         update_table_cec_2();
     }//GEN-LAST:event_jButton2MouseClicked
+
+    private void btnRemoveAllMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRemoveAllMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRemoveAllMouseClicked
+
+    private void btnRemoveAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveAllActionPerformed
+        // TODO add your handling code here:
+          
+              //JOptionPane.showMessageDialog(null, data_used_name.size());
+        skip_all_id=1;
+            btnContinue.setVisible(false);
+        btnRemoveAll.setVisible(false);
+        clear_all();
+        continue_with_loop();
+    }//GEN-LAST:event_btnRemoveAllActionPerformed
   
     
     private void open_explorer(){
     Desktop desktop = Desktop.getDesktop();
         File dirToOpen = null;
         try {
-                        System.out.println(filenamex);
+                      //  System.out.println(filenamex);
            // filenamexx  = filenamex.substring(0, filenamex.lastIndexOf(""));   
             //////////////////////////////////
            String pp="\\"; 
       filenamexx = filenamex.substring(0, filenamex.lastIndexOf(pp));
-      System.out.println(filenamexx);
+     // System.out.println(filenamexx);
             ///////////////////
             filenamexx=filenamexx+"\\";
-            System.out.println(filenamexx);
+          //  System.out.println(filenamexx);
             dirToOpen = new File(filenamexx);
     try {
         desktop.open(dirToOpen);
@@ -1603,7 +1625,7 @@ lbl_per.setText("0%");
         Logger.getLogger(Arc_Import.class.getName()).log(Level.SEVERE, null, ex);
     }
         } catch (IllegalArgumentException iae) {
-            System.out.println("File Not Found");
+          //  System.out.println("File Not Found");
         }
     }
     private void save_txt(){
@@ -1633,7 +1655,7 @@ lbl_per.setText("0%");
     for (int col = 0; col < SqliteDataTable.getColumnCount(); col++) {
         joiner.add(SqliteDataTable.getColumnName(col));
     }
-    System.out.println(joiner.toString());
+   // System.out.println(joiner.toString());
     bw.write(joiner.toString());
     bw.newLine();
     for (int row = 0; row < SqliteDataTable.getRowCount(); row++) {
@@ -1643,7 +1665,7 @@ lbl_per.setText("0%");
             String value = obj == null ? "null" : obj.toString();
             joiner.add(value);
         }
-        System.out.println(joiner.toString());
+       // System.out.println(joiner.toString());
         bw.write(joiner.toString());
         bw.newLine();
     }
@@ -1730,6 +1752,7 @@ lbl_per.setText("0%");
     private javax.swing.JPanel CheckBoxes;
     private static javax.swing.JTable SqliteDataTable;
     private javax.swing.JButton btnContinue;
+    private javax.swing.JButton btnRemoveAll;
     private javax.swing.JButton btn_conf_file;
     private javax.swing.JButton btn_impo_compesation;
     private javax.swing.JButton btn_normalize;
@@ -1915,105 +1938,105 @@ lbl_per.setText("0%");
         
           sql = "select col1 as '..',col30 as '..' from  tbl_processed_table order by col30 ASC";
         }else if (non_zero_columns==2){
-        sql = "select col1 as '..',col30 as '..',col2 as '..' from  tbl_processed_table";     
+        sql = "select col1 as '..',col2 as '..' from  tbl_processed_table";     
         }
         else if (non_zero_columns==3){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..' from  tbl_processed_table";     
+        sql = "select col1 as '..',col2 as '..',col3 as '..' from  tbl_processed_table";     
         }
          else if (non_zero_columns==4){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..' from  tbl_processed_table";     
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..' from  tbl_processed_table";     
         }
          else if (non_zero_columns==5){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..' from  tbl_processed_table";     
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..' from  tbl_processed_table";     
         }
          else if (non_zero_columns==6){
         sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..' from  tbl_processed_table";     
          }
            else if (non_zero_columns==7){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..' from  tbl_processed_table";     
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..' from  tbl_processed_table";     
          }
             else if (non_zero_columns==8){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..' from  tbl_processed_table";     
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..' from  tbl_processed_table";     
          }
              else if (non_zero_columns==9){
         sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..' from  tbl_processed_table";     
          }
              else if (non_zero_columns==10){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..' from  tbl_processed_table";     
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..' from  tbl_processed_table";     
          }
              else if (non_zero_columns==11){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..' from  tbl_processed_table";     
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..' from  tbl_processed_table";     
          }
              else if (non_zero_columns==12){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..' from  tbl_processed_table";     
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..' from  tbl_processed_table";     
          }
              else if (non_zero_columns==13){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..' from  tbl_processed_table";     
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..' from  tbl_processed_table";     
          }
              else if (non_zero_columns==14){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..' from  tbl_processed_table";     
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..' from  tbl_processed_table";     
          }
              else if (non_zero_columns==15){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..' from  tbl_processed_table";     
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..' from  tbl_processed_table";     
          }
              else if (non_zero_columns==16){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..' from  tbl_processed_table";     
          }
              else if (non_zero_columns==17){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..' from  tbl_processed_table";     
          }
              else if (non_zero_columns==18){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..' from  tbl_processed_table";     
          }
              else if (non_zero_columns==19){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..' from  tbl_processed_table";     
          }
               else if (non_zero_columns==20){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..' from  tbl_processed_table";     
          }
               else if (non_zero_columns==21){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..' from  tbl_processed_table";     
          }
               else if (non_zero_columns==22){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..' from  tbl_processed_table";     
          }
               else if (non_zero_columns==23){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..' from  tbl_processed_table";     
          }
               else if (non_zero_columns==24){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..' from  tbl_processed_table";     
          }
               else if (non_zero_columns==25){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..' from  tbl_processed_table";     
          }
               else if (non_zero_columns==26){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..' from  tbl_processed_table";     
          }
               else if (non_zero_columns==27){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..' from  tbl_processed_table";     
          }
               else if (non_zero_columns==28){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..',col28 as '..' from  tbl_processed_table";     
          }
               else if (non_zero_columns==29){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..',col28 as '..',col29 as '..' from  tbl_processed_table";     
          }
               else if (non_zero_columns==30){
-        sql = "select col1 as '..',col30 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..',col28 as '..',col29 as '..',col30 as '..' from  tbl_processed_table";     
          }             
         else{
@@ -2041,105 +2064,105 @@ lbl_per.setText("0%");
         
           sql = "select col1 as '..',col61 as '..' from  tbl_processed_cec_table";
         }else if (non_zero_columns==2){
-        sql = "select col1 as '..',col61 as '..',col2 as '..' from  tbl_processed_cec_table";     
+        sql = "select col1 as '..',col2 as '..' from  tbl_processed_cec_table";     
         }
         else if (non_zero_columns==3){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..' from  tbl_processed_cec_table";     
+        sql = "select col1 as '..',col2 as '..',col3 as '..' from  tbl_processed_cec_table";     
         }
          else if (non_zero_columns==4){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..' from  tbl_processed_cec_table";     
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..' from  tbl_processed_cec_table";     
         }
          else if (non_zero_columns==5){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..' from  tbl_processed_cec_table";     
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..' from  tbl_processed_cec_table";     
         }
          else if (non_zero_columns==6){
         sql = "select col1 as '..',co61 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..' from  tbl_processed_cec_table";     
          }
            else if (non_zero_columns==7){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..' from  tbl_processed_cec_table";     
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..' from  tbl_processed_cec_table";     
          }
             else if (non_zero_columns==8){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..' from  tbl_processed_cec_table";     
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..' from  tbl_processed_cec_table";     
          }
              else if (non_zero_columns==9){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..' from  tbl_processed_cec_table";     
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..' from  tbl_processed_cec_table";     
          }
              else if (non_zero_columns==10){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..' from  tbl_processed_cec_table";     
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..' from  tbl_processed_cec_table";     
          }
              else if (non_zero_columns==11){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..' from  tbl_processed_cec_table";     
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..' from  tbl_processed_cec_table";     
          }
              else if (non_zero_columns==12){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..' from  tbl_processed_cec_table";     
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..' from  tbl_processed_cec_table";     
          }
              else if (non_zero_columns==13){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..' from  tbl_processed_cec_table";     
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..' from  tbl_processed_cec_table";     
          }
              else if (non_zero_columns==14){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..' from  tbl_processed_cec_table";     
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..' from  tbl_processed_cec_table";     
          }
              else if (non_zero_columns==15){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..' from  tbl_processed_cec_table";     
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..' from  tbl_processed_cec_table";     
          }
              else if (non_zero_columns==16){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..' from  tbl_processed_cec_table";     
          }
              else if (non_zero_columns==17){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..' from  tbl_processed_cec_table";     
          }
              else if (non_zero_columns==18){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..' from  tbl_processed_cec_table";     
          }
              else if (non_zero_columns==19){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..' from  tbl_processed_cec_table";     
          }
               else if (non_zero_columns==20){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..' from  tbl_processed_cec_table";     
          }
               else if (non_zero_columns==21){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..' from  tbl_processed_cec_table";     
          }
               else if (non_zero_columns==22){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..' from  tbl_processed_cec_table";     
          }
               else if (non_zero_columns==23){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..' from  tbl_processed_cec_table";     
          }
               else if (non_zero_columns==24){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..' from  tbl_processed_cec_table";     
          }
               else if (non_zero_columns==25){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..' from  tbl_processed_cec_table";     
          }
               else if (non_zero_columns==26){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..' from  tbl_processed_cec_table";     
          }
               else if (non_zero_columns==27){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..' from  tbl_processed_cec_table";     
          }
               else if (non_zero_columns==28){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..',col28 as '..' from  tbl_processed_cec_table";     
          }
               else if (non_zero_columns==29){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..',col28 as '..',col29 as '..' from  tbl_processed_cec_table";     
          }
               else if (non_zero_columns==30){
-        sql = "select col1 as '..',col61 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..',col28 as '..',col29 as '..',col30 as '..' from  tbl_processed_cec_table";     
          }             
         else{
@@ -2247,7 +2270,11 @@ private void select_file_2() {
         String filename=f.getAbsolutePath();
         pathxx2 =filename;
         txt_path2.setText(filename);
-         extract_data_2();       
+        
+        
+         Select_inputs si = new Select_inputs();
+        si.setVisible(true);
+        // extract_data_2();       
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void select_file() {
@@ -2353,19 +2380,19 @@ private void select_file_2() {
    private void update_arraylist() {
        int xx=data_used_only_xx.size();
         
-        String removedStr = data_used_only_xx.remove(int_checkbox_index);
-        String removedStr_index = data_used_only_indices.remove(int_checkbox_index);
-        String removedStr_index_store = size_store.remove(int_checkbox_index);
-         String removedStr_index_name = data_used_name.remove(int_checkbox_index);
+         data_used_only_xx.remove(int_checkbox_index);
+         data_used_only_indices.remove(int_checkbox_index);
+         size_store.remove(int_checkbox_index);
+         data_used_name.remove(int_checkbox_index);
         btnContinue.setVisible(true);
-        
+        btnRemoveAll.setVisible(true);
         
       //  JOptionPane.showMessageDialog(null, datacheckbox.size()+" removed");
-       System.out.println(data_used_only_xx);
-         System.out.println(data_used_only_indices);
-       System.out.println(removedStr);
-       System.out.println(removedStr_index);
-       System.out.println(removedStr_index_store);
+      // System.out.println(data_used_only_xx);
+      //   System.out.println(data_used_only_indices);
+      // System.out.println(removedStr);
+      // System.out.println(removedStr_index);
+      // System.out.println(removedStr_index_store);
        set_check_box();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -2588,7 +2615,8 @@ private boolean start_loop_par1_2(){
          // String part5="$AA_ENC_COMP";
      //
          try{        
-         String pxx=pathxx2;     
+       //  String pxx=pathxx2;    
+            // pathxx2=txt_path2.getText().toString().trim();
          FileReader fileReader = new FileReader(pathxx2);
          try (BufferedReader bufferedReader = new BufferedReader(fileReader)) {
       //String line;
@@ -2717,7 +2745,7 @@ compesation_segments=(mincc+mincc)/stepcc;
             }    
    }
    catch (SQLException ex){
-System.out.println(ex.getMessage());
+//System.out.println(ex.getMessage());
 JOptionPane.showMessageDialog(null, ex.getMessage());
      }}
  private void select_row(){
@@ -2774,7 +2802,7 @@ JOptionPane.showMessageDialog(null, ex.getMessage());
             }    
    }
    catch (SQLException ex){
-System.out.println(ex.getMessage());
+//System.out.println(ex.getMessage());
 JOptionPane.showMessageDialog(null, ex.getMessage());
      }
      
@@ -2831,9 +2859,9 @@ JOptionPane.showMessageDialog(null, ex.getMessage());
          dataxx="";
          }
         compesation_data_1.add(dataxx);
-       // System.out.println(compesation_data_1);
+       // /(compesation_data_1);
         }
- System.out.println("Header"+compesation_data_1);
+ //System.out.println("Header"+compesation_data_1);
  }
  private void add_body_array(){
      
@@ -2850,7 +2878,7 @@ JOptionPane.showMessageDialog(null, ex.getMessage());
         
         }
   compesation_data_1.add("");
- System.out.println("body"+compesation_data_1);
+// System.out.println("body"+compesation_data_1);
  }
  
  private void add_footer_1_array(){
@@ -2883,7 +2911,7 @@ JOptionPane.showMessageDialog(null, ex.getMessage());
         compesation_data_1.add(dataxx);
        // System.out.println(compesation_data_1);
         }
-         System.out.println("footer_1"+compesation_data_1);
+        // System.out.println("footer_1"+compesation_data_1);
  }
  private void add_footer_2_array(){
      
@@ -2911,7 +2939,7 @@ JOptionPane.showMessageDialog(null, ex.getMessage());
         compesation_data_1.add(dataxx);
       //  System.out.println(compesation_data_1);
         }
-         System.out.println("footer_2"+compesation_data_1);
+         //System.out.println("footer_2"+compesation_data_1);
  }
    private boolean start_loop_par1(){
    SW1= new SwingWorker(){
@@ -3274,17 +3302,7 @@ reader.close();
          try (BufferedReader bufferedReader = new BufferedReader(fileReader)) {
       //String line;
          while((line = bufferedReader.readLine()) != null) {
-           used_count=used_count+1;  
-        // int     
-             
-            // GSGSGS
-         double fl_row_number = (double) used_count;
-         
-         if (fl_row_number >= 60720){
-         
-         // JOptionPane.showMessageDialog(null, "Reached" + fl_row_number+line);
-         
-         }
+          
          //  System.out.println("Reached " + fl_row_number+" "+line);
          //  System.out.println("Reached " + fl_row_number+" "+line);
            
@@ -3319,10 +3337,13 @@ reader.close();
        //  System.out.println("["+chandata_loop+"]"+""+row_of_rows); 
               if(firstFourChars.equals("CHANDATA") || first6Char.equals("N20000") || first6Char.equals("N20070") || first6Char.equals("N41300") ){
                if(first6Char.equals("N20070")){
+                   str_base_id_count_1=str_base_id_count_1+1;
+                  
                     str_base_id=1;  
                }   
                 if(first6Char.equals("N41300")){
-                    
+                    str_base_id_count_2=str_base_id_count_2+1;
+                  
                     str_base_id=2;
                }  
                   
@@ -3414,7 +3435,7 @@ reader.close();
                     String sql_rep="Select * from tbl_processed_table where col1 = '" + str_asset_body + "'";
                     rs=stmt2.executeQuery(sql_rep);
                     if(rs.next()){
-                     System.out.println(""); 
+                   //  System.out.println(""); 
                    // return;
                     }else{
                        //////////end check body repetion/////////////
@@ -3423,15 +3444,17 @@ reader.close();
                             old_str_asset_def_body =str_asset_def_body;
                          ///////////add data to arraylist////////////
                             if(str_chandata.equals(chandata_loop)){
-                                
+                                last_chandata_loop=chandata_loop;
                                 if(str_base_id==1){
                                     data_used_only_xx.add(str_asset_status);
+                                    
                                     data_used_only_indices.add("("+str_pos_counter_1+")");
-                                    System.out.println(data_used_only_indices);
+                                 //   System.out.println(data_used_only_indices);
                                     size_store.add(str_pos_counter);
                                     str_base_id=0;
                                 }else if (str_base_id==2){
                                      cec_data_used_only_xx.add(str_asset_status);
+                                     cec_data_2.add(str_asset_status);
                                     cec_data_used_only_indices.add("41300"+"["+str_pos_counter_1+"]");
                                     cec_size_store.add(str_pos_counter); 
                                      str_base_id=0;
@@ -3445,7 +3468,7 @@ reader.close();
                          
                            if(str_base_id==0){
                            if(str_chandata.equals(chandata_loop) && used_chennel_count !=0){  
-                             open_choose_used_axis(); 
+                             //open_choose_used_axis(); 
                           return true;
                          }                       
                          
@@ -3454,7 +3477,8 @@ reader.close();
                            }
                          if (str_base_id==2){
                                       cec_data_used_only_xx.add(str_asset_status);
-                                      cec_data_used_only_indices.add("("+str_pos_counter_1+")");
+                                      cec_data_2.add(str_asset_status);
+                                      cec_data_used_only_indices.add("41300"+"("+str_pos_counter_1+")");
                                       cec_size_store.add(str_pos_counter); 
                                      str_base_id=0;
                                       old_str_asset_def_body =str_asset_def_body;
@@ -3478,11 +3502,12 @@ reader.close();
                           if(str_base_id==1){
                                     data_used_only_xx.add(str_asset_status);
                                     data_used_only_indices.add("("+str_pos_counter_1+")");
-                                     System.out.println(data_used_only_indices);
+                                  //   System.out.println(data_used_only_indices);
                                     size_store.add(str_pos_counter);
                                 
                                 }else if (str_base_id==2){
                                      cec_data_used_only_xx.add(str_asset_status);
+                                     cec_data_2.add(str_asset_status);
                                      cec_data_used_only_indices.add("("+str_pos_counter_1+")");
                                      cec_size_store.add(str_pos_counter); 
                                 
@@ -3513,24 +3538,16 @@ reader.close();
        // timer_way();
         
         }else{
-               //used_index=old_str_asset_def_body;
-              // old_str_asset_def_body="n/a";
-                 if(data_used_only_xx.size() != 0 && cec_data_used_only_xx.size() != 0){
-                if(end_used_only==0 && old_str_asset_def_body.equals("$MC_AXCONF_MACHAX_USED")){
-                used_chennel_count=data_used_only_xx.size();
-                if(str_chandata.equals(chandata_loop) && used_chennel_count !=0){
-                    
-                   // insert_used_values_row();
-                    open_choose_used_axis(); 
-                    return true;
-                           
-                 }
-              
-               }
-                 }
+               
+                  
+                 
+                
+                 
+                 
            }   
         
       }
+         loop23();
       
     }
     }catch(Exception e){}
@@ -3542,7 +3559,7 @@ reader.close();
              if(str_chandata.equals(chandata_loop) && used_chennel_count !=0){
                     
                    // insert_used_values_row();
-                    open_choose_used_axis(); 
+                   // open_choose_used_axis(); 
                     return true;
                            
                  } 
@@ -3552,6 +3569,28 @@ reader.close();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         return true;
     }
+    
+    private void loop23(){
+     if(data_used_only_xx.size() != 0 || cec_data_used_only_xx.size() != 0){
+              //  if(end_used_only==0 && old_str_asset_def_body.equals("$MC_AXCONF_MACHAX_USED")){
+                  //  if(old_str_asset_def_body.equals("$MC_AXCONF_MACHAX_USED") || old_str_asset_def_body.equals("$SN_CEC_TABLE_ENABLE")){
+                //used_chennel_count=data_used_only_xx.size();
+                if(last_chandata_loop.equals(chandata_loop)){
+                    System.out.println(" USED "+data_used_only_xx);
+                     System.out.println(" ENABLE "+data_used_only_xx);
+                   // insert_used_values_row();
+                    open_choose_used_axis(); 
+                    str_base_id_count_1=0;
+                    str_base_id_count_2=0;
+                  //  return true;
+                           
+               //  }
+              
+               }
+                 }else{
+                    continue_with_loop();
+                     }
+    }
     private void reset_dble() {
         
                 double fl_row_number = 0.0;
@@ -3560,9 +3599,12 @@ reader.close();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_array() {
+      //  check_validity();
+        
+        
         leng = data.size();
       int ss = data_used_only_xx.size();
-      
+    
         
      if(leng > 0){
         String sql = "insert into tbl_processed_table(col1, col2, col3, col4,col5,col6, col7, col8, col9,col10,col11, col12,col13, col14, col15,col16, col17, col18, col19,col20,col21, col22, col23, col24,col25,col26, col27, col28, col29, col30) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
@@ -3681,92 +3723,300 @@ reader.close();
   
     }
     
-    
-      private void insert_array_cc() {
-        leng = data.size();
-      int ss = data_used_only_xx.size();
+    private void insert_array_cc(){
+         int loop_times=0;
+                      loop_times=60-data.size();
+                       
+                       for(int i=0; i< loop_times; i++){
+                       data.add("");
+                       }
+     String[] stringArray = data.toArray(new String[data.size()]);
+    // if(str_chandata.equals(chandata_loop)){
+                  var1x=old_str_asset_def_body; 
+    String sqlInsert = "insert into tbl_processed_cec_table(col1, col2, col3, col4,col5,col6, col7, col8, col9,col10,col11, col12,col13, col14, col15,col16, col17, col18, col19,col20,col21, col22, col23, col24,col25,col26, col27, col28, col29, col30,col31, col32, col33, col34,col35,col36, col37, col38, col39,col40,col41, col42,col43, col44, col45,col46, col47, col48, col49,col50,col51, col52, col53, col54,col55,col56, col57, col58, col59, col60, col61) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+          
+try (PreparedStatement pst = conn.prepareStatement(sqlInsert)) {
+             pst.setString(1, var1x);
+            pst.setString(2, stringArray[0]);
+            pst.setString(3, stringArray[1]);      
+            pst.setString(4, stringArray[2]); 
+            pst.setString(5, stringArray[3]);
+            pst.setString(6, stringArray[4]);
+            pst.setString(7, stringArray[5]); 
+            pst.setString(8, stringArray[6]);
+            pst.setString(9, stringArray[7]);
+            pst.setString(10, stringArray[8]);     
+            pst.setString(11, stringArray[9]);
+            pst.setString(12, stringArray[10]);           
+            pst.setString(13, stringArray[11]);       
+            pst.setString(14, stringArray[12]);
+            pst.setString(15, stringArray[13]);
+            pst.setString(16, stringArray[14]);
+            pst.setString(17, stringArray[15]);
+            pst.setString(18, stringArray[16]);
+            pst.setString(19, stringArray[17]);
+            pst.setString(20, stringArray[18]);     
+            pst.setString(21, stringArray[19]);
+            pst.setString(22, stringArray[20]);           
+            pst.setString(23, stringArray[21]);
+            pst.setString(24, stringArray[22]);
+            pst.setString(25, stringArray[23]);
+            pst.setString(26, stringArray[24]);     
+            pst.setString(27, stringArray[25]);
+            pst.setString(28, stringArray[26]);
+            pst.setString(29, stringArray[27]); 
+            pst.setString(30, stringArray[28]);
+            
+             pst.setString(31, stringArray[29]);
+            pst.setString(32, stringArray[30]);
+            pst.setString(33, stringArray[31]);      
+            pst.setString(34, stringArray[32]);
+            pst.setString(35, stringArray[33]);
+            pst.setString(36, stringArray[34]);
+            pst.setString(37, stringArray[35]);
+            pst.setString(38, stringArray[36]);
+            pst.setString(39, stringArray[37]);
+            pst.setString(40, stringArray[38]);    
+            pst.setString(41, stringArray[39]);      
+            pst.setString(42, stringArray[40]);     
+            pst.setString(43, stringArray[41]);   
+            pst.setString(44, stringArray[42]);
+            pst.setString(45, stringArray[43]);
+            pst.setString(46, stringArray[44]);
+            pst.setString(47, stringArray[45]);
+            pst.setString(48, stringArray[46]);
+            pst.setString(49, stringArray[47]);
+            pst.setString(50, stringArray[48]);
+            pst.setString(51, stringArray[49]);
+            pst.setString(52, stringArray[50]);  
+            pst.setString(53, stringArray[51]);
+            pst.setString(54, stringArray[52]);
+            pst.setString(55, stringArray[53]);
+            pst.setString(56, stringArray[54]);
+            pst.setString(57, stringArray[55]);
+            pst.setString(58, stringArray[56]);
+            pst.setString(59, stringArray[57]);
+             pst.setString(60, stringArray[58]);
+            pst.setString(61, str_index);
+    int updateCount = pst.executeUpdate(); // 1 when inserted 1 record
+}catch(Exception ex){
+        JOptionPane.showMessageDialog(null, ex);
+
+}
+str_index="";
+data.clear();
+
+    }
+      private void insert_array_ccc() {
       
+     // fetch_my_data();
         
-     if(leng > 0){
+
         String sql = "insert into tbl_processed_cec_table(col1, col2, col3, col4,col5,col6, col7, col8, col9,col10,col11, col12,col13, col14, col15,col16, col17, col18, col19,col20,col21, col22, col23, col24,col25,col26, col27, col28, col29, col30,col31, col32, col33, col34,col35,col36, col37, col38, col39,col40,col41, col42,col43, col44, col45,col46, col47, col48, col49,col50,col51, col52, col53, col54,col55,col56, col57, col58, col59, col60, col61) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
-       // String //sql = "INSERT INTO nameTable (name) values (?)";
-  
-    try {
-       pst = conn.prepareStatement(sql);
+          try {
+          /* ;
+                      ; 
+                      ; 
+                      ; 
+                      ; 
+                      var7x=stringArray[5]; 
+                      var8x=
+                      var9x=stringArray[7]; 
+                      var10x=stringArray[8]; 
+                      var11x=stringArray[9]; 
+                      var12x=stringArray[10]; 
+                      var13x=stringArray[11]; 
+                      var14x=stringArray[12]; 
+                      var15x=stringArray[13]; 
+                       var16x=stringArray[14]; 
+                      var17x=stringArray[15]; 
+                      var18x=stringArray[16]; 
+                      var19x=stringArray[17]; 
+                      var20x=stringArray[18]; 
+                      var21x=stringArray[19]; 
+                      var22x=stringArray[20]; 
+                      var23x=stringArray[21]; 
+                      var24x=stringArray[22]; 
+                      var25x=stringArray[23]; 
+                      var26x=stringArray[24]; 
+                      var27x=stringArray[25]; 
+                      var28x=stringArray[26]; 
+                      var29x=stringArray[27]; 
+                      var30x=stringArray[28]; 
+                      var31x=stringArray[29]; 
+                      var32x=stringArray[30]; 
+                      var33x=stringArray[31]; 
+                      var34x=stringArray[32]; 
+                      var35x=stringArray[33]; 
+                      var36x=stringArray[34]; 
+                      var37x=stringArray[35]; 
+                      var38x=stringArray[36]; 
+                      var39x=stringArray[37]; 
+                      var40x=stringArray[38]; 
+                      var41x=stringArray[39]; 
+                      var42x=stringArray[40]; 
+                      var43x=stringArray[41]; 
+                      var44x=stringArray[42]; 
+                       var45x=stringArray[43]; 
+                      var46x=stringArray[44]; 
+                      var47x=stringArray[45]; 
+                      var48x=stringArray[46]; 
+                      var49x=stringArray[47]; 
+                      var50x=stringArray[48]; 
+                      var51x=stringArray[49]; 
+                      var52x=stringArray[50]; 
+                      var53x=stringArray[51]; 
+                      var54x=stringArray[52]; 
+                      var55x=stringArray[53]; 
+                      var56x=stringArray[54]; 
+                      var57x=stringArray[55]; 
+                      var58x=stringArray[56]; 
+                      var59x=stringArray[57]; 
+                      var60x=stringArray[58]; 
+                      var61x=stringArray[59]; */    
+     /*  pst = conn.prepareStatement(sql);
+            pst.setString(1, var1x);
+            pst.setString(2, stringArray[0]);
+            pst.setString(3, stringArray[1]);      
+            pst.setString(4, stringArray[2]); 
+            pst.setString(5, stringArray[3]);
+            pst.setString(6, stringArray[4]);
+            pst.setString(7, stringArray[5]); 
+            pst.setString(8, stringArray[6]);
+            pst.setString(9, stringArray[6]);
+            pst.setString(10, stringArray[6]);     
+            pst.setString(11, stringArray[6]);
+            pst.setString(12, stringArray[6]);           
+            pst.setString(13, stringArray[6]);       
+            pst.setString(14, stringArray[6]);
+            pst.setString(15, stringArray[6]);
+            pst.setString(16, stringArray[6]);
+            pst.setString(17, stringArray[6]);
+            pst.setString(18, stringArray[6]);
+            pst.setString(19, stringArray[6]);
+            pst.setString(20, stringArray[6]);     
+            pst.setString(21, stringArray[6]);
+            pst.setString(22, stringArray[6]);           
+            pst.setString(23, stringArray[6]);
+            pst.setString(24, stringArray[6]);
+            pst.setString(25, stringArray[6]);
+            pst.setString(26, stringArray[6]);     
+            pst.setString(27, stringArray[6]);
+            pst.setString(28, stringArray[6]);
+            pst.setString(29, stringArray[6]); 
+            pst.setString(30, stringArray[6]);
+            
+             pst.setString(31, stringArray[6]);
+            pst.setString(32, stringArray[6]);
+            pst.setString(33, stringArray[6]);      
+            pst.setString(34, stringArray[6]);
+            pst.setString(35, stringArray[6]);
+            pst.setString(36, stringArray[6]);
+            pst.setString(37, stringArray[6]);
+            pst.setString(38, stringArray[6]);
+            pst.setString(39, stringArray[6]);
+            pst.setString(40, stringArray[6]);    
+            pst.setString(41, stringArray[6]);      
+            pst.setString(42, stringArray[6]);     
+            pst.setString(43, stringArray[6]);   
+            pst.setString(44, stringArray[6]);
+            pst.setString(45, stringArray[6]);
+            pst.setString(46, stringArray[6]);
+            pst.setString(47, stringArray[6]);
+            pst.setString(48, stringArray[6]);
+            pst.setString(49, stringArray[6]);
+            pst.setString(50, stringArray[6]);
+            pst.setString(51, stringArray[6]);
+            pst.setString(52, stringArray[6]);  
+            pst.setString(53, stringArray[6]);
+            pst.setString(54, stringArray[6]);
+            pst.setString(55, stringArray[6]);
+            pst.setString(56, stringArray[6]);
+            pst.setString(57, stringArray[6]);
+            pst.setString(58, stringArray[6]);
+            pst.setString(59, stringArray[6]);
+             pst.setString(60, stringArray[6]);
+            pst.setString(61, stringArray[6]);*/
+           
+ pst.setString(1, "pp");
+            pst.setString(2, "");
+            pst.setString(3, "");      
+            pst.setString(4, ""); 
+            pst.setString(5, "");
+            pst.setString(6, "");
+            pst.setString(7, "");
+            pst.setString(8, "");
+            pst.setString(9, "");
+            pst.setString(10, "");     
+            pst.setString(11, ""); 
+            pst.setString(12, "");            
+            pst.setString(13, "");       
+            pst.setString(14, ""); 
+            pst.setString(15, ""); 
+            pst.setString(16, "");
+            pst.setString(17, "");
+            pst.setString(18, "");
+            pst.setString(19, "");
+            pst.setString(20, "");      
+            pst.setString(21, "");
+            pst.setString(22, "");            
+            pst.setString(23, "");
+            pst.setString(24, "");
+            pst.setString(25, "");
+            pst.setString(26, "");     
+            pst.setString(27, ""); 
+            pst.setString(28, "");
+            pst.setString(29, ""); 
+            pst.setString(30, ""); 
+            
+             pst.setString(31, "");
+            pst.setString(32, "");
+            pst.setString(33, "");       
+            pst.setString(34, "");
+            pst.setString(35, "");
+            pst.setString(36, "");
+            pst.setString(37, "");
+            pst.setString(38, "");
+            pst.setString(39, "");
+            pst.setString(40, "");     
+            pst.setString(41, ""); 
+            pst.setString(42, "");           
+            pst.setString(43, "");      
+            pst.setString(44, "");
+            pst.setString(45, "");
+            pst.setString(46, "");
+            pst.setString(47, "");
+            pst.setString(48, "");
+            pst.setString(49, "");
+            pst.setString(50, "");      
+            pst.setString(51, "");  
+            pst.setString(52, "");           
+            pst.setString(53, "");
+            pst.setString(54, "");
+            pst.setString(55, "");
+            pst.setString(56, "");       
+            pst.setString(57, ""); 
+            pst.setString(58, ""); 
+            pst.setString(59, ""); 
+             pst.setString(60, "");
+            pst.setString(61, ""); 
+            pst.execute();  
+      
+         pst.close();         
+         data.clear();
+    }catch(Exception e){
+    
+    }
        
        
  
-    String[] stringArray = data.toArray(new String[data.size()]);
-    // if(str_chandata.equals(chandata_loop)){
-                  var1x=old_str_asset_def_body; 
-                 // if(leng == leng){
-                  if(leng == used_chennel_count){
-                  try {    var2x=stringArray[0]; } catch (IndexOutOfBoundsException e) { var2x=""; }
-                  try {    var3x=stringArray[1]; } catch (IndexOutOfBoundsException e) { var3x=""; }
-                  try {    var4x=stringArray[2]; } catch (IndexOutOfBoundsException e) { var4x=""; }
-                  try {    var5x=stringArray[3]; } catch (IndexOutOfBoundsException e) { var5x=""; }
-                  try {    var6x=stringArray[4]; } catch (IndexOutOfBoundsException e) { var6x=""; }
-                  try {    var7x=stringArray[5]; } catch (IndexOutOfBoundsException e) { var7x=""; }
-                  try {    var8x=stringArray[6]; } catch (IndexOutOfBoundsException e) { var8x=""; }
-                  try {    var9x=stringArray[7]; } catch (IndexOutOfBoundsException e) { var9x=""; }
-                  try {    var10x=stringArray[8]; } catch (IndexOutOfBoundsException e) { var10x=""; }
-                  try {    var11x=stringArray[9]; } catch (IndexOutOfBoundsException e) { var11x=""; }
-                  try {    var12x=stringArray[10]; } catch (IndexOutOfBoundsException e) { var12x=""; }                  
-                  try {    var13x=stringArray[11]; } catch (IndexOutOfBoundsException e) { var13x=""; }
-                  try {    var14x=stringArray[12]; } catch (IndexOutOfBoundsException e) { var14x=""; }
-                  try {    var15x=stringArray[13]; } catch (IndexOutOfBoundsException e) { var15x=""; }
-                   try {    var16x=stringArray[14]; } catch (IndexOutOfBoundsException e) { var16x=""; }
-                  try {    var17x=stringArray[15]; } catch (IndexOutOfBoundsException e) { var17x=""; }
-                  try {    var18x=stringArray[16]; } catch (IndexOutOfBoundsException e) { var18x=""; }
-                  try {    var19x=stringArray[17]; } catch (IndexOutOfBoundsException e) { var19x=""; }
-                  try {    var20x=stringArray[18]; } catch (IndexOutOfBoundsException e) { var20x=""; }
-                  try {    var21x=stringArray[19]; } catch (IndexOutOfBoundsException e) { var21x=""; }
-                  try {    var22x=stringArray[20]; } catch (IndexOutOfBoundsException e) { var22x=""; }
-                  try {    var23x=stringArray[21]; } catch (IndexOutOfBoundsException e) { var23x=""; }
-                  try {    var24x=stringArray[22]; } catch (IndexOutOfBoundsException e) { var24x=""; }                  
-                  try {    var25x=stringArray[23]; } catch (IndexOutOfBoundsException e) { var25x=""; }
-                  try {    var26x=stringArray[24]; } catch (IndexOutOfBoundsException e) { var26x=""; }
-                  try {    var27x=stringArray[25]; } catch (IndexOutOfBoundsException e) { var27x=""; }
-                  try {    var28x=stringArray[26]; } catch (IndexOutOfBoundsException e) { var28x=""; }
-                  try {    var29x=stringArray[27]; } catch (IndexOutOfBoundsException e) { var29x=""; }
-                  try {    var30x=stringArray[28]; } catch (IndexOutOfBoundsException e) { var30x=""; } 
-                  try {    var31x=stringArray[29]; } catch (IndexOutOfBoundsException e) { var31x=""; }
-                  try {    var32x=stringArray[30]; } catch (IndexOutOfBoundsException e) { var32x=""; }
-                  try {    var33x=stringArray[31]; } catch (IndexOutOfBoundsException e) { var33x=""; }
-                  try {    var34x=stringArray[32]; } catch (IndexOutOfBoundsException e) { var34x=""; }
-                  try {    var35x=stringArray[33]; } catch (IndexOutOfBoundsException e) { var35x=""; }
-                  try {    var36x=stringArray[34]; } catch (IndexOutOfBoundsException e) { var36x=""; }
-                  try {    var37x=stringArray[35]; } catch (IndexOutOfBoundsException e) { var37x=""; }
-                  try {    var38x=stringArray[36]; } catch (IndexOutOfBoundsException e) { var38x=""; }
-                  try {    var39x=stringArray[37]; } catch (IndexOutOfBoundsException e) { var39x=""; }
-                  try {    var40x=stringArray[38]; } catch (IndexOutOfBoundsException e) { var40x=""; }
-                  try {    var41x=stringArray[39]; } catch (IndexOutOfBoundsException e) { var41x=""; }                  
-                  try {    var42x=stringArray[40]; } catch (IndexOutOfBoundsException e) { var42x=""; }
-                  try {    var43x=stringArray[41]; } catch (IndexOutOfBoundsException e) { var43x=""; }
-                  try {    var44x=stringArray[42]; } catch (IndexOutOfBoundsException e) { var44x=""; }
-                   try {    var45x=stringArray[43]; } catch (IndexOutOfBoundsException e) { var45x=""; }
-                  try {    var46x=stringArray[44]; } catch (IndexOutOfBoundsException e) { var46x=""; }
-                  try {    var47x=stringArray[45]; } catch (IndexOutOfBoundsException e) { var47x=""; }
-                  try {    var48x=stringArray[46]; } catch (IndexOutOfBoundsException e) { var48x=""; }
-                  try {    var49x=stringArray[47]; } catch (IndexOutOfBoundsException e) { var49x=""; }
-                  try {    var50x=stringArray[48]; } catch (IndexOutOfBoundsException e) { var50x=""; }
-                  try {    var51x=stringArray[49]; } catch (IndexOutOfBoundsException e) { var51x=""; }
-                  try {    var52x=stringArray[50]; } catch (IndexOutOfBoundsException e) { var52x=""; }
-                  try {    var53x=stringArray[51]; } catch (IndexOutOfBoundsException e) { var53x=""; }                  
-                  try {    var54x=stringArray[52]; } catch (IndexOutOfBoundsException e) { var54x=""; }
-                  try {    var55x=stringArray[53]; } catch (IndexOutOfBoundsException e) { var55x=""; }
-                  try {    var56x=stringArray[54]; } catch (IndexOutOfBoundsException e) { var56x=""; }
-                  try {    var57x=stringArray[55]; } catch (IndexOutOfBoundsException e) { var57x=""; }
-                  try {    var58x=stringArray[56]; } catch (IndexOutOfBoundsException e) { var58x=""; }
-                  try {    var59x=stringArray[57]; } catch (IndexOutOfBoundsException e) { var59x=""; }
-                  try {    var60x=stringArray[58]; } catch (IndexOutOfBoundsException e) { var60x=""; }
-                  try {    var61x=stringArray[59]; } catch (IndexOutOfBoundsException e) { var61x=""; }
+   
                    /*try {    var31x=stringArray[28]; } catch (IndexOutOfBoundsException e) { var31x=""; }
                   try {    var32x=stringArray[29]; } catch (IndexOutOfBoundsException e) { var32x=""; }
                   try {    var33x=stringArray[30]; } catch (IndexOutOfBoundsException e) { var33x=""; }*/
                   
-                  
-            pst.setString(1, var1x);
+            
+           /* pst.setString(1, var1x);
             pst.setString(2, var2x);
             pst.setString(3, var3x);       
             pst.setString(4, var4x);  
@@ -3831,39 +4081,33 @@ reader.close();
             pst.execute();  
       
          pst.close();         
-      //   data.clear();
-          ss = data_used_only_xx.size();        
+            
                   
                 }else{
                   
-                 // var2x="";
+            JOptionPane.showMessageDialog(null, var1x+" Rejected");
                   }
              
-            
-          
-         
-         old_str_asset_def_body="n/a";
-       // conn.close();
     } catch (SQLException ex) {
         System.err.println("Error = " + ex);
-    }
+    }*/
      
-     }
-     if(!old_str_asset_def_body.equals("n/a")){
-    // JOptionPane.showMessageDialog(null, old_str_asset_def_body+" Is blank "+chandata_loop);
-     }
-      
-     
-    // data.clear();
-     ss = data_used_only_xx.size();
-     end_used_only =1;
-     old_str_asset_def_body="n/a";
-     if(!old_str_asset_def_body.equals(str_asset_def_body) && loop_id==2){
-     data.add(str_asset_status);
-     }
+  
+    
+    
   
     }
+    private void fetch_my_data(){
+                     
+                 // if(leng == leng){
+                
+                      
+                      
+                    
     
+   
+    
+    }
     
     private void insert_array_2() {
         leng = data.size();
@@ -4004,17 +4248,17 @@ reader.close();
    lastFiveDigits  = line;
     }
     }
-    private void insert_multiple_pockets() {    
+    private boolean insert_multiple_pockets() {    
         
-      
+      set_cec_arrays();
         
            reset_dble();
          try{  
              // Arc_Import mainClass = new Arc_Import();                 
                              // mainClass.UpdateJTable();
                               // pathxx= mainClass.pathx;
-                   
-        FileReader fileReader = new FileReader(pathxx);
+        FileReader fileReader = new FileReader(pathxx);           
+       // FileReader fileReader = new FileReader("C:\\Users\\peter\\Desktop\\aa\\CEC_SAMPLE_DATA.txt");
         try (BufferedReader bufferedReader = new BufferedReader(fileReader)) {
         //String line;
         while((line = bufferedReader.readLine()) != null) {     
@@ -4035,6 +4279,12 @@ reader.close();
                // str_global_count=integerpp+" %";
                 //row_of_rows = "[ "+row_number+" of "+cnt+" ] [ "+ str_per_pr +" %"+" ]";   
                 row_of_rows = "[ "+data_chabdata_count.size()+" CHANNELS "+" ] [ "+ str_per_pr +" %"+" ]";
+                
+                if (skip_all_id == 0){
+                          //          if (0==0){
+
+               // ffxxff
+                
              //  str_global_count=row_of_rows;
               ////////////////////////////
                 String input = line;     //input string
@@ -4086,15 +4336,18 @@ reader.close();
                    || first6Char.equals("N36100")
                    || first6Char.equals("N36110")
                    || first6Char.equals("N32710") 
-                   
+                
+                 
                    || first6Char.equals("N10002")
                    || first6Char.equals("N10000")
                    || first6Char.equals("N30300")   
                    || first6Char.equals("N18342")
+                   || first6Char.equals("N41300")
                    
-                   
+                   || first6Char.equals("N41310")
                    || first6Char.equals("N32450")
                    || first6Char.equals("N38000")
+                   || first6Char.equals("$AN_CE")   
                    || first16Char.equals("$AA_ENC_COMP_STE")   
                    || first16Char.equals("$AA_ENC_COMP_MIN")
                    || first16Char.equals("$AA_ENC_COMP_MAX")
@@ -4154,8 +4407,7 @@ reader.close();
                     ||str_asset_def_body.equals("$MA_POS_LIMIT_PLUS")
                     ||str_asset_def_body.equals("$MA_CEC_ENABLE") 
                     ||str_asset_def_body.equals("$MA_IS_ROT_AX")
-                    
-                     ||str_asset_def_body.equals("$MN_MM_CEC_MAX_POINTS")
+                   
                     ||str_asset_def_body.equals("$SN_CEC_TABLE_ENABLE") 
                     ||str_asset_def_body.equals("$SN_CEC_TABLE_WEIGHT") 
                     ){
@@ -4169,10 +4421,36 @@ reader.close();
                  int int_pos = Integer.parseInt(str_pos_counter)+1;
                  str_pos_counter=int_pos+"";
                  
+                 
+                 
+                  if(str_asset_def_body.equals("$MN_MM_CEC_MAX_POINTS")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                 try{
+                                                        check_position_to_insert();
+                                                        data15.set(int_positon_to_insert, str_asset_status);
+                                                 }catch(Exception ex){}
+                                                 
+                                                  try{
+                                                        cec_check_position_to_insert();
+                                                        cec_data_1.set(int_positon_to_insert, str_asset_status);
+                                                 }catch(Exception ex){}
+                                                       
+                                                        
+                                                        
+                                                        
+                                                         System.out.println(" CEC1"+data15);
+                                                        System.out.println(" CEC2"+cec_data_1);
+                                                        
+                                                }
+                                            
+                                        }
+                 
                  }
                  /////////////////////////////3RD OPTION/////////////////////////////
                  else if(str_asset_def_body.equals("$AN_CEC_INPUT_NCU")
-                    ||str_asset_def_body.equals("$AN_CEC_INPUT_AXIS")                   
+                    ||str_asset_def_body.equals("$AN_CEC_INPUT_AXIS") 
+                         ||str_asset_def_body.equals("$AN_CEC_OUTPUT_AXIS")                          
                     ||str_asset_def_body.equals("$AN_CEC_OUTPUT_NCU")                         
                      ||str_asset_def_body.equals("$AN_CEC_STEP")                   
                     ||str_asset_def_body.equals("$AN_CEC_MIN")    
@@ -4281,395 +4559,26 @@ reader.close();
                         //////////////////filter entry to align with used channels///////////////////
                          Statement stmt22;
                          String par ="$MC_AXCONF_MACHAX_USED";
+                         String par2 ="$SN_CEC_TABLE_ENABLE";
                     stmt22= conn.createStatement();
-                    String sql1122="Select * from tbl_chandata where str_asset_body LIKE '%"+par+"%' and  pos_counter = '" + str_pos_counter + "'";
+                    String sql1122="Select * from tbl_chandata where str_asset_body LIKE '%"+par+"%' and  pos_counter = '" + str_pos_counter + "' ";
                     rs=stmt2.executeQuery(sql1122);
                     if(rs.next()){
-                                         insert_data();
-                                          
-                                          /////////////////////////
-                                          if(status_used_sess_2==0){
-                                          status_used_sess_2=status_used_sess_2+1;
-                                           int xx =data_used_only_xx.size(); 
-                                            
-                                             
-                                             for(int i =0; i<data_used_only_xx.size(); i++)
-                                                         {                                         
-                                                     String  ppx =data_used_only_xx.get(i);
-                                                       int_positon_to_insert=data_used_only_xx.indexOf(ppx);
-                                                      data25.set(int_positon_to_insert, ppx);
-                                                    //  data_used_only_indices_keeper.set(int_positon_to_insert, ppx);
-                                                      
-                                                     // herer
-                                                         }
-                                            
-                                          }
-                                        
-                                         /////////////////////
-                                      loop_id=3;
-                                         if(str_asset_def_body.equals("$MA_CEC_ENABLE"))
-                                        {                                       
-                                        //data1.add(str_asset_status);   
-                                            
-                                            if(str_chandata.equals(chandata_loop)){
-                                                check_position_to_insert();
-                                               data0.set(int_positon_to_insert, str_asset_status);
-                                                data10.set(int_positon_to_insert, str_asset_status);
-                                             }
-                                            
-                                            
-                                        }
-                                        if(str_asset_def_body.equals("$MA_ENC_IS_LINEAR[0]"))
-                                        {                                       
-                                                if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        data1.set(int_positon_to_insert, str_asset_status);
-
-                                                }
-                                            
-                                        }
-                                        else if(str_asset_def_body.equals("$MA_ENC_IS_LINEAR[1]")){
-                                        //data2.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                         data2.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                           
-                                        }
-                                        else if(str_asset_def_body.equals("$MA_GANTRY_AXIS_TYPE")){
-                                       // data3.add(str_asset_status);
-                                            if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        data3.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                        else if(str_asset_def_body.equals("$MA_NUM_ENCS")){
-                                            if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                         data4.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                      // .set(5,"newString"); 
-                                        }
-                                        else if(str_asset_def_body.equals("$MA_ENC_COMP_ENABLE[0]")){
-                                        //data5.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                      data5.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                        else if(str_asset_def_body.equals("$MA_ENC_COMP_ENABLE[1]")){
-                                       // data6.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                          data6.set(int_positon_to_insert, str_asset_status);
-                                                          data9.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                        else if(str_asset_def_body.equals("$MA_POS_LIMIT_MINUS")){
-                                       // data7.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        data7.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                        else if(str_asset_def_body.equals("$MA_POS_LIMIT_PLUS")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        data8.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                        //////////////////////////last loop////////////////////
-                                        else if(str_asset_def_body.equals("$MN_AXCONF_LOGIC_MACHAX_TAB")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        data12.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                        
-                                         else if(str_asset_def_body.equals("$MN_AXCONF_MACHAX_NAME_TAB")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        data13.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                          else if(str_asset_def_body.equals("$MA_IS_ROT_AX")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        data14.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                         
-                                           else if(str_asset_def_body.equals("$MN_MM_CEC_MAX_POINTS")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        data15.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                          ////////////////////////////////////////////////////////////////////  
-                                         else if(str_asset_def_body.equals("$MA_BACKLASH[0]")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        data16.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                          else if(str_asset_def_body.equals("$MA_BACKLASH[1]")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        data17.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                           else if(str_asset_def_body.equals("$MA_MM_ENC_COMP_MAX_POINTS[0]")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        data18.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                            else if(str_asset_def_body.equals("$MA_MM_ENC_COMP_MAX_POINTS[1]")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        data19.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                             else if(str_asset_def_body.equals("$AA_ENC_COMP_STEP[0]")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        data20.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                             else if(str_asset_def_body.equals("$AA_ENC_COMP_STEP[1]")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        data24.set(int_positon_to_insert, str_asset_status);
-                                                }                                            
-                                                }
-                                             //////////////////////////////////////////////////////////////
-                                              else if(str_asset_def_body.equals("$AA_ENC_COMP_MIN[0]")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        data21.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                              }
-                                              ///////////////////////////////////////////////////////////////////////
-                                              //////////////////////////////////////////////////////////////
-                                              else if(str_asset_def_body.equals("$AA_ENC_COMP_MIN[1]")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        data21_a.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                              }
-                                              ///////////////////////////////////////////////////////////////////////
-                                               else if(str_asset_def_body.equals("$AA_ENC_COMP_MAX[0]")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        data22.set(int_positon_to_insert, str_asset_status);
-                                                }                                            
-                                                }
-                                               ////////////////////////////////////////
-                                                else if(str_asset_def_body.equals("$AA_ENC_COMP_MAX[1]")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        data22_a.set(int_positon_to_insert, str_asset_status);
-                                                }                                            
-                                                }
-                                               /////////////////////////////////////////////////
-                                                else if(str_asset_def_body.equals("$AA_ENC_COMP_IS_MODULO[0]")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        data23.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                                }
-                                            ////////////////////////////////////////////////////////
-                                                 /////////////////////////////////////////////////
-                                                else if(str_asset_def_body.equals("$AA_ENC_COMP_IS_MODULO[1]")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        data23_a.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                                }
-                                            ////////////////////////////////////////////////////////
-                                        
-                                            else if(str_asset_def_body.equals("$AA_ENC_COMP_STEP[1]")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        data24.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                        ////////////////////////////last loop////////////////////////////
-                                       ///////////////////////////////CEC///////////////////////////////////////     
-                                            
-                                             else if(str_asset_def_body.equals("$MN_MM_CEC_MAX_POINTS")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        cec_data_1.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                        ////////////////////////////CEC////////////////////////////
-                                           else if(str_asset_def_body.equals("$SN_CEC_TABLE_ENABLE")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        cec_data_2.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                        ////////////////////////////CEC////////////////////////////
-                                            else if(str_asset_def_body.equals("$SN_CEC_TABLE_WEIGHT")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        cec_data_3.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                        ////////////////////////////CEC////////////////////////////
-                                             else if(str_asset_def_body.equals("$AN_CEC_INPUT_NCU")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        cec_data_4.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                        ////////////////////////////CEC////////////////////////////
-                                              else if(str_asset_def_body.equals("$AN_CEC_INPUT_AXIS")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        cec_data_5.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                        ////////////////////////////CEC////////////////////////////
-                                               else if(str_asset_def_body.equals("$AN_CEC_OUTPUT_NCU")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        cec_data_6.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                        ////////////////////////////CEC////////////////////////////
-                                                else if(str_asset_def_body.equals("$AN_CEC_OUTPUT_AXIS")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        cec_data_7.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                        ////////////////////////////CEC////////////////////////////
-                                                 else if(str_asset_def_body.equals("$AN_CEC_STEP")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        cec_data_8.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                        ////////////////////////////CEC////////////////////////////
-                                                  else if(str_asset_def_body.equals("$AN_CEC_MIN")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        cec_data_9.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                        ////////////////////////////CEC////////////////////////////
-                                                   else if(str_asset_def_body.equals("$AN_CEC_MAX")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                       cec_data_10.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                        ////////////////////////////CEC////////////////////////////
-                                                    else if(str_asset_def_body.equals("$AN_CEC_DIRECTION")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        cec_data_11.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                        ////////////////////////////CEC////////////////////////////
-                                                     else if(str_asset_def_body.equals("$AN_CEC_MULT_BY_TABLE")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        cec_data_12.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                        ////////////////////////////CEC////////////////////////////
-                                                      else if(str_asset_def_body.equals("$AN_CEC_IS_MODULO")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        cec_data_13.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                        ////////////////////////////CEC////////////////////////////
-                                                       else if(str_asset_def_body.equals("$AN_CEC_TYPE")){
-                                       // data8.add(str_asset_status);
-                                             if(str_chandata.equals(chandata_loop)){
-                                                        check_position_to_insert();
-                                                        cec_data_14.set(int_positon_to_insert, str_asset_status);
-                                                }
-                                            
-                                        }
-                                       
-                                            
-                                        else{
-                                             // old_str_asset_def_body =str_asset_def_body;
-                                           // old_str_asset_def_body="";
-                                           // old_str_asset_def_body =str_asset_def_body;
-                                            //////////check whether Arraylist is less than usedChanels///////////////////
-                                            
-                                           //////////end check whether Arraylist is less than usedChanels///////////////////
-
-                                             }
-                          
-                        
+                        //////
+                           proceed_to_re_fill();            
+          ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////              
                        
+                    }else{
+                         Statement stmt33;
+                     stmt33= conn.createStatement();
+                    String sql1133="Select * from tbl_chandata where  str_asset_body LIKE '%"+par2+"%' and  pos_counter = '" + str_pos_counter + "' ";
+                    rs=stmt33.executeQuery(sql1133);
+                    if(rs.next()){
+                        //////
+                           proceed_to_re_fill();            
+          ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////              
+                       
+                    }     
                     }     
                        // old_str_asset_def_body =str_asset_def_body;
                     }
@@ -4683,8 +4592,17 @@ reader.close();
                  }
        // timer_way();
         
-        }    
-        
+        } 
+                
+       } else if(skip_all_id == 1){
+       
+       skip_all_id=0;
+       return true;
+       }else{
+       
+       }
+              //  skip_all_id=0;
+        //ffX
       }
       reset_dble();
     }
@@ -4705,6 +4623,7 @@ reader.close();
         
       // 
         status_used_sess_2=0;
+        return true;
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_0() {
@@ -4904,9 +4823,10 @@ reader.close();
          
          
             private void cec_transition1() {
-        old_str_asset_def_body="CEC STARTS";  
+        old_str_asset_def_body="NAME";  
+        str_index="INDEX"; 
         data.clear();
-        data=data25;
+        data=cec_data_used_only_indices;
        insert_array_cc();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     } 
@@ -4923,6 +4843,7 @@ reader.close();
         old_str_asset_def_body="N41300 $SN_CEC_TABLE_ENABLE";  
         data.clear();
         data=cec_data_2;
+      //  data=cec_data_used_only_xx;
        insert_array_cc();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }      
@@ -5042,8 +4963,22 @@ reader.close();
         }
      }    
     private void finish_loops() {
-                              
-        
+         //here                     
+        System.out.println(" CEC" +cec_data_1);
+         System.out.println(" CEC" +cec_data_2);
+          System.out.println(" CEC" +cec_data_3);
+           System.out.println(" CEC" +cec_data_4);
+            System.out.println(" CEC" +cec_data_5);
+             System.out.println(" CEC" +cec_data_6);
+              System.out.println(" CEC" +cec_data_7);
+               System.out.println(" CEC" +cec_data_8);
+               
+                System.out.println(" CEC" +cec_data_9);
+         System.out.println(" CEC" +cec_data_10);
+          System.out.println(" CEC" +cec_data_11);
+           System.out.println(" CEC" +cec_data_12);
+            System.out.println(" CEC" +cec_data_13);
+            System.out.println(" CEC" +cec_data_14);
         for(int i=0; i < 43; i++){
         
         if(i==0){
@@ -5215,9 +5150,9 @@ reader.close();
     }
     
     private void insert_cec_column_size() {
+      // here
        
-       
-       String col_size=data_used_only_xx.size()+"";
+       String col_size=cec_data_used_only_xx.size()+"";
        String sql = "insert into tbl_cec_col_size(count) values(?) ";
      
         try{
@@ -5325,7 +5260,7 @@ reader.close();
                                  data25 = new ArrayList<String>(int_array_size_for_used);
                                  
                                  cec_data_1= new ArrayList<String>();
-                                 cec_data_2= new ArrayList<String>();
+                                 
                                  cec_data_3= new ArrayList<String>();
                                  cec_data_4= new ArrayList<String>();
                                  cec_data_5= new ArrayList<String>();
@@ -5372,21 +5307,7 @@ reader.close();
                                          data24.add("");
                                          data25.add("");
                                          
-                                         cec_data_1.add("");
-                                         cec_data_2.add("");
-                                         cec_data_3.add("");
-                                         cec_data_4.add("");
-                                         cec_data_5.add("");
-                                         cec_data_6.add("");
-                                         cec_data_7.add("");
-                                         
-                                         cec_data_8.add("");
-                                         cec_data_9.add("");
-                                         cec_data_10.add("");
-                                         cec_data_11.add("");
-                                         cec_data_12.add("");
-                                         cec_data_13.add("");
-                                         cec_data_14.add("");
+                                       
                                          
                                             }
                                 int xx =data_used_only_xx.size(); 
@@ -5395,7 +5316,25 @@ reader.close();
     }
     private void check_position_to_insert() {
         //herer
+           // System.out.println(" CNC "+size_store);
+               System.out.println(" CNC "+data_used_only_xx);
+          System.out.println(" CNC "+data_used_only_indices);
+           System.out.println(" CNC "+size_store);
        int_positon_to_insert= size_store.indexOf(str_pos_counter);
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+      private void cec_check_position_to_insert() {
+        //herer
+        //  System.out.println(" CEC "+cec_data_used_only_xx);
+         // System.out.println(" CEC "+cec_data_used_only_indices);
+        //   System.out.println(" CEC "+cec_size_store);
+         // System.out.println(" CEC "+cec_size_store);
+          //  data_used_only_xx.clear();
+       //  data_used_only_indices.clear();
+       //  size_store.clear();
+        // data_used_name.clear();
+       int_positon_to_insert= cec_size_store.indexOf(str_pos_counter);
         
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -5567,6 +5506,7 @@ reader.close();
         pick_chan_name();
         String xxx=chandata_loop;
         String xxx2=str_chan_name;
+        str_chan_name_2=str_chan_name;
         String strs_parent_insert="";
        for(int i=0; i<3; i++ ){
            if(i==0){
@@ -5632,8 +5572,10 @@ reader.close();
     }
     private void insert_cec_table_transition() {
         //pick_chan_name();
-        String xxx="CEC "+chandata_loop;
-        String xxx2="";
+       
+     
+         String xxx=chandata_loop;
+        String xxx2=str_chan_name_2;
         String strs_parent_insert="";
        for(int i=0; i<3; i++ ){
            if(i==0){
@@ -5644,8 +5586,9 @@ reader.close();
            strs_parent_insert=xxx;
           // str_chan_name="";
            }else{
+              strs_parent_insert=xxx2;  
            //chandata_loop="";
-         strs_parent_insert=xxx2;
+       //  strs_parent_insert="";
            }
            //here
             String sql = "insert into tbl_processed_cec_table(col1, col2, col3, col4,col5,col6, col7, col8, col9,col10,col11, col12,col13, col14, col15,col16, col17, col18, col19,col20,col21, col22, col23, col24,col25,col26, col27, col28, col29, col30,col31, col32, col33, col34,col35,col36, col37, col38, col39,col40,col41, col42,col43, col44, col45,col46, col47, col48, col49,col50,col51, col52, col53, col54,col55,col56, col57, col58, col59, col60, col61) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
@@ -5726,7 +5669,8 @@ reader.close();
     }      
        
        }
-       str_chan_name="";
+       str_chan_name_2="";
+     //  str_chan_name="";
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_table_transition_2() {
@@ -5803,7 +5747,7 @@ reader.close();
                            old_str_asset_def_body ="INDEX";  
                          //  used_chennel_count=data_used_only_xx.size();
                            // data_used_only_indices=data_used_only_indices_1;
-                            System.out.println(data_used_only_indices);
+                          //  System.out.println(data_used_only_indices);
                           //  data_used_only_indices_keeper.clear();
                           //  data_used_only_indices_keeper=data_used_only_indices;
                            data=data_used_only_indices;
@@ -5869,10 +5813,15 @@ reader.close();
       //  JOptionPane.showMessageDialog(null, cec_data_used_only_indices);
       //  JOptionPane.showMessageDialog(null, cec_size_store);
         //cec_data_used_only_indices cec_size_store
+       // insert_cec_size();
+        
         insert_used_only_names();
+        // cec_insert_used_only_names();
         cont_2();
     }
-
+    
+    
+       
     private void upate_action() {
         
         new ActionListener() {
@@ -5890,6 +5839,7 @@ reader.close();
           if (p==0){
           set_check_box();
          btnContinue.setVisible(true);
+         btnRemoveAll.setVisible(true);
           }else if(p==1)
           {
           continue_with_loop();
@@ -5941,7 +5891,7 @@ reader.close();
                 
                 }else{
              try{
-                  System.out.println(xx+"----------------------------------------------------------------------------"+xx);            
+                 // System.out.println(xx+"----------------------------------------------------------------------------"+xx);            
               //if (t.getState()==Thread.State.RUNNABLE) 
                  t.interrupt();
                 
@@ -6181,6 +6131,431 @@ compesation_errors.clear();
 
     private void open_foler() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void set_cec_arrays() {
+      
+        for(int i=0; i< cec_size_store.size(); i++){
+        // for(int i=0; i< 5; i++){
+                                       cec_data_1.add("");
+                                        // cec_data_2.add("");
+                                         cec_data_3.add("");
+                                         cec_data_4.add("");
+                                         cec_data_5.add("");
+                                         cec_data_6.add("");
+                                         cec_data_7.add("");                                         
+                                         cec_data_8.add("");
+                                         cec_data_9.add("");
+                                         cec_data_10.add("");
+                                         cec_data_11.add("");
+                                         cec_data_12.add("");
+                                         cec_data_13.add("");
+                                         cec_data_14.add("");
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void clear_all() {
+       // data_used_name.clear();
+        data_used_only_xx.clear();
+         data_used_only_indices.clear();
+         size_store.clear();
+         data_used_name.clear();
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void proceed_to_re_fill() {
+        
+        
+          insert_data();
+                                          
+                                          /////////////////////////
+                                          if(status_used_sess_2==0){
+                                          status_used_sess_2=status_used_sess_2+1;
+                                           int xx =data_used_only_xx.size(); 
+                                            
+                                             
+                                             for(int i =0; i<data_used_only_xx.size(); i++)
+                                                         {                                         
+                                                     String  ppx =data_used_only_xx.get(i);
+                                                       int_positon_to_insert=data_used_only_xx.indexOf(ppx);
+                                                      data25.set(int_positon_to_insert, ppx);
+                                                    //  data_used_only_indices_keeper.set(int_positon_to_insert, ppx);
+                                                      
+                                                     // herer
+                                                         }
+                                            
+                                          }
+                                        
+                                         /////////////////////
+                                      loop_id=3;
+                                         if(str_asset_def_body.equals("$MA_CEC_ENABLE"))
+                                        {                                       
+                                        //data1.add(str_asset_status);   
+                                            
+                                            if(str_chandata.equals(chandata_loop)){
+                                                check_position_to_insert();
+                                               data0.set(int_positon_to_insert, str_asset_status);
+                                                data10.set(int_positon_to_insert, str_asset_status);
+                                             }
+                                            
+                                            
+                                        }
+                                        if(str_asset_def_body.equals("$MA_ENC_IS_LINEAR[0]"))
+                                        {                                       
+                                                if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data1.set(int_positon_to_insert, str_asset_status);
+
+                                                }
+                                            
+                                        }
+                                        else if(str_asset_def_body.equals("$MA_ENC_IS_LINEAR[1]")){
+                                        //data2.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                         data2.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                           
+                                        }
+                                        else if(str_asset_def_body.equals("$MA_GANTRY_AXIS_TYPE")){
+                                       // data3.add(str_asset_status);
+                                            if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data3.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        else if(str_asset_def_body.equals("$MA_NUM_ENCS")){
+                                            if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                         data4.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                      // .set(5,"newString"); 
+                                        }
+                                        else if(str_asset_def_body.equals("$MA_ENC_COMP_ENABLE[0]")){
+                                        //data5.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                      data5.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        else if(str_asset_def_body.equals("$MA_ENC_COMP_ENABLE[1]")){
+                                       // data6.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                          data6.set(int_positon_to_insert, str_asset_status);
+                                                          data9.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        else if(str_asset_def_body.equals("$MA_POS_LIMIT_MINUS")){
+                                       // data7.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data7.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        else if(str_asset_def_body.equals("$MA_POS_LIMIT_PLUS")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data8.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        //////////////////////////last loop////////////////////
+                                        else if(str_asset_def_body.equals("$MN_AXCONF_LOGIC_MACHAX_TAB")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data12.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        
+                                         else if(str_asset_def_body.equals("$MN_AXCONF_MACHAX_NAME_TAB")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data13.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                          else if(str_asset_def_body.equals("$MA_IS_ROT_AX")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data14.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                         
+                                        /*   else if(str_asset_def_body.equals("$MN_MM_CEC_MAX_POINTS")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data15.set(int_positon_to_insert, str_asset_status);
+                                                        
+                                                        cec_check_position_to_insert();
+                                                        cec_data_1.set(int_positon_to_insert, str_asset_status);
+                                                        
+                                                }
+                                            
+                                        }*/
+                                          ////////////////////////////////////////////////////////////////////  
+                                         else if(str_asset_def_body.equals("$MA_BACKLASH[0]")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data16.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                          else if(str_asset_def_body.equals("$MA_BACKLASH[1]")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data17.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                           else if(str_asset_def_body.equals("$MA_MM_ENC_COMP_MAX_POINTS[0]")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data18.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                            else if(str_asset_def_body.equals("$MA_MM_ENC_COMP_MAX_POINTS[1]")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data19.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                             else if(str_asset_def_body.equals("$AA_ENC_COMP_STEP[0]")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data20.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                             else if(str_asset_def_body.equals("$AA_ENC_COMP_STEP[1]")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data24.set(int_positon_to_insert, str_asset_status);
+                                                }                                            
+                                                }
+                                             //////////////////////////////////////////////////////////////
+                                              else if(str_asset_def_body.equals("$AA_ENC_COMP_MIN[0]")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data21.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                              }
+                                              ///////////////////////////////////////////////////////////////////////
+                                              //////////////////////////////////////////////////////////////
+                                              else if(str_asset_def_body.equals("$AA_ENC_COMP_MIN[1]")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data21_a.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                              }
+                                              ///////////////////////////////////////////////////////////////////////
+                                               else if(str_asset_def_body.equals("$AA_ENC_COMP_MAX[0]")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data22.set(int_positon_to_insert, str_asset_status);
+                                                }                                            
+                                                }
+                                               ////////////////////////////////////////
+                                                else if(str_asset_def_body.equals("$AA_ENC_COMP_MAX[1]")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data22_a.set(int_positon_to_insert, str_asset_status);
+                                                }                                            
+                                                }
+                                               /////////////////////////////////////////////////
+                                                else if(str_asset_def_body.equals("$AA_ENC_COMP_IS_MODULO[0]")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data23.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                                }
+                                            ////////////////////////////////////////////////////////
+                                                 /////////////////////////////////////////////////
+                                                else if(str_asset_def_body.equals("$AA_ENC_COMP_IS_MODULO[1]")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data23_a.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                                }
+                                            ////////////////////////////////////////////////////////
+                                        
+                                            else if(str_asset_def_body.equals("$AA_ENC_COMP_STEP[1]")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data24.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////last loop////////////////////////////
+                                       ///////////////////////////////CEC///////////////////////////////////////     
+                                            
+                                             else if(str_asset_def_body.equals("$MN_MM_CEC_MAX_POINTS")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                       cec_check_position_to_insert();
+                                                        cec_data_1.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                           else if(str_asset_def_body.equals("$SN_CEC_TABLE_ENABLE")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                      //  cec_check_position_to_insert();
+                                                    //    cec_data_2.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                            else if(str_asset_def_body.equals("$SN_CEC_TABLE_WEIGHT")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                       cec_check_position_to_insert();
+                                                        cec_data_3.set(int_positon_to_insert, str_asset_status);
+                                                        System.out.println(" TABLE_WEIGHT"+cec_data_3);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                             else if(str_asset_def_body.equals("$AN_CEC_INPUT_NCU")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        cec_check_position_to_insert();
+                                                        cec_data_4.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                              else if(str_asset_def_body.equals("$AN_CEC_INPUT_AXIS")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                      cec_check_position_to_insert();
+                                                        cec_data_5.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                               else if(str_asset_def_body.equals("$AN_CEC_OUTPUT_NCU")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        cec_check_position_to_insert();
+                                                        cec_data_6.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                                else if(str_asset_def_body.equals("$AN_CEC_OUTPUT_AXIS")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                       cec_check_position_to_insert();
+                                                        cec_data_7.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                                 else if(str_asset_def_body.equals("$AN_CEC_STEP")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        cec_check_position_to_insert();
+                                                        cec_data_8.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                                  else if(str_asset_def_body.equals("$AN_CEC_MIN")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        cec_check_position_to_insert();
+                                                        cec_data_9.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                                   else if(str_asset_def_body.equals("$AN_CEC_MAX")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                       cec_check_position_to_insert();
+                                                       cec_data_10.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                                    else if(str_asset_def_body.equals("$AN_CEC_DIRECTION")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        cec_check_position_to_insert();
+                                                        cec_data_11.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                                     else if(str_asset_def_body.equals("$AN_CEC_MULT_BY_TABLE")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                       cec_check_position_to_insert();
+                                                        cec_data_12.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                                      else if(str_asset_def_body.equals("$AN_CEC_IS_MODULO")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        cec_check_position_to_insert();
+                                                        cec_data_13.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                        ////////////////////////////CEC////////////////////////////
+                                                       else if(str_asset_def_body.equals("$AN_CEC_TYPE")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        cec_check_position_to_insert();
+                                                        cec_data_14.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                       
+                                            
+                                        else{
+                                             // old_str_asset_def_body =str_asset_def_body;
+                                           // old_str_asset_def_body="";
+                                           // old_str_asset_def_body =str_asset_def_body;
+                                            //////////check whether Arraylist is less than usedChanels///////////////////
+                                            
+                                           //////////end check whether Arraylist is less than usedChanels///////////////////
+
+                                             }
+                          
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

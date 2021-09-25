@@ -51,6 +51,7 @@ import java.util.UUID;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
@@ -97,10 +98,12 @@ public class Arc_Import extends javax.swing.JFrame {
      int int_data_chabdata_count=0;
      int stop_timer_status=0;
      int compesation_segments=0;
+     int diffInDays=0;
      String str_data_chabdata_count="";
      static int non_zero_columns=0; 
      Timer timer_universal;
      String int_backlash="n/a";
+     String exp_date="";
    static Connection conn = null;
     static ResultSet rs = null;     
     static int ixx_1=0;
@@ -357,7 +360,7 @@ public class Arc_Import extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -487,16 +490,19 @@ public class Arc_Import extends javax.swing.JFrame {
                 .addComponent(lbl_per, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
-        CheckBoxes1.setBorder(javax.swing.BorderFactory.createTitledBorder(".."));
+        CheckBoxes1.setBorder(javax.swing.BorderFactory.createTitledBorder("..."));
         CheckBoxes1.setOpaque(false);
 
+        txt_header1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         txt_header1.setText(";Header Text");
 
+        txt_header_1_1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         txt_header_1_1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "AX1", "AX2", "AX3", "AX4", "AX5", "AX6", "AX7", "AX8", "AX9", "AX10", "AX11", "AX12", "AX13", "AX14", "AX15", "AX16", "AX17", "AX18", "AX19", "AX20", "AX21", "AX22", "AX23", "AX24", "AX25", "AX26", "AX27", "AX28", "AX29", "AX30" }));
 
+        txt_header_2.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         txt_header_2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "$MA_ENC_COMP_ENABLED[0]=0", "$MA_ENC_COMP_ENABLED[0]=1", "$MA_ENC_COMP_ENABLED[1]=1", "$MA_ENC_COMP_ENABLED[1]=1" }));
         txt_header_2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -504,6 +510,7 @@ public class Arc_Import extends javax.swing.JFrame {
             }
         });
 
+        txt_header3.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         txt_header3.setText("NEWCONF");
         txt_header3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -511,6 +518,7 @@ public class Arc_Import extends javax.swing.JFrame {
             }
         });
 
+        txt_header4.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         txt_header4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1" }));
         txt_header4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -518,6 +526,7 @@ public class Arc_Import extends javax.swing.JFrame {
             }
         });
 
+        txt_header5.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         txt_header5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1" }));
         txt_header5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -525,8 +534,10 @@ public class Arc_Import extends javax.swing.JFrame {
             }
         });
 
+        txt_header6.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         txt_header6.setText(";End Text");
 
+        txt_header7.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         txt_header7.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "$MA_ENC_COMP_ENABLED[0]=0", "$MA_ENC_COMP_ENABLED[0]=1", "$MA_ENC_COMP_ENABLED[1]=1", "$MA_ENC_COMP_ENABLED[1]=1" }));
         txt_header7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -534,51 +545,53 @@ public class Arc_Import extends javax.swing.JFrame {
             }
         });
 
+        txt_header8.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         txt_header8.setText("NEWCONF");
 
+        txt_header9.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         txt_header9.setText("M7");
 
-        lbl_1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lbl_1.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         lbl_1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbl_1.setText(";Header Text");
 
-        lbl_2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lbl_2.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         lbl_2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbl_2.setText("$MN_AXCONF_LOGIC_MACHAX_TAB");
 
-        lbl_3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lbl_3.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         lbl_3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbl_3.setText("$MA-ENC-COMP-ENABLED");
 
-        lbl_4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lbl_4.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         lbl_4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbl_4.setText("NEWCONF");
 
-        lbl_5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lbl_5.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         lbl_5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbl_5.setText("$AA_ENC_COMP_ENABLED[0]=0");
 
-        lbl_6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lbl_6.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         lbl_6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_6.setText("$AA_ENC_COMP_IS_MODULO[0,AX1]=0");
+        lbl_6.setText("$AA_ENC_COMP_IS_MODULO");
 
-        lbl_7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lbl_7.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         lbl_7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbl_7.setText(";End Text");
 
-        lbl_8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lbl_8.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         lbl_8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbl_8.setText("$MA-ENC-COMP-ENABLED");
 
-        lbl_9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lbl_9.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         lbl_9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbl_9.setText("NEWCONF");
 
-        lbl_10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lbl_10.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         lbl_10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbl_10.setText("M7");
 
-        jButton3.setText("Proceed");
+        jButton3.setText("NEXT");
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton3MouseClicked(evt);
@@ -590,39 +603,56 @@ public class Arc_Import extends javax.swing.JFrame {
         CheckBoxes1Layout.setHorizontalGroup(
             CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CheckBoxes1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lbl_6, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-                    .addComponent(lbl_5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbl_3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbl_2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbl_1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbl_4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txt_header4, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txt_header3, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_header_2, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txt_header_1_1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txt_header1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_header5, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(11, 11, 11)
                 .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbl_9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbl_10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbl_7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbl_8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(CheckBoxes1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbl_2)
+                            .addComponent(lbl_5)
+                            .addComponent(lbl_1)
+                            .addComponent(lbl_3)))
+                    .addGroup(CheckBoxes1Layout.createSequentialGroup()
+                        .addGap(146, 146, 146)
+                        .addComponent(lbl_4))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CheckBoxes1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lbl_6)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txt_header5, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_header4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_header3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txt_header_2, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_header_1_1, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CheckBoxes1Layout.createSequentialGroup()
+                        .addComponent(txt_header1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(1, 1, 1)))
+                .addGap(31, 31, 31)
+                .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lbl_8)
+                    .addComponent(lbl_9)
+                    .addComponent(lbl_10)
+                    .addComponent(lbl_7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_header8)
-                    .addComponent(txt_header9)
-                    .addComponent(txt_header7, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txt_header6)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CheckBoxes1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(30, 30, 30))
+                    .addGroup(CheckBoxes1Layout.createSequentialGroup()
+                        .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_header8, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_header9, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_header7, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CheckBoxes1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(51, 51, 51))
+                    .addGroup(CheckBoxes1Layout.createSequentialGroup()
+                        .addComponent(txt_header6, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
+
+        CheckBoxes1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txt_header6, txt_header7, txt_header8, txt_header9});
+
+        CheckBoxes1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txt_header1, txt_header3, txt_header4, txt_header5, txt_header_1_1, txt_header_2});
+
         CheckBoxes1Layout.setVerticalGroup(
             CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CheckBoxes1Layout.createSequentialGroup()
@@ -631,7 +661,6 @@ public class Arc_Import extends javax.swing.JFrame {
                     .addGroup(CheckBoxes1Layout.createSequentialGroup()
                         .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txt_header1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_7)
                             .addComponent(lbl_1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -641,18 +670,15 @@ public class Arc_Import extends javax.swing.JFrame {
                         .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txt_header_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbl_3))
-                        .addGap(8, 8, 8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txt_header3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbl_4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txt_header4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_header5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_6)))
+                            .addComponent(lbl_5)))
+                    .addComponent(lbl_7)
                     .addGroup(CheckBoxes1Layout.createSequentialGroup()
                         .addComponent(txt_header6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -669,6 +695,10 @@ public class Arc_Import extends javax.swing.JFrame {
                             .addComponent(lbl_10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_6)
+                    .addComponent(txt_header5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -676,8 +706,12 @@ public class Arc_Import extends javax.swing.JFrame {
 
         CheckBoxes1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {lbl_10, lbl_7, lbl_8, lbl_9});
 
+        CheckBoxes1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txt_header1, txt_header3, txt_header4, txt_header5, txt_header_1_1, txt_header_2});
+
+        CheckBoxes1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txt_header6, txt_header7, txt_header8, txt_header9});
+
         //CheckBoxes = new RoundedPanel(10, new Color(40, 40, 40));
-        CheckBoxes.setBorder(javax.swing.BorderFactory.createTitledBorder("Select axes."));
+        CheckBoxes.setBorder(javax.swing.BorderFactory.createTitledBorder("..."));
         CheckBoxes.setOpaque(false);
 
         chk16.addItemListener(new java.awt.event.ItemListener() {
@@ -1076,11 +1110,11 @@ public class Arc_Import extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(CheckBoxes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(CheckBoxes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(CheckBoxes1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1234,7 +1268,17 @@ lbl_per.setText("0%");
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-       
+       conn = mysqlconnect.ConnectDb(); 
+       hide_all_checkboxes();
+        hide_all_variable_fields();
+        select_expiry();
+        String xx=exp_date;
+        
+       find_dif();
+          
+          if(diffInDays>0){
+          
+        //int diffInDays = (int)( (newerDate.getTime() - olderDate.getTime()) / (1000 * 60 * 60 * 24) );
        datacheckbox=new ArrayList<String>(); 
         data = new ArrayList<String>();                                  
                                  data11 = new ArrayList<String>(); 
@@ -1263,10 +1307,15 @@ lbl_per.setText("0%");
         hide_all_variable_fields();
         // create_myDB() 
           
-        conn = mysqlconnect.ConnectDb();  
+         
        
      
         update_table_2();
+    }else{
+             
+              JOptionPane.showMessageDialog(null, "Deprecated Compmaster Version");      
+               close();
+          }
         //disable_btns();
        //  set_jtables();
        // UpdateJTable();
@@ -7061,5 +7110,38 @@ compesation_errors.clear();
         select_col_size();
         update_table_2();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void select_expiry() {
+        
+        try{
+        
+                    Statement stmt2;  
+                    stmt2= conn.createStatement();
+                    String sql112="Select *  from  tbl_ves where id='4'";
+                    rs=stmt2.executeQuery(sql112);
+                    if(rs.next()){
+                       exp_date = rs.getString("txt_data");
+                    }
+                    }catch(Exception e){}
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void find_dif() {
+        try{
+            
+           String datexx = new SimpleDateFormat("yyyy-MM-dd").format(new Date())+" 00:00:00";
+          SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+          Date date1 = formatter.parse(datexx); 
+          Date date2 = formatter.parse(exp_date); 
+           diffInDays = (int)( (date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24) );
+        //  System.out.println(""+diffInDays);
+        }     
+        catch(Exception ex){
+        
+        
+        }
+         
+      //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

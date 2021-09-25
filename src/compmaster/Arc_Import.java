@@ -91,6 +91,8 @@ public class Arc_Import extends javax.swing.JFrame {
       String filenamex="";
       String str_index="";
       String last_chandata_loop="";
+      int insert_code=0;
+      int  proceed_code=0;
      String loop1_global_count="";
      int int_data_chabdata_count=0;
      int stop_timer_status=0;
@@ -98,6 +100,7 @@ public class Arc_Import extends javax.swing.JFrame {
      String str_data_chabdata_count="";
      static int non_zero_columns=0; 
      Timer timer_universal;
+     String int_backlash="n/a";
    static Connection conn = null;
     static ResultSet rs = null;     
     static int ixx_1=0;
@@ -1207,8 +1210,8 @@ lbl_per.setText("0%");
     private void btn_conf_fileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_conf_fileActionPerformed
         // TODO add your handling code here:
        // disable_btns();
-        
-       
+      //  String ext1 = FilenameUtils.getExtension("/path/to/file/foo.txt");
+     // String ext = Files.getFileExtension(path);
         if(active_state==0){
                select_file();
                // clear_arrays();
@@ -1786,11 +1789,11 @@ lbl_per.setText("0%");
       
         JFileChooser chooser =new JFileChooser();
         chooser.showOpenDialog(null);
-        chooser.setDialogTitle("Name MDF file");
+        chooser.setDialogTitle("Name MPF file");
         File f = chooser.getSelectedFile();
         filenamex=f.getAbsolutePath();
        // JOptionPane.showMessageDialog(null, filename+".mdf");
-        txt_file_path=filenamex+".mdf";
+        txt_file_path=filenamex+".mpf";
        // save_txt_2();
         try {
       File myObj = new File(txt_file_path);
@@ -2566,6 +2569,7 @@ private void select_file_2() {
         String filename=f.getAbsolutePath();
         pathxx =filename;
         path.setText(filename);
+        
          extract_data();       
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -2925,6 +2929,11 @@ private boolean start_loop_par1_2(){
                    int_step=comp_body.replaceAll("([a-z])", "");
                    //JOptionPane.showMessageDialog(null, int_step+"Step");
                  }
+                   else if(comp_body.contains("backlasherror"))
+                 {
+                   int_backlash=comp_body.replaceAll("([a-z])", "");
+                   //JOptionPane.showMessageDialog(null, int_step+"Step");
+                 }
                  else if(comp_body.contains("compensationoutput"))
                  {
                    error_collect_status=1;
@@ -3031,7 +3040,7 @@ compesation_segments=(mincc+mincc)/stepcc;
                    
                    
                    
-                   footer_2_1="$MA_BACKLASH[0,"+ax+"]="+backlash;
+                   footer_2_1="$MA_BACKLASH[0,"+ax+"]="+int_backlash;
                    footer_2_2="";
                    footer_2_3=str_footer_text;
                    footer_2_4=str_enc_com_ena_1;
@@ -3953,15 +3962,17 @@ reader.close();
                 double per_pr=  0.0; 
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    private void insert_array() {
-      //  check_validity();
+    private boolean insert_array() {
         
         
         leng = data.size();
       int ss = data_used_only_xx.size();
-    
+    System.out.println(data);
         
      if(leng > 0){
+         check_validity();
+       if(proceed_code==8888){
+         System.out.println(data);
         String sql = "insert into tbl_processed_table(col1, col2, col3, col4,col5,col6, col7, col8, col9,col10,col11, col12,col13, col14, col15,col16, col17, col18, col19,col20,col21, col22, col23, col24,col25,col26, col27, col28, col29, col30) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
        // String //sql = "INSERT INTO nameTable (name) values (?)";
   
@@ -4061,7 +4072,7 @@ reader.close();
     } catch (SQLException ex) {
         System.err.println("Error = " + ex);
     }
-     
+     }
      }
      if(!old_str_asset_def_body.equals("n/a")){
     // JOptionPane.showMessageDialog(null, old_str_asset_def_body+" Is blank "+chandata_loop);
@@ -4075,16 +4086,45 @@ reader.close();
      if(!old_str_asset_def_body.equals(str_asset_def_body) && loop_id==2){
      data.add(str_asset_status);
      }
-  
-    }
+     proceed_code=0;
     
+       
+       return true;
+    }
+    private boolean check_validity(){
+        String xcv="";
+        for(int i=0; i< data.size(); i++){
+            xcv=data.get(i);
+            if(!xcv.equals("")){
+              proceed_code=8888;
+              return true;
+            }else{
+                if(i==data.size()-1){
+                proceed_code=0;
+                return true;
+                }
+                
+                
+            }
+        
+        }
+    return true;
+    }
     private void insert_array_cc(){
+        
+        if(data.size() > 0){
+         check_validity();
+       if(proceed_code==8888){
+        
          int loop_times=0;
                       loop_times=60-data.size();
                        
                        for(int i=0; i< loop_times; i++){
                        data.add("");
                        }
+                     /////////////////////////////////////////////////////  
+                     
+                       
      String[] stringArray = data.toArray(new String[data.size()]);
     // if(str_chandata.equals(chandata_loop)){
                   var1x=old_str_asset_def_body; 
@@ -4161,6 +4201,9 @@ try (PreparedStatement pst = conn.prepareStatement(sqlInsert)) {
 str_index="";
 data.clear();
 
+}
+    }
+//////////////////////////////////////////////////////
     }
       private void insert_array_ccc() {
       
@@ -4470,6 +4513,10 @@ data.clear();
       
         
      if(leng > 0){
+         
+          check_validity();
+       if(proceed_code==8888){
+         
         String sql = "insert into tbl_processed_table(col1, col2, col3, col4,col5,col6, col7, col8, col9,col10,col11, col12,col13, col14, col15,col16, col17, col18, col19,col20,col21, col22, col23, col24,col25,col26, col27, col28, col29, col30) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
        // String //sql = "INSERT INTO nameTable (name) values (?)";
   
@@ -4569,7 +4616,7 @@ data.clear();
     } catch (SQLException ex) {
         System.err.println("Error = " + ex);
     }
-     
+     }
      }
      data.clear();
      end_used_only =1;
@@ -4764,13 +4811,15 @@ data.clear();
                     ||str_asset_def_body.equals("$MA_IS_ROT_AX")
                    
                     ||str_asset_def_body.equals("$SN_CEC_TABLE_ENABLE") 
-                    ||str_asset_def_body.equals("$SN_CEC_TABLE_WEIGHT") 
+                    
                     ){
                  str_pos_counter = str_pos_counter_compound.replaceAll("[^0-9]", "");
                      
                  }else if(str_asset_def_body.equals("$MN_AXCONF_LOGIC_MACHAX_TAB")
-                    ||str_asset_def_body.equals("$MN_AXCONF_MACHAX_NAME_TAB")                   
+                    ||str_asset_def_body.equals("$MN_AXCONF_MACHAX_NAME_TAB")  
+                         ||str_asset_def_body.equals("$SN_CEC_TABLE_WEIGHT") 
                     ||str_asset_def_body.equals("$MN_MM_CEC_MAX_POINTS"))
+                     
                  {
                  str_pos_counter = str_pos_counter_compound.replaceAll("[^0-9]", "");
                  int int_pos = Integer.parseInt(str_pos_counter)+1;
@@ -4912,6 +4961,8 @@ data.clear();
                         //////////////////end//////////////////
                         
                         //////////////////filter entry to align with used channels///////////////////
+                        
+                        System.out.println(str_pos_counter ); 
                          Statement stmt22;
                          String par ="$MC_AXCONF_MACHAX_USED";
                          String par2 ="$SN_CEC_TABLE_ENABLE";
@@ -5205,6 +5256,7 @@ data.clear();
      private void cec_data_3() {
         old_str_asset_def_body="N41310 $SN_CEC_TABLE_WEIGHT";  
         data.clear();
+        System.out.println();
         data=cec_data_3;
         insert_array_cc();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -5507,7 +5559,7 @@ data.clear();
     private void insert_cec_column_size() {
       // here
        
-       String col_size=cec_data_used_only_xx.size()+"";
+       String col_size=cec_size_store.size()+"";
        String sql = "insert into tbl_cec_col_size(count) values(?) ";
      
         try{
@@ -5689,6 +5741,7 @@ data.clear();
        //  data_used_only_indices.clear();
        //  size_store.clear();
         // data_used_name.clear();
+          
        int_positon_to_insert= cec_size_store.indexOf(str_pos_counter);
         
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -5858,6 +5911,7 @@ data.clear();
    
     }
     private void insert_table_transition() {
+       // insert_code=8880;
         pick_chan_name();
         String xxx=chandata_loop;
         String xxx2=str_chan_name;
@@ -5923,6 +5977,7 @@ data.clear();
        
        }
        str_chan_name="";
+      //  insert_code=0;
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_cec_table_transition() {
@@ -6799,6 +6854,7 @@ compesation_errors.clear();
                                                        cec_check_position_to_insert();
                                                         cec_data_3.set(int_positon_to_insert, str_asset_status);
                                                         System.out.println(" TABLE_WEIGHT"+cec_data_3);
+                                                        System.out.println(cec_size_store);
                                                 }
                                             
                                         }

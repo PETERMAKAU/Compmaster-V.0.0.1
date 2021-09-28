@@ -161,7 +161,16 @@ public class Arc_Import extends javax.swing.JFrame {
      ArrayList<String> data23;   
       ArrayList<String> data23_a;  
      ArrayList<String> data24;
-     ArrayList<String> data25; //Used second insert
+     ArrayList<String> data25;
+     
+     
+     ArrayList<String> data26_3rd;  
+     ArrayList<String> data27_3rd;  
+     ArrayList<String> data28_3rd;  
+     ArrayList<String> data29_3rd;  
+
+
+//Used second insert
      	String var35x="", var36x="", var37x="",	 var38x="", var39x="", 	 var40x="",  var41x="",  var42x="",  var43x="",	 var44x="",
                    var45x="", var46x="", var47x="", var48x="",var49x="", var50x="", var51x="", var52x="", var53x="",                 
                   var54x="", var55x="", var56x="", var57x="", var58x="", var59x="",  var60x="",    var61x="";
@@ -1154,12 +1163,76 @@ public class Arc_Import extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_impo_compesationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_impo_compesationActionPerformed
-         clearx7();      
+         
+        
+        clearx7();      
         cec_size_store.clear();
         select_compensation_path();
        
     }//GEN-LAST:event_btn_impo_compesationActionPerformed
- private void select_compensation_path(){
+ private void verify_compefile(){
+     try{        
+       //  String pxx=pathxx2;    
+            // pathxx2=txt_path2.getText().toString().trim();
+         FileReader fileReader = new FileReader(pathxx2);
+         try (BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+      //String line;
+         while((line = bufferedReader.readLine()) != null) {
+         
+                str_global_count="Compensating data.";
+               // String input = line;     //input string
+                 comp_body=line.replaceAll("\\s+","");
+                 comp_body=comp_body.toLowerCase();
+                 if(comp_body.contains("referenceposition"))
+                 {
+                 
+                 }else if(comp_body.contains("compensationstart"))
+                 {
+                   int_min=comp_body.replaceAll("([a-z])", "");
+                 ///  JOptionPane.showMessageDialog(null, int_min+"Min");
+                 }
+                 else if(comp_body.contains("compensationend"))
+                 {
+                   int_max=comp_body.replaceAll("([a-z])", "");
+                 //  JOptionPane.showMessageDialog(null, int_max+"Max");
+                 }
+                 else if(comp_body.contains("compensationspacing"))
+                 {
+                   int_step=comp_body.replaceAll("([a-z])", "");
+                   //JOptionPane.showMessageDialog(null, int_step+"Step");
+                 }
+                   else if(comp_body.contains("backlasherror"))
+                 {
+                   int_backlash=comp_body.replaceAll("([a-z])", "");
+                   //JOptionPane.showMessageDialog(null, int_step+"Step");
+                 }
+                 else if(comp_body.contains("compensationoutput"))
+                 {
+                   error_collect_status=1;
+                   //JOptionPane.showMessageDialog(null, int_step+"Step");
+                 }
+                 else if(comp_body.contains("compensationoutput"))
+                 {
+                  // error_collect_status=0;
+                   //JOptionPane.showMessageDialog(null, int_step+"Step");
+                 }
+                 else if (error_collect_status==1 && !comp_body.equals("")){
+                 compesation_errors.add(comp_body);
+                 }
+                 else{
+                 
+                 }
+                 
+              
+      }  
+      error_collect_status=0;  
+    }
+    }catch(Exception e){
+    
+    }
+ }
+    
+    private void select_compensation_path(){
       path.setText("");     
         select_file_2();
  }
@@ -1182,7 +1255,7 @@ public class Arc_Import extends javax.swing.JFrame {
      //  pathxx2=tt;
        pathxx2=txt_path2.getText().toString();
  if(process_continuing==0){
-          process_continuing=1;         
+          process_continuing=0;         
                  
             //  herer
                //  reset_variables();
@@ -1202,19 +1275,36 @@ lbl_per.setText("0%");
         
                               stop_timer_status=1;
                               pathxx=path.getText().toString().trim();
-                              starts_progress_bar();                     // reset_varaiables();
-                              start_timer2();  
+                               
+                             
+                              count_chandata_types();
+                              
+                             // here
+                              if(data_chabdata_count.size() > 0){
+                                  clear_db_data();
+                                  starts_progress_bar();                     // reset_varaiables();
+                              start_timer2(); 
+                              start_loop_par1();
+                              }else{
+                                      lbl_per.setText("");
+                                      path.setText("");
+                                      enable_components();
+                                    //  active_state=0
+                                      JOptionPane.showMessageDialog(null, "Invalid machine data file. !");
+                                    }
+                              
+  
+  
+                                 }
+    
+    private void clear_db_data(){
                               clearx();
                               clearx2();
                               clearx3();
                               clear_cec_x2();
                               clear_col_size();   
                               clear_cec_col_size(); 
-                              count_chandata_types();
-                              start_loop_par1();
-  
-  
-                                 }
+    }
    private void start_program_2(){
                               stop_timer_status=1;
                              // pathxx2=txt_path2.getText().toString().trim();
@@ -1263,8 +1353,15 @@ lbl_per.setText("0%");
                // clear_arrays();
 
         }else if(active_state > 0){
+                try{
                 clear_arrays();
-                select_file();
+                }catch(Exception ex){}
+                 
+                 
+                 
+                 select_file();
+              
+               
                 
         }else{
                 
@@ -1349,8 +1446,8 @@ lbl_per.setText("0%");
         TableColumnModel columnModel = SqliteDataTable.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(370);
         columnModel.getColumn(0).setMaxWidth(370);
-        columnModel.getColumn(1).setPreferredWidth(150);
-        columnModel.getColumn(1).setMaxWidth(150);
+      //  columnModel.getColumn(1).setPreferredWidth(150);
+      //  columnModel.getColumn(1).setMaxWidth(150);
       
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -2745,6 +2842,7 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 private void select_file_2() {
+    
         process_continuing=0;
         JFileChooser chooser =new JFileChooser();
         chooser.showOpenDialog(null);
@@ -2752,8 +2850,19 @@ private void select_file_2() {
         String filename=f.getAbsolutePath();
         pathxx2 =filename;
         txt_path2.setText(filename);
+        disable_components();
+        verify_compefile();
+        if(compesation_errors.size() > 0){
+            compesation_errors.clear();
+          
+          show_all_variable_fields();
         
-       show_all_variable_fields();
+        }else{
+            enable_components();
+        txt_path2.setText("");
+        JOptionPane.showMessageDialog(null, "Invalid Compensation file !");
+        }
+      
        
     }
     private void select_file() {
@@ -2764,8 +2873,8 @@ private void select_file_2() {
         String filename=f.getAbsolutePath();
         pathxx =filename;
         path.setText(filename);
-        
-         extract_data();       
+        disable_components();
+        extract_data();       
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
      private void starts_progress_bar(){
@@ -3570,6 +3679,8 @@ JOptionPane.showMessageDialog(null, ex.getMessage());
                                     data_chabdata_count.clear();
                                     update_table_2();
                                     reset_progres_bar();
+                                    enable_components();
+                                    path.setText("");
                                     JOptionPane.showMessageDialog(null, "Finished successfully!");
                                     // enable_btns();
                                    /// Arc_Import
@@ -3991,7 +4102,9 @@ reader.close();
                     }else{
                         int_str_asset_status=Integer.parseInt(str_asset_status);
                         //////////////////let pos start from zero//////////////////////
-                        if(!str_asset_body.contains("$MA_IS_ROT_AX")){
+                        if(     !str_asset_body.contains("$MA_IS_ROT_AX") 
+                                || !str_asset_body.contains("$MA_ROT_IS_MODULO")
+                                ){
                             
                         int_str_pos_counter = Integer.parseInt(str_pos_counter);
                         int_str_pos_counter=int_str_pos_counter+1;
@@ -4948,7 +5061,7 @@ data.clear();
                    || first6Char.equals("N36100")
                    || first6Char.equals("N36110")
                    || first6Char.equals("N32710") 
-                
+                   
                  
                    || first6Char.equals("N10002")
                    || first6Char.equals("N10000")
@@ -4964,6 +5077,14 @@ data.clear();
                    || first16Char.equals("$AA_ENC_COMP_MIN")
                    || first16Char.equals("$AA_ENC_COMP_MAX")
                    || first16Char.equals("$AA_ENC_COMP_IS_")
+                   
+                   
+                   
+                   || first6Char.equals("N20060") 
+                   || first6Char.equals("N20080") 
+                   || first6Char.equals("N30310") 
+                   || first6Char.equals("N20050") 
+                 
                  
                    ){
                
@@ -5019,16 +5140,22 @@ data.clear();
                     ||str_asset_def_body.equals("$MA_POS_LIMIT_PLUS")
                     ||str_asset_def_body.equals("$MA_CEC_ENABLE") 
                     ||str_asset_def_body.equals("$MA_IS_ROT_AX")
-                   
+                   ||str_asset_def_body.equals("$MA_ROT_IS_MODULO")
                     ||str_asset_def_body.equals("$SN_CEC_TABLE_ENABLE") 
+                    
                     
                     ){
                  str_pos_counter = str_pos_counter_compound.replaceAll("[^0-9]", "");
                      
                  }else if(str_asset_def_body.equals("$MN_AXCONF_LOGIC_MACHAX_TAB")
                     ||str_asset_def_body.equals("$MN_AXCONF_MACHAX_NAME_TAB")  
-                         ||str_asset_def_body.equals("$SN_CEC_TABLE_WEIGHT") 
-                    ||str_asset_def_body.equals("$MN_MM_CEC_MAX_POINTS"))
+                         ||str_asset_def_body.equals("$SN_CEC_TABLE_WEIGHT")
+                         ||str_asset_def_body.equals("$MC_AXCONF_GEOAX_ASSIGN_TAB") 
+                         ||str_asset_def_body.equals("$MC_AXCONF_GEOAX_NAME_TAB")
+                         ||str_asset_def_body.equals("$MC_AXCONF_CHANAX_NAME_TAB")                         
+                          ||str_asset_def_body.equals("$MN_MM_CEC_MAX_POINTS"))
+                     
+                     
                      
                  {
                  str_pos_counter = str_pos_counter_compound.replaceAll("[^0-9]", "");
@@ -5436,8 +5563,34 @@ data.clear();
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-         
-         
+          private void insert_26() {
+        old_str_asset_def_body="N20060 $MC_AXCONF_GEOAX_NAME_TAB";  
+        data.clear();
+        data=data26_3rd;
+        insert_array();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+          private void insert_27() {
+        old_str_asset_def_body="N20080 $MC_AXCONF_CHANAX_NAME_TAB";  
+        data.clear();
+        data=data27_3rd;
+        insert_array();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+      private void insert_28() {
+        old_str_asset_def_body="N30310 $MA_ROT_IS_MODULO";  
+        data.clear();
+        data=data28_3rd;
+        insert_array();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }    
+       private void insert_29() {
+        old_str_asset_def_body="N20050 $MC_AXCONF_GEOAX_ASSIGN_TAB";  
+        data.clear();
+        data=data29_3rd;
+        insert_array();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }    
             private void cec_transition1() {
         old_str_asset_def_body="NAME";  
         str_index="INDEX"; 
@@ -5604,19 +5757,23 @@ data.clear();
         insert_12();
         }
         else if(i==2){
+            insert_29();
         insert_15();
         }
         else if(i==3){
         delete_old_used();
         }
         else if(i==4){
+         insert_26();
         insert_used();
+        insert_27();
         }
         else if(i==5){
         insert_4();
         }
         else if(i==6){
         insert_14();
+        insert_28();
         }
         else if(i==7){
         insert_1();
@@ -5875,7 +6032,10 @@ data.clear();
                                  
                                  data24 = new ArrayList<String>(int_array_size_for_used);
                                  data25 = new ArrayList<String>(int_array_size_for_used);
-                                 
+                                 data26_3rd=new ArrayList<String>();
+                                 data27_3rd=new ArrayList<String>();
+                                 data28_3rd=new ArrayList<String>();
+                                 data29_3rd=new ArrayList<String>();
                                  cec_data_1= new ArrayList<String>();
                                  
                                  cec_data_3= new ArrayList<String>();
@@ -5923,9 +6083,10 @@ data.clear();
                                           data23_a.add("");
                                          data24.add("");
                                          data25.add("");
-                                         
-                                       
-                                         
+                                         data26_3rd.add("");
+                                         data27_3rd.add("");
+                                         data28_3rd.add("");
+                                         data29_3rd.add("");
                                             }
                                 int xx =data_used_only_xx.size(); 
                                  int cc=data5.size();
@@ -6116,8 +6277,16 @@ data.clear();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
    
    
-                                        
+        cec_data_used_only_indices.clear();
+cec_data_used_only_xx.clear();
+cec_size_store.clear();                                
    
+
+
+data26_3rd.clear();
+data27_3rd.clear();
+data28_3rd.clear();
+data29_3rd.clear();
    
     }
     private void insert_table_transition() {
@@ -6684,9 +6853,10 @@ private void enable_btns() {
          compesation_data_1.clear();       
          compesation_errors.clear();
         clear_compesation_varia();
-        
+        enable_components();
        JOptionPane.showMessageDialog(null, "Completed !");
-       lbl_per.setText("Process has completed !");
+       txt_path2.setText("");
+       lbl_per.setText("Process completed !");
        stop_timer();
         stop_threads(); 
         open_table();
@@ -6976,7 +7146,7 @@ private void enable_btns() {
                                                 }
                                             
                                         }
-                                         
+                                        
                                         /*   else if(str_asset_def_body.equals("$MN_MM_CEC_MAX_POINTS")){
                                        // data8.add(str_asset_status);
                                              if(str_chandata.equals(chandata_loop)){
@@ -7094,6 +7264,40 @@ private void enable_btns() {
                                              if(str_chandata.equals(chandata_loop)){
                                                         check_position_to_insert();
                                                         data24.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                            
+                                             else if(str_asset_def_body.equals("$MC_AXCONF_GEOAX_NAME_TAB")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data26_3rd.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                              else if(str_asset_def_body.equals("$MC_AXCONF_CHANAX_NAME_TAB")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data27_3rd.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                               else if(str_asset_def_body.equals("$MA_ROT_IS_MODULO")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data28_3rd.set(int_positon_to_insert, str_asset_status);
+                                                }
+                                            
+                                        }
+                                               
+                                               else if(str_asset_def_body.equals("$MC_AXCONF_GEOAX_ASSIGN_TAB")){
+                                       // data8.add(str_asset_status);
+                                             if(str_chandata.equals(chandata_loop)){
+                                                        check_position_to_insert();
+                                                        data29_3rd.set(int_positon_to_insert, str_asset_status);
                                                 }
                                             
                                         }
@@ -7397,5 +7601,21 @@ private void enable_btns() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    private void disable_components() {
+        
+         btn_conf_file.setEnabled(false);
+        btn_impo_compesation.setEnabled(false);
+        path.setEnabled(false);
+        txt_path2.setEnabled(false);
+      //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+ private void enable_components() {
+        
+         btn_conf_file.setEnabled(true);
+        btn_impo_compesation.setEnabled(true);
+        path.setEnabled(true);
+        txt_path2.setEnabled(true);
+      //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
    
 }

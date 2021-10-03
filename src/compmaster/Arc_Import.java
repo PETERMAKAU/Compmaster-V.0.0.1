@@ -94,10 +94,11 @@ public class Arc_Import extends javax.swing.JFrame {
       String last_chandata_loop="";
       int insert_code=0;
       int  proceed_code=0;
+      String asset_code_dif_col="";
      String loop1_global_count="";
      int int_data_chabdata_count=0;
      int stop_timer_status=0;
-     int compesation_segments=0;
+     double compesation_segments=0;
      int diffInDays=0;
      String str_data_chabdata_count="";
      static int non_zero_columns=0; 
@@ -291,6 +292,8 @@ public class Arc_Import extends javax.swing.JFrame {
         lbl_9 = new javax.swing.JLabel();
         lbl_10 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        txt_header_chandata = new javax.swing.JComboBox();
+        jLabel1 = new javax.swing.JLabel();
         CheckBoxes = new javax.swing.JPanel();
         chk16 = new javax.swing.JCheckBox();
         chk3 = new javax.swing.JCheckBox();
@@ -612,21 +615,26 @@ public class Arc_Import extends javax.swing.JFrame {
             }
         });
 
+        txt_header_chandata.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        txt_header_chandata.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CHANDATA(1)", "CHANDATA(2)", "CHANDATA(3)" }));
+        txt_header_chandata.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_header_chandataActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jLabel1.setText("CHANDATA");
+
         javax.swing.GroupLayout CheckBoxes1Layout = new javax.swing.GroupLayout(CheckBoxes1);
         CheckBoxes1.setLayout(CheckBoxes1Layout);
         CheckBoxes1Layout.setHorizontalGroup(
             CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CheckBoxes1Layout.createSequentialGroup()
                 .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(CheckBoxes1Layout.createSequentialGroup()
-                            .addGap(32, 32, 32)
-                            .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(lbl_5)
-                                .addComponent(lbl_1)))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CheckBoxes1Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(lbl_6)))
+                    .addGroup(CheckBoxes1Layout.createSequentialGroup()
+                        .addGap(138, 138, 138)
+                        .addComponent(lbl_1))
                     .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(CheckBoxes1Layout.createSequentialGroup()
                             .addGap(69, 69, 69)
@@ -636,25 +644,34 @@ public class Arc_Import extends javax.swing.JFrame {
                             .addComponent(lbl_4)))
                     .addGroup(CheckBoxes1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(lbl_2)))
+                        .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(CheckBoxes1Layout.createSequentialGroup()
+                                    .addGap(20, 20, 20)
+                                    .addComponent(lbl_5))
+                                .addComponent(lbl_6, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(lbl_2)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CheckBoxes1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_header_2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txt_header5, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txt_header4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CheckBoxes1Layout.createSequentialGroup()
-                            .addComponent(txt_header1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(1, 1, 1)))
-                    .addComponent(txt_header3)
+                    .addGroup(CheckBoxes1Layout.createSequentialGroup()
+                        .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_header1, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                            .addComponent(txt_header_2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txt_header3)
+                            .addComponent(txt_header_chandata, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(32, 32, 32)
+                        .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbl_8)
+                            .addComponent(lbl_9)
+                            .addComponent(lbl_10)
+                            .addComponent(lbl_7)))
+                    .addComponent(txt_header5, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_header4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txt_header_1_1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(31, 31, 31)
-                .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lbl_8)
-                    .addComponent(lbl_9)
-                    .addComponent(lbl_10)
-                    .addComponent(lbl_7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(CheckBoxes1Layout.createSequentialGroup()
                         .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -679,47 +696,52 @@ public class Arc_Import extends javax.swing.JFrame {
             .addGroup(CheckBoxes1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(CheckBoxes1Layout.createSequentialGroup()
-                        .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_header1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_3)
-                            .addComponent(txt_header_2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_4)
-                            .addComponent(txt_header3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_header_1_1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_header4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_5)))
                     .addComponent(lbl_7)
                     .addGroup(CheckBoxes1Layout.createSequentialGroup()
-                        .addComponent(txt_header6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(CheckBoxes1Layout.createSequentialGroup()
+                                .addComponent(txt_header6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txt_header7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbl_8))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txt_header8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbl_9))
+                                .addGap(8, 8, 8)
+                                .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txt_header9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbl_10)
+                                    .addComponent(txt_header_chandata, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1)))
+                            .addGroup(CheckBoxes1Layout.createSequentialGroup()
+                                .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txt_header1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbl_1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbl_3)
+                                    .addComponent(txt_header_2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbl_4)
+                                    .addComponent(txt_header3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_header7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_header8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_9))
-                        .addGap(8, 8, 8)
-                        .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_header9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_10))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lbl_6)
-                    .addComponent(txt_header5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(CheckBoxes1Layout.createSequentialGroup()
+                                .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txt_header_1_1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbl_2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txt_header4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbl_5))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lbl_6)
+                                    .addComponent(txt_header5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButton3))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1283,8 +1305,8 @@ lbl_per.setText("0%");
                               if(data_chabdata_count.size() > 0){
                                   clear_db_data();
                                   starts_progress_bar();                     // reset_varaiables();
-                              start_timer2(); 
-                              start_loop_par1();
+                                  start_timer2(); 
+                                  start_loop_par1();
                               }else{
                                       lbl_per.setText("");
                                       path.setText("");
@@ -1444,9 +1466,18 @@ lbl_per.setText("0%");
     }//GEN-LAST:event_btn_raw_tblMouseClicked
  private static void set_jtables() {
         TableColumnModel columnModel = SqliteDataTable.getColumnModel();
+        columnModel.getColumn(1).setPreferredWidth(370);
+        columnModel.getColumn(1).setMaxWidth(370);
+       // columnModel.getColumn(1).setPreferredWidth(150);
+      //  columnModel.getColumn(1).setMaxWidth(150);
+      
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+ private static void set_jtables3() {
+        TableColumnModel columnModel = SqliteDataTable.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(370);
         columnModel.getColumn(0).setMaxWidth(370);
-      //  columnModel.getColumn(1).setPreferredWidth(150);
+       // columnModel.getColumn(1).setPreferredWidth(150);
       //  columnModel.getColumn(1).setMaxWidth(150);
       
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -2030,6 +2061,10 @@ lbl_per.setText("0%");
     private void txt_header_1_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_header_1_1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_header_1_1ActionPerformed
+
+    private void txt_header_chandataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_header_chandataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_header_chandataActionPerformed
   
     
     private void open_explorer(){
@@ -2225,6 +2260,7 @@ lbl_per.setText("0%");
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -2252,6 +2288,7 @@ lbl_per.setText("0%");
     private javax.swing.JTextField txt_header9;
     private javax.swing.JComboBox txt_header_1_1;
     private javax.swing.JComboBox txt_header_2;
+    private javax.swing.JComboBox txt_header_chandata;
     private javax.swing.JTextField txt_path2;
     // End of variables declaration//GEN-END:variables
    
@@ -2351,7 +2388,7 @@ lbl_per.setText("0%");
     static void UpdateJTable(){
         
         //SqliteDataTable = new javax.swing.JTable();
-     String sql = "select id AS '..' ,chandata AS '..', asset_number AS '..',str_def_asset_body AS '..', asset_status AS '..', pos_counter as '..' from tbl_chandata";
+     String sql = "select id AS '..' ,chandata AS '..', asset_number AS '..',str_def_asset_body AS '..', asset_status AS '..', pos_counter as '..' from tbl_chandata order by id DESC";
      try{
     pst = conn.prepareStatement(sql);
     rs = pst.executeQuery();
@@ -2507,7 +2544,7 @@ lbl_per.setText("0%");
      catch (Exception e){
     // JOptionPane.showMessageDialog(null, e);
      }
-     set_jtables();
+     set_jtables3();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     static void update_table_2() {
@@ -2516,107 +2553,107 @@ lbl_per.setText("0%");
         String sql="";
              if(non_zero_columns==1){
         
-          sql = "select col1 as '..',col30 as '..' from  tbl_processed_table order by col30 ASC";
+          sql = "select col29 as '..',col1 as '..',col30 as '..' from  tbl_processed_table order by col30 ASC";
         }else if (non_zero_columns==2){
-        sql = "select col1 as '..',col2 as '..' from  tbl_processed_table";     
+        sql = "select col29 as '..',col1 as '..',col2 as '..' from  tbl_processed_table";     
         }
         else if (non_zero_columns==3){
-        sql = "select col1 as '..',col2 as '..',col3 as '..' from  tbl_processed_table";     
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..' from  tbl_processed_table";     
         }
          else if (non_zero_columns==4){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..' from  tbl_processed_table";     
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..' from  tbl_processed_table";     
         }
          else if (non_zero_columns==5){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..' from  tbl_processed_table";     
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..' from  tbl_processed_table";     
         }
          else if (non_zero_columns==6){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..' from  tbl_processed_table";     
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..' from  tbl_processed_table";     
          }
            else if (non_zero_columns==7){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..' from  tbl_processed_table";     
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..' from  tbl_processed_table";     
          }
             else if (non_zero_columns==8){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..' from  tbl_processed_table";     
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..' from  tbl_processed_table";     
          }
              else if (non_zero_columns==9){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..' from  tbl_processed_table";     
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..' from  tbl_processed_table";     
          }
              else if (non_zero_columns==10){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..' from  tbl_processed_table";     
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..' from  tbl_processed_table";     
          }
              else if (non_zero_columns==11){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..' from  tbl_processed_table";     
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..' from  tbl_processed_table";     
          }
              else if (non_zero_columns==12){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..' from  tbl_processed_table";     
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..' from  tbl_processed_table";     
          }
              else if (non_zero_columns==13){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..' from  tbl_processed_table";     
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..' from  tbl_processed_table";     
          }
              else if (non_zero_columns==14){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..' from  tbl_processed_table";     
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..' from  tbl_processed_table";     
          }
              else if (non_zero_columns==15){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..' from  tbl_processed_table";     
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..' from  tbl_processed_table";     
          }
              else if (non_zero_columns==16){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..' from  tbl_processed_table";     
          }
              else if (non_zero_columns==17){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..' from  tbl_processed_table";     
          }
              else if (non_zero_columns==18){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..' from  tbl_processed_table";     
          }
              else if (non_zero_columns==19){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..' from  tbl_processed_table";     
          }
               else if (non_zero_columns==20){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..' from  tbl_processed_table";     
          }
               else if (non_zero_columns==21){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..' from  tbl_processed_table";     
          }
               else if (non_zero_columns==22){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..' from  tbl_processed_table";     
          }
               else if (non_zero_columns==23){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..' from  tbl_processed_table";     
          }
               else if (non_zero_columns==24){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..' from  tbl_processed_table";     
          }
               else if (non_zero_columns==25){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..' from  tbl_processed_table";     
          }
               else if (non_zero_columns==26){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..' from  tbl_processed_table";     
          }
               else if (non_zero_columns==27){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..' from  tbl_processed_table";     
          }
               else if (non_zero_columns==28){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..',col28 as '..' from  tbl_processed_table";     
          }
               else if (non_zero_columns==29){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..',col28 as '..',col29 as '..' from  tbl_processed_table";     
          }
               else if (non_zero_columns==30){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col29 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..',col28 as '..',col29 as '..',col30 as '..' from  tbl_processed_table";     
          }             
         else{
@@ -2641,107 +2678,107 @@ lbl_per.setText("0%");
         String sql="";
              if(non_zero_columns==1){
         
-          sql = "select col1 as '..',col61 as '..' from  tbl_processed_cec_table";
+          sql = "select col60 as '..',col1 as '..',col61 as '..' from  tbl_processed_cec_table";
         }else if (non_zero_columns==2){
-        sql = "select col1 as '..',col2 as '..' from  tbl_processed_cec_table";     
+        sql = "select col60 as '..',col1 as '..',col2 as '..' from  tbl_processed_cec_table";     
         }
         else if (non_zero_columns==3){
-        sql = "select col1 as '..',col2 as '..',col3 as '..' from  tbl_processed_cec_table";     
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..' from  tbl_processed_cec_table";     
         }
          else if (non_zero_columns==4){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..' from  tbl_processed_cec_table";     
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..' from  tbl_processed_cec_table";     
         }
          else if (non_zero_columns==5){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..' from  tbl_processed_cec_table";     
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..' from  tbl_processed_cec_table";     
         }
          else if (non_zero_columns==6){
-        sql = "select col1 as '..',co61 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..' from  tbl_processed_cec_table";     
+        sql = "select col60 as '..',col1 as '..',co61 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..' from  tbl_processed_cec_table";     
          }
            else if (non_zero_columns==7){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..' from  tbl_processed_cec_table";     
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..' from  tbl_processed_cec_table";     
          }
             else if (non_zero_columns==8){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..' from  tbl_processed_cec_table";     
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..' from  tbl_processed_cec_table";     
          }
              else if (non_zero_columns==9){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..' from  tbl_processed_cec_table";     
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..' from  tbl_processed_cec_table";     
          }
              else if (non_zero_columns==10){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..' from  tbl_processed_cec_table";     
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..' from  tbl_processed_cec_table";     
          }
              else if (non_zero_columns==11){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..' from  tbl_processed_cec_table";     
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..' from  tbl_processed_cec_table";     
          }
              else if (non_zero_columns==12){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..' from  tbl_processed_cec_table";     
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..' from  tbl_processed_cec_table";     
          }
              else if (non_zero_columns==13){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..' from  tbl_processed_cec_table";     
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..' from  tbl_processed_cec_table";     
          }
              else if (non_zero_columns==14){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..' from  tbl_processed_cec_table";     
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..' from  tbl_processed_cec_table";     
          }
              else if (non_zero_columns==15){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..' from  tbl_processed_cec_table";     
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..' from  tbl_processed_cec_table";     
          }
              else if (non_zero_columns==16){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..' from  tbl_processed_cec_table";     
          }
              else if (non_zero_columns==17){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..' from  tbl_processed_cec_table";     
          }
              else if (non_zero_columns==18){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..' from  tbl_processed_cec_table";     
          }
              else if (non_zero_columns==19){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..' from  tbl_processed_cec_table";     
          }
               else if (non_zero_columns==20){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..' from  tbl_processed_cec_table";     
          }
               else if (non_zero_columns==21){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..' from  tbl_processed_cec_table";     
          }
               else if (non_zero_columns==22){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..' from  tbl_processed_cec_table";     
          }
               else if (non_zero_columns==23){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..' from  tbl_processed_cec_table";     
          }
               else if (non_zero_columns==24){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..' from  tbl_processed_cec_table";     
          }
               else if (non_zero_columns==25){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..' from  tbl_processed_cec_table";     
          }
               else if (non_zero_columns==26){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..' from  tbl_processed_cec_table";     
          }
               else if (non_zero_columns==27){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..' from  tbl_processed_cec_table";     
          }
               else if (non_zero_columns==28){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..',col28 as '..' from  tbl_processed_cec_table";     
          }
               else if (non_zero_columns==29){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..',col28 as '..',col29 as '..' from  tbl_processed_cec_table";     
          }
               else if (non_zero_columns==30){
-        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+        sql = "select col60 as '..',col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
                 + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..',col28 as '..',col29 as '..',col30 as '..' from  tbl_processed_cec_table";     
          }             
         else{
@@ -3281,17 +3318,20 @@ private boolean start_loop_par1_2(){
         
        }
  private void calculate_segments(){
-     String int_min_xc=int_min.replaceAll("[^0-9]", "");
-    String int_max_xc=int_max.replaceAll("[^0-9]", "");
-    String int_step_xc=int_step.replaceAll("[^0-9]", "");
+     String int_min_xc=int_min;
+    String int_max_xc=int_max;
+    String int_step_xc=int_step;
+    double mincc = Double.parseDouble(int_min_xc);
+    double maxcc = Double.parseDouble(int_max_xc);
+    double stepcc = Double.parseDouble(int_step_xc);
      
-     int mincc = Integer.parseInt(int_min_xc);
-     int maxcc = Integer.parseInt(int_max_xc);
-     int stepcc = Integer.parseInt(int_step_xc);
+  //   int mincc = Integer.parseInt(int_min_xc);
+   //  int maxcc = Integer.parseInt(int_max_xc);
+  //   int stepcc = Integer.parseInt(int_step_xc);
      //int_min
      //int_max
      ///int_step
-compesation_segments=(mincc+mincc)/stepcc;
+compesation_segments=(maxcc-mincc)/stepcc;
  }
  private void select_row_0(){
      
@@ -3316,7 +3356,7 @@ compesation_segments=(mincc+mincc)/stepcc;
                      String str_enc_com_ena =rs.getString("header_enable_0");
                    String str_enc_com_ena_1 =rs.getString("footer_enable_1");
                    String str_header_text=rs.getString("header_text");
-                  
+                  String str_chandata=rs.getString("chandata");
                    String str_header_new_conf=rs.getString("header_newconf");
                     String str_footer_text=rs.getString("footer_end_text");
                      String str_footer_new_conf=rs.getString("footer_newconf");
@@ -3326,7 +3366,7 @@ compesation_segments=(mincc+mincc)/stepcc;
                   header_part2=str_header_text;
                   header_part3=str_enc_com_ena; 
                   header_part4=str_header_new_conf;
-                  header_part5="";
+                  header_part5=str_chandata;
                   
                  // header_part4=rs.getString("chandata"); 
                  // headeheader_part3="";r_part4="n/a"; 
@@ -3484,7 +3524,7 @@ JOptionPane.showMessageDialog(null, ex.getMessage());
           String header_part2="NEWCONF";
           String header_part3="";
           String header_part4="CHANDATA(1)";*/
-          int ixx=5;
+          int ixx=6;
          for(int i=0; i <ixx; i++){
          String dataxx="";
          if(i==0){
@@ -3498,9 +3538,11 @@ JOptionPane.showMessageDialog(null, ex.getMessage());
           else if(i==3){
              dataxx=header_part4;
          }
-          
+          else if(i==4){
+             dataxx=header_part5;
+         }
          else{
-        // dataxx="";
+         dataxx="";
          }
         compesation_data_1.add(dataxx);
        // /(compesation_data_1);
@@ -3513,7 +3555,8 @@ JOptionPane.showMessageDialog(null, ex.getMessage());
           String body_part2="1";
           String body_part3="AX1";
           String body_part4="0";*/
-          int ixxb=compesation_segments;
+     int ixxb= (int) Math.round(compesation_segments);
+         // int ixxb=compesation_segments;
  for(int i=0; i <ixxb+1; i++){
           String error_value =compesation_errors.get(i);
           String dataxx=body_part1+"["+body_part2+","+i+","+body_part3+"]"+"="+error_value;
@@ -4371,7 +4414,7 @@ reader.close();
             pst.setString(26, var26x);       
             pst.setString(27, var27x);  
             pst.setString(28, var28x); 
-            pst.setString(29, var29x); 
+            pst.setString(29, asset_code_dif_col); 
             pst.setString(30, chandata_loop); 
          
            
@@ -4405,6 +4448,7 @@ reader.close();
     // data.clear();
      ss = data_used_only_xx.size();
      end_used_only =1;
+     asset_code_dif_col="";
      old_str_asset_def_body="n/a";
      if(!old_str_asset_def_body.equals(str_asset_def_body) && loop_id==2){
      data.add(str_asset_status);
@@ -4514,7 +4558,7 @@ try (PreparedStatement pst = conn.prepareStatement(sqlInsert)) {
             pst.setString(57, stringArray[55]);
             pst.setString(58, stringArray[56]);
             pst.setString(59, stringArray[57]);
-             pst.setString(60, stringArray[58]);
+             pst.setString(60, asset_code_dif_col);
             pst.setString(61, str_index);
     int updateCount = pst.executeUpdate(); // 1 when inserted 1 record
 }catch(Exception ex){
@@ -5371,7 +5415,8 @@ data.clear();
     }
     private void insert_0() {
         int xx =data10.size();
-        old_str_asset_def_body="N32700 $MA_CEC_ENABLE";
+        old_str_asset_def_body="$MA_CEC_ENABLE";
+        asset_code_dif_col="N32700";
         data.clear();
         xx =data10.size();
         data=data0;
@@ -5379,57 +5424,64 @@ data.clear();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_1() {
-        old_str_asset_def_body="N31000 $MA_ENC_IS_LINEAR[0]";
+        old_str_asset_def_body="$MA_ENC_IS_LINEAR[0]";
+        asset_code_dif_col="N31000";
         data.clear();
         data=data1;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_2() {
-        old_str_asset_def_body="N31000 $MA_ENC_IS_LINEAR[1]";
+        old_str_asset_def_body="$MA_ENC_IS_LINEAR[1]";
+        asset_code_dif_col="N31000";
         data.clear();
         data=data2;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_3() {
-        old_str_asset_def_body="N37100 $MA_GANTRY_AXIS_TYPE";
-        
+        old_str_asset_def_body="$MA_GANTRY_AXIS_TYPE";
+        asset_code_dif_col="N37100";
         data.clear();
         data=data3;
         insert_array();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_4() {
-        old_str_asset_def_body="N30200 $MA_NUM_ENCS";
+        old_str_asset_def_body="$MA_NUM_ENCS";
+        asset_code_dif_col="N30200";
         data.clear();
         data=data4;
         insert_array();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_5() {
-        old_str_asset_def_body="N32700 $MA_ENC_COMP_ENABLE[0]";
+        old_str_asset_def_body="$MA_ENC_COMP_ENABLE[0]";
+        asset_code_dif_col="N32700";
         data.clear();
         data=data5;
         insert_array();
       //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_6() {
-        old_str_asset_def_body="N32700 $MA_ENC_COMP_ENABLE[1]";
+        old_str_asset_def_body="$MA_ENC_COMP_ENABLE[1]";
+        asset_code_dif_col="N32700";
        data.clear();
         data=data6;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
  private void insert_7() {
-        old_str_asset_def_body="N36110 $MA_POS_LIMIT_MINUS[0]";
+        old_str_asset_def_body="$MA_POS_LIMIT_MINUS[0]";
+        asset_code_dif_col="N36110";
         data.clear();
         data=data7;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
   private void insert_8() {
-        old_str_asset_def_body="N36110 $MA_POS_LIMIT_PLUS[1]";
+        old_str_asset_def_body="$MA_POS_LIMIT_PLUS[1]";
+        asset_code_dif_col="N36110";
         data.clear();
         data=data8;
         insert_array();
@@ -5437,6 +5489,7 @@ data.clear();
     }
    private void insert_9() {
         old_str_asset_def_body="ENC Axis Comp active";
+        asset_code_dif_col="";
         data.clear();
         data=data9;
         insert_array();
@@ -5444,6 +5497,7 @@ data.clear();
     }
     private void insert_10() {
         old_str_asset_def_body="CEC Axis Comp active";
+        asset_code_dif_col="";
         data.clear();
         data=data10;
         insert_array();
@@ -5451,28 +5505,32 @@ data.clear();
     }
     //$MN_AXCONF_LOGIC_MACHAX_TAB  $MN_AXCONF_MACHAX_NAME_TAB  $MA_IS_ROT_AX  $MN_MM_CEC_MAX_POINTS
     private void insert_12() {
-        old_str_asset_def_body="N10002 $MN_AXCONF_LOGIC_MACHAX_TAB";
+        old_str_asset_def_body="$MN_AXCONF_LOGIC_MACHAX_TAB";
+        asset_code_dif_col="N10002";
         data.clear();
         data=data12;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_13() {
-        old_str_asset_def_body="N10000 $MN_AXCONF_MACHAX_NAME_TAB";
+        old_str_asset_def_body="$MN_AXCONF_MACHAX_NAME_TAB";
+        asset_code_dif_col="N10000";
         data.clear();
         data=data13;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_14() {
-        old_str_asset_def_body="N30300 $MA_IS_ROT_AX";
+        old_str_asset_def_body="$MA_IS_ROT_AX";
+        asset_code_dif_col="N30300";
         data.clear();
         data=data14;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_15() {
-        old_str_asset_def_body="N18342 $MN_MM_CEC_MAX_POINTS";
+        old_str_asset_def_body="$MN_MM_CEC_MAX_POINTS";
+        asset_code_dif_col="N18342";
         data.clear();
         data=data15;
         insert_array();
@@ -5480,63 +5538,72 @@ data.clear();
     }
     
      private void insert_16() {
-        old_str_asset_def_body="N32450 $MA_BACKLASH[0]";
+        old_str_asset_def_body="$MA_BACKLASH[0]";
+        asset_code_dif_col="N32450";
         data.clear();
         data=data16;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
        private void insert_17() {
-        old_str_asset_def_body="N32450 $MA_BACKLASH[1]";        
+        old_str_asset_def_body="$MA_BACKLASH[1]";  
+        asset_code_dif_col="N32450";
        data.clear();
         data=data17;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
          private void insert_18() {
-       old_str_asset_def_body="N38000 $MA_MM_ENC_COMP_MAX_POINTS[0]";       
+       old_str_asset_def_body="$MA_MM_ENC_COMP_MAX_POINTS[0]";  
+       asset_code_dif_col="N38000";
        data.clear();
         data=data18;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
            private void insert_19() {
-       old_str_asset_def_body="N38000 $MA_MM_ENC_COMP_MAX_POINTS[1]";       
+       old_str_asset_def_body="$MA_MM_ENC_COMP_MAX_POINTS[1]";   
+       asset_code_dif_col="N38000";
        data.clear();
         data=data19;
         insert_array();
       
     }
             private void insert_20() {
-        old_str_asset_def_body="$AA_ENC_COMP_STEP[0]";        
+        old_str_asset_def_body="$AA_ENC_COMP_STEP[0]";    
+        asset_code_dif_col="";
         data.clear();
         data=data20;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
            }
              private void insert_21() {
-         old_str_asset_def_body="$AA_ENC_COMP_MIN[0]";       
+         old_str_asset_def_body="$AA_ENC_COMP_MIN[0]";   
+         asset_code_dif_col="";
          data.clear();
         data=data21;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
           }
              private void insert_21_a() {
-         old_str_asset_def_body="$AA_ENC_COMP_MIN[1]";       
+         old_str_asset_def_body="$AA_ENC_COMP_MIN[1]";    
+         asset_code_dif_col="";
          data.clear();
         data=data21_a;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
           }
               private void insert_22() {
-        old_str_asset_def_body="$AA_ENC_COMP_MAX[0]";          
+        old_str_asset_def_body="$AA_ENC_COMP_MAX[0]";    
+        asset_code_dif_col="";
         data.clear();
         data=data22;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
                private void insert_22_a() {
-        old_str_asset_def_body="$AA_ENC_COMP_MAX[1]";          
+        old_str_asset_def_body="$AA_ENC_COMP_MAX[1]";     
+        asset_code_dif_col="";
         data.clear();
         data=data22_a;
         insert_array();
@@ -5544,6 +5611,7 @@ data.clear();
     }
                private void insert_23() {
         old_str_asset_def_body="$AA_ENC_COMP_IS_MODULO[0]";  
+        asset_code_dif_col="";
          data.clear();
         data=data23;
         insert_array();
@@ -5551,6 +5619,7 @@ data.clear();
     }
                     private void insert_23_a() {
         old_str_asset_def_body="$AA_ENC_COMP_IS_MODULO[1]";  
+        asset_code_dif_col="";
         data.clear();
         data=data23_a;
         insert_array();
@@ -5558,41 +5627,48 @@ data.clear();
     }
          private void insert_24() {
         old_str_asset_def_body="$AA_ENC_COMP_STEP[1]";  
+        asset_code_dif_col="";
         data.clear();
         data=data24;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
           private void insert_26() {
-        old_str_asset_def_body="N20060 $MC_AXCONF_GEOAX_NAME_TAB";  
+        old_str_asset_def_body="$MC_AXCONF_GEOAX_NAME_TAB";  
+        asset_code_dif_col="N20060";
         data.clear();
         data=data26_3rd;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
           private void insert_27() {
-        old_str_asset_def_body="N20080 $MC_AXCONF_CHANAX_NAME_TAB";  
+        old_str_asset_def_body="$MC_AXCONF_CHANAX_NAME_TAB";  
+        asset_code_dif_col="N20080";
         data.clear();
         data=data27_3rd;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
       private void insert_28() {
-        old_str_asset_def_body="N30310 $MA_ROT_IS_MODULO";  
+        old_str_asset_def_body="$MA_ROT_IS_MODULO";  
+        asset_code_dif_col="N30310";
         data.clear();
         data=data28_3rd;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }    
        private void insert_29() {
-        old_str_asset_def_body="N20050 $MC_AXCONF_GEOAX_ASSIGN_TAB";  
+        old_str_asset_def_body="$MC_AXCONF_GEOAX_ASSIGN_TAB";  
+        asset_code_dif_col="N20050";
         data.clear();
         data=data29_3rd;
         insert_array();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }    
             private void cec_transition1() {
-        old_str_asset_def_body="NAME";  
+        old_str_asset_def_body="$SN_CEC_TABLE_ENABLED";  
+                asset_code_dif_col="N41300";
+//herer
         str_index="INDEX"; 
         data.clear();
         data=cec_data_used_only_indices;
@@ -5601,7 +5677,8 @@ data.clear();
     } 
          ////////////////////CEC//////////////////////////////////////
        private void cec_data_1() {
-        old_str_asset_def_body="N18342 $MN_MM_CEC_MAX_POINTS";  
+        old_str_asset_def_body="$MN_MM_CEC_MAX_POINTS";  
+        asset_code_dif_col="N18342";
         data.clear();
         data=cec_data_1;
        insert_array_cc();
@@ -5609,7 +5686,8 @@ data.clear();
     }   
          
      private void cec_data_2() {
-        old_str_asset_def_body="N41300 $SN_CEC_TABLE_ENABLE";  
+        old_str_asset_def_body="$SN_CEC_TABLE_ENABLE";  
+        asset_code_dif_col="N41300";
         data.clear();
         data=cec_data_2;
       //  data=cec_data_used_only_xx;
@@ -5617,7 +5695,8 @@ data.clear();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }      
      private void cec_data_3() {
-        old_str_asset_def_body="N41310 $SN_CEC_TABLE_WEIGHT";  
+        old_str_asset_def_body="$SN_CEC_TABLE_WEIGHT";  
+        asset_code_dif_col="N41310";
         data.clear();
         System.out.println();
         data=cec_data_3;
@@ -5627,6 +5706,7 @@ data.clear();
      
      private void cec_data_4() {
         old_str_asset_def_body="$AN_CEC_INPUT_NCU";  
+        asset_code_dif_col="";
         data.clear();
         data=cec_data_4;
         insert_array_cc();
@@ -5635,6 +5715,7 @@ data.clear();
      
      private void cec_data_5() {
         old_str_asset_def_body="$AN_CEC_INPUT_AXIS";  
+        asset_code_dif_col="";
         data.clear();
         data=cec_data_5;
        insert_array_cc();
@@ -5643,6 +5724,7 @@ data.clear();
      
      private void cec_data_6() {
         old_str_asset_def_body="$AN_CEC_OUTPUT_NCU";  
+        asset_code_dif_col="";
         data.clear();
         data=cec_data_6;
         insert_array_cc();
@@ -5650,6 +5732,7 @@ data.clear();
     }
      private void cec_data_7() {
         old_str_asset_def_body="$AN_CEC_OUTPUT_AXIS";  
+        asset_code_dif_col="";
         data.clear();
         data=cec_data_7;
         insert_array_cc();
@@ -5657,6 +5740,7 @@ data.clear();
     }
      private void cec_data_8() {
         old_str_asset_def_body="$AN_CEC_STEP";  
+        asset_code_dif_col="";
         data.clear();
         data=cec_data_8;
         insert_array_cc();
@@ -5664,6 +5748,7 @@ data.clear();
     } 
      private void cec_data_9() {
         old_str_asset_def_body="$AN_CEC_MIN";  
+        asset_code_dif_col="";
         data.clear();
         data=cec_data_9;
        insert_array_cc();
@@ -5672,6 +5757,7 @@ data.clear();
      
      private void cec_data_10() {
         old_str_asset_def_body="$AN_CEC_MAX";  
+        asset_code_dif_col="";
         data.clear();
         data=cec_data_10;
         insert_array_cc();
@@ -5680,6 +5766,7 @@ data.clear();
      
      private void cec_data_11() {
         old_str_asset_def_body="$AN_CEC_DIRECTION";  
+        asset_code_dif_col="";
         data.clear();
         data=cec_data_11;
         insert_array_cc();
@@ -5687,6 +5774,7 @@ data.clear();
     }  
      private void cec_data_12() {
         old_str_asset_def_body="$AN_CEC_MULT_BY_TABLE";  
+        asset_code_dif_col="";
         data.clear();
         data=cec_data_12;
         insert_array_cc();
@@ -5695,6 +5783,7 @@ data.clear();
      
      private void cec_data_13() {
         old_str_asset_def_body="$AN_CEC_IS_MODULO";  
+        asset_code_dif_col="";
         data.clear();
         data=cec_data_13;
         insert_array_cc();
@@ -5702,6 +5791,7 @@ data.clear();
     }
      private void cec_data_14() {
         old_str_asset_def_body="$AN_CEC_TYPE";  
+        asset_code_dif_col="";
         data.clear();
         data=cec_data_14;
        insert_array_cc();
@@ -5709,7 +5799,8 @@ data.clear();
     }  
        private void insert_used() {
          //  here
-        old_str_asset_def_body="N20070 $MC_AXCONF_MACHAX_USED";  
+        old_str_asset_def_body="$MC_AXCONF_MACHAX_USED";  
+        asset_code_dif_col="N20070";
         //data.clear();
         data=data25;
        insert_array();
@@ -6190,6 +6281,8 @@ data.clear();
                     normalize_line();
                    String chan_name=line.substring(line.lastIndexOf("=") + 1);
                    chan_name = chan_name.replaceAll("[^a-zA-Z0-9]", "");
+                line=line.substring(6);
+                   line = line.replaceAll("\\s","");
                    ///////////////////start check chan name repetition/////////////////////////
                     Statement stmt2;
                     stmt2= conn.createStatement();                
@@ -6296,17 +6389,19 @@ data29_3rd.clear();
         String xxx2=str_chan_name;
         str_chan_name_2=str_chan_name;
         String strs_parent_insert="";
-       for(int i=0; i<3; i++ ){
+       for(int i=0; i==0; i++ ){
            if(i==0){
                strs_parent_insert="";
           // chandata_loop="";
           // str_chan_name="";
            }else if(i==1){
-           strs_parent_insert=xxx;
+           strs_parent_insert=xxx2;
+           asset_code_dif_col="N20000";
+           
           // str_chan_name="";
            }else{
            //chandata_loop="";
-         strs_parent_insert=xxx2;
+       //  strs_parent_insert=xxx2;
            }
            
             String sql = "insert into tbl_processed_table(col1, col2, col3, col4,col5,col6, col7, col8, col9,col10,col11, col12,col13, col14, col15,col16, col17, col18, col19,col20,col21, col22, col23, col24,col25,col26, col27, col28, col29, col30) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
@@ -6342,7 +6437,7 @@ data29_3rd.clear();
             pst.setString(26, "");     
             pst.setString(27, ""); 
             pst.setString(28, "");
-            pst.setString(29, ""); 
+            pst.setString(29, asset_code_dif_col); 
             pst.setString(30, "");   
            
 
@@ -6366,7 +6461,7 @@ data29_3rd.clear();
          String xxx=chandata_loop;
         String xxx2=str_chan_name_2;
         String strs_parent_insert="";
-       for(int i=0; i<3; i++ ){
+       for(int i=0; i < 3; i++ ){
            if(i==0){
                strs_parent_insert="";
           // chandata_loop="";
@@ -6374,10 +6469,14 @@ data29_3rd.clear();
            }else if(i==1){
            strs_parent_insert=xxx;
           // str_chan_name="";
-           }else{
+           }else if(i==2){
               strs_parent_insert=xxx2;  
+              asset_code_dif_col="N20000";
+
            //chandata_loop="";
        //  strs_parent_insert="";
+           }else{
+           strs_parent_insert=""; 
            }
            //here
             String sql = "insert into tbl_processed_cec_table(col1, col2, col3, col4,col5,col6, col7, col8, col9,col10,col11, col12,col13, col14, col15,col16, col17, col18, col19,col20,col21, col22, col23, col24,col25,col26, col27, col28, col29, col30,col31, col32, col33, col34,col35,col36, col37, col38, col39,col40,col41, col42,col43, col44, col45,col46, col47, col48, col49,col50,col51, col52, col53, col54,col55,col56, col57, col58, col59, col60, col61) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
@@ -6445,7 +6544,7 @@ data29_3rd.clear();
             pst.setString(57, ""); 
             pst.setString(58, ""); 
             pst.setString(59, ""); 
-             pst.setString(60, "");
+             pst.setString(60, asset_code_dif_col);
             pst.setString(61, ""); 
            
 
@@ -6541,7 +6640,7 @@ data29_3rd.clear();
                           //  data_used_only_indices_keeper=data_used_only_indices;
                            data=data_used_only_indices;
                           // insert_column_size();                                
-                         //  insert_array_2();
+                           insert_array_2();
                           // used_inserted_status=1;
                           
         
@@ -6864,7 +6963,7 @@ private void enable_btns() {
     }
 
     private void clear_compesation_varia() {
-         header_part1="";header_part2="";header_part3="";header_part4="";
+         header_part1="";header_part2="";header_part3="";header_part4=""; header_part5="";
    body_part1="";body_part2="";body_part3="";body_part4="";
    footer_1_1="";footer_1_2="";footer_1_3="";footer_1_4="";footer_1_5="";
   footer_2_1=""; footer_2_2="";footer_2_3="";footer_2_4="";
@@ -7448,20 +7547,21 @@ private void enable_btns() {
 
     private void insert_compesantation_vars_inputs() {
         
-         String sql = "insert into tbl_compensation_var_inputs (header_text, header_enable_0, header_newconf,logic_machax_tab, body_aa_enc_comp,body_modulo, footer_end_text,footer_enable_1,footer_newconf,footer_m17) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+         String sql = "insert into tbl_compensation_var_inputs (header_text, header_enable_0, header_newconf,chandata,logic_machax_tab, body_aa_enc_comp,body_modulo, footer_end_text,footer_enable_1,footer_newconf,footer_m17) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
        
         try{
             pst = conn.prepareStatement(sql);            
             pst.setString(1, txt_header1.getText().toString().trim());
             pst.setString(2, txt_header_2.getSelectedItem().toString().trim());
             pst.setString(3, txt_header3.getText().toString().trim());   
-            pst.setString(4, txt_header_1_1.getSelectedItem().toString().trim());
-            pst.setString(5, txt_header4.getSelectedItem().toString().trim());  
-            pst.setString(6, txt_header5.getSelectedItem().toString().trim());
-            pst.setString(7, txt_header6.getText().toString().trim());
-            pst.setString(8, txt_header7.getSelectedItem().toString().trim());
-            pst.setString(9, txt_header8.getText().toString().trim());
-            pst.setString(10, txt_header9.getText().toString().trim());
+             pst.setString(4, txt_header_chandata.getSelectedItem().toString().trim());
+            pst.setString(5, txt_header_1_1.getSelectedItem().toString().trim());
+            pst.setString(6, txt_header4.getSelectedItem().toString().trim());  
+            pst.setString(7, txt_header5.getSelectedItem().toString().trim());
+            pst.setString(8, txt_header6.getText().toString().trim());
+            pst.setString(9, txt_header7.getSelectedItem().toString().trim());
+            pst.setString(10, txt_header8.getText().toString().trim());
+            pst.setString(11, txt_header9.getText().toString().trim());
            
 
             pst.execute();  
@@ -7487,7 +7587,8 @@ private void enable_btns() {
         txt_header7.setVisible(false);
         txt_header8.setVisible(false);
         txt_header9.setVisible(false);
-        
+        txt_header_chandata.setVisible(false);
+        jLabel1.setVisible(false);
         lbl_1.setVisible(false);
          lbl_2.setVisible(false);
           lbl_3.setVisible(false);
@@ -7513,7 +7614,8 @@ private void enable_btns() {
         txt_header7.setVisible(true);
         txt_header8.setVisible(true);
         txt_header9.setVisible(true);
-        
+        txt_header_chandata.setVisible(true);
+        jLabel1.setVisible(true);
         lbl_1.setVisible(true);
          lbl_2.setVisible(true);
           lbl_3.setVisible(true);

@@ -87,6 +87,7 @@ import test.CustomOutputStream;
 
 public class Arc_Import extends javax.swing.JFrame {
       int active_state=0;
+      int loop_pass=0;
       SwingWorker SW1;
       SwingWorker SW2;
       String filenamex="";
@@ -372,7 +373,7 @@ public class Arc_Import extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -502,7 +503,7 @@ public class Arc_Import extends javax.swing.JFrame {
                 .addComponent(lbl_per, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         CheckBoxes1.setBorder(javax.swing.BorderFactory.createTitledBorder("..."));
@@ -1153,10 +1154,10 @@ public class Arc_Import extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(CheckBoxes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(CheckBoxes1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(CheckBoxes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(CheckBoxes1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -3997,6 +3998,8 @@ reader.close();
                    if(data_used_only_indices.contains("("+str_pos_counter +")")){
                    int_positon_to_insert= data_used_only_indices.indexOf("("+str_pos_counter +")");
                   data_used_name.set(int_positon_to_insert, str_asset_status);
+                  System.out.println(data_used_only_indices);
+                  System.out.println(data_used_name);
                    }
                  }
                   
@@ -4063,8 +4066,8 @@ reader.close();
                // str_global_count="["+chandata_loop+"]"+""+row_of_rows;
               
        //  System.out.println("["+chandata_loop+"]"+""+row_of_rows); 
-              if(firstFourChars.equals("CHANDATA") || first6Char.equals("N20000") || first6Char.equals("N20070") || first6Char.equals("N41300") ){
-               if(first6Char.equals("N20070")){
+              if(firstFourChars.equals("CHANDATA") || first6Char.equals("N20000") || first6Char.equals("N10000") || first6Char.equals("N41300") ){
+               if(first6Char.equals("N10000")){
                    str_base_id_count_1=str_base_id_count_1+1;
                   
                     str_base_id=1;  
@@ -4121,6 +4124,8 @@ reader.close();
                  str_asset_body = line.substring(line.indexOf(" ") + 1, line.indexOf("=")); 
                 
                  str_asset_status = line.substring(line.lastIndexOf("=") + 1);
+                 str_asset_status = str_asset_status.replace("\"", "");
+                // str_asset_status = str_asset_status.substring(str_asset_status.indexOf("") + 1, str_asset_status.indexOf("s"));
                  //error_body before [
                  str_asset_def_body =  str_asset_body.substring(0, str_asset_body.indexOf("["));
                
@@ -4143,7 +4148,8 @@ reader.close();
                     // System.out.println("repetition--"); 
                    // return;
                     }else{
-                        int_str_asset_status=Integer.parseInt(str_asset_status);
+                        
+                        
                         //////////////////let pos start from zero//////////////////////
                         if(     !str_asset_body.contains("$MA_IS_ROT_AX") 
                                 || !str_asset_body.contains("$MA_ROT_IS_MODULO")
@@ -4157,7 +4163,27 @@ reader.close();
                         str_pos_counter_1=int_str_pos_counter_1+"";
                         }
                         ////////////////////////////////////
+                        
+                      // int_str_asset_status=Integer.parseInt(str_asset_status);
+                        if(str_base_id==2){
+                        int_str_asset_status=Integer.parseInt(str_asset_status);
                         if(int_str_asset_status!=0){
+                            loop_pass=1;
+                        
+                        }else{
+                         loop_pass=0;
+                        }
+                        }else if(str_base_id==1){
+                            
+                               if(!str_asset_status.equals("")){
+                                loop_pass=1;
+                        
+                               }else{
+                               loop_pass=0;
+                               }
+                       // str_asset_status=str_asset_status;
+                        }
+                       if(loop_pass==1){
                         insert_data();
                         //////////check body repetion/////////////
                         
@@ -4249,6 +4275,7 @@ reader.close();
                             }
                         ////////////////
                        }
+                    loop_pass=0;
                         }
                        
                         
@@ -4318,7 +4345,11 @@ reader.close();
               
                }
                  }else{
+                    // stoptimer();
+                     stop_timer();
                     continue_with_loop();
+                      str_base_id_count_1=0;
+                    str_base_id_count_2=0;
                      }
     }
     private void reset_dble() {
@@ -4959,7 +4990,7 @@ data.clear();
             pst.setString(26, var26x);       
             pst.setString(27, var27x);  
             pst.setString(28, var28x); 
-            pst.setString(29, var29x); 
+            pst.setString(29, asset_code_dif_col); 
             pst.setString(30, ""); 
          
            
@@ -5345,7 +5376,7 @@ data.clear();
                         
                         System.out.println(str_pos_counter ); 
                          Statement stmt22;
-                         String par ="$MC_AXCONF_MACHAX_USED";
+                         String par ="$MN_AXCONF_MACHAX_NAME_TAB";
                          String par2 ="$SN_CEC_TABLE_ENABLE";
                     stmt22= conn.createStatement();
                     String sql1122="Select * from tbl_chandata where str_asset_body LIKE '%"+par+"%' and  pos_counter = '" + str_pos_counter + "' ";
@@ -5824,115 +5855,100 @@ data.clear();
         }
      }    
     private void finish_loops() {
-         //here                     
-        System.out.println(" CEC" +cec_data_1);
-         System.out.println(" CEC" +cec_data_2);
-          System.out.println(" CEC" +cec_data_3);
-           System.out.println(" CEC" +cec_data_4);
-            System.out.println(" CEC" +cec_data_5);
-             System.out.println(" CEC" +cec_data_6);
-              System.out.println(" CEC" +cec_data_7);
-               System.out.println(" CEC" +cec_data_8);
-               
-                System.out.println(" CEC" +cec_data_9);
-         System.out.println(" CEC" +cec_data_10);
-          System.out.println(" CEC" +cec_data_11);
-           System.out.println(" CEC" +cec_data_12);
-            System.out.println(" CEC" +cec_data_13);
-            System.out.println(" CEC" +cec_data_14);
+        
+       
         for(int i=0; i < 43; i++){
         
         if(i==0){
-        insert_13();
-        }else if(i==1){
         insert_12();
-        }
-        else if(i==2){
-            insert_29();
-        insert_15();
-        }
-        else if(i==3){
-        delete_old_used();
-        }
-        else if(i==4){
-         insert_26();
-        insert_used();
-        insert_27();
-        }
-        else if(i==5){
+        }else if(i==1){
         insert_4();
         }
-        else if(i==6){
-        insert_14();
+        else if(i==2){
+            insert_14();
+       
+        }
+        else if(i==3){
         insert_28();
         }
-        else if(i==7){
-        insert_1();
+        else if(i==4){
+         insert_1();
+      
         }
-        else if(i==8){
+        else if(i==5){
         insert_2();
         }
-        else if(i==9){
+        else if(i==6){
         insert_16();
+       
+        }
+        else if(i==7){
+        insert_17();
+        }
+        else if(i==8){
+        insert_5();
+        }
+        else if(i==9){
+        insert_6();
         }
         else if(i==10){
-        insert_17();
+        insert_3();
         }
         
         else if(i==11){
-        insert_5();
-        }
-        else if(i==12){
-        insert_6(); 
-        }
-        else if(i==13){
-        insert_3();
-        }
-        else if(i==14){
         insert_0();
         }
-        else if(i==15){
-        insert_6();
+        else if(i==12){
+        insert_7(); 
         }
-        else if(i==16){
-        insert_7();
-        }
-        else if(i==17){
+        else if(i==13){
         insert_8();
         }
-        else if(i==18){
+        else if(i==14){
         insert_18();
         }
-        else if(i==19){
+        else if(i==15){
         insert_19();
         }
-        else if(i==20){
+        else if(i==16){
         insert_20();
+        }
+        else if(i==17){
+        insert_24();
+        }
+        else if(i==18){
+        insert_21();
+        }
+        else if(i==19){
+        insert_21_a();
+        }
+        else if(i==20){
+        insert_22();
         }
         
         
         
         else if(i==21){
-        insert_24();
+        insert_22_a();
        
         }
         else if(i==22){
-       insert_21();
+       insert_23();
         }
         else if(i==23){
-        insert_21_a();
+        insert_23_a();
         }
         else if(i==24){
-        insert_22();
+        //insert_22();
         }
         else if(i==25){
-        insert_22_a();
+      //  insert_22_a();
         }
         else if(i==26){
-        insert_23();
+       // insert_23();
         }
         else if(i==27){
-        insert_23_a();
+      //  insert_23_a();
         }
         else if(i==28){
             
@@ -6633,6 +6649,7 @@ data29_3rd.clear();
     }
     private void insert_used_indices() {
                            old_str_asset_def_body ="INDEX";  
+                           asset_code_dif_col="N10000";
                          //  used_chennel_count=data_used_only_xx.size();
                            // data_used_only_indices=data_used_only_indices_1;
                           //  System.out.println(data_used_only_indices);
@@ -6649,9 +6666,11 @@ data29_3rd.clear();
     private void insert_used_values_row() {
                         int ss = data_used_only_xx.size();
                            insert_used_indices();
-                           old_str_asset_def_body ="$MC_AXCONF_MACHAX_USED";  
+                           old_str_asset_def_body ="$MN_AXCONF_MACHAX_NAME_TAB";  
+                           asset_code_dif_col="N10000";
                            used_chennel_count=data_used_only_xx.size();
                            data=data_used_only_xx;
+                           System.out.println(data);
                            insert_column_size();  
                            insert_cec_column_size();
                            insert_array();

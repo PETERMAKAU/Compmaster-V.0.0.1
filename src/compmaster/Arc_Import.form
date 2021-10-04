@@ -141,7 +141,7 @@
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="CheckBoxes" alignment="0" max="32767" attributes="0"/>
                       <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
-                      <Component id="CheckBoxes1" pref="0" max="32767" attributes="0"/>
+                      <Component id="CheckBoxes1" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -226,7 +226,11 @@
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/button_icon/icon_imp1.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Import Machine Data file"/>
+                <Property name="horizontalAlignment" type="int" value="2"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_conf_fileActionPerformed"/>
@@ -234,7 +238,11 @@
             </Component>
             <Component class="javax.swing.JButton" name="btn_raw_tbl">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/button_icon/icon_view2.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="View raw table"/>
+                <Property name="horizontalAlignment" type="int" value="2"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_raw_tblMouseClicked"/>
@@ -246,7 +254,11 @@
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/button_icon/icon_imp2.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Import ENC compesation file"/>
+                <Property name="horizontalAlignment" type="int" value="2"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_impo_compesationActionPerformed"/>
@@ -254,7 +266,12 @@
             </Component>
             <Component class="javax.swing.JButton" name="btn_normalize">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/button_icon/icon_view.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="View ENC processed table"/>
+                <Property name="horizontalAlignment" type="int" value="2"/>
+                <Property name="inheritsPopupMenu" type="boolean" value="true"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_normalizeMouseClicked"/>
@@ -307,7 +324,11 @@
             </Component>
             <Component class="javax.swing.JButton" name="jButton1">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/button_icon/icon_exp1.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Export MPF File"/>
+                <Property name="horizontalAlignment" type="int" value="2"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
@@ -315,7 +336,12 @@
             </Component>
             <Component class="javax.swing.JButton" name="jButton2">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/button_icon/icon_view1.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="View CEC processed table"/>
+                <Property name="horizontalAlignment" type="int" value="2"/>
+                <Property name="inheritsPopupMenu" type="boolean" value="true"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton2MouseClicked"/>
@@ -336,7 +362,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="138" max="-2" attributes="0"/>
@@ -355,12 +381,9 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                                          <Component id="lbl_5" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="lbl_6" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                                      <Component id="lbl_5" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="lbl_2" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -372,44 +395,46 @@
                       </Group>
                       <EmptySpace pref="34" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="txt_header1" linkSize="6" pref="178" max="32767" attributes="0"/>
+                              <Component id="txt_header_2" linkSize="6" max="32767" attributes="0"/>
+                              <Component id="txt_header3" linkSize="6" max="32767" attributes="0"/>
+                              <Component id="txt_header_chandata" max="32767" attributes="0"/>
+                          </Group>
+                          <Component id="txt_header4" linkSize="6" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txt_header_1_1" linkSize="6" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="txt_header1" linkSize="6" pref="178" max="32767" attributes="0"/>
-                                  <Component id="txt_header_2" linkSize="6" max="32767" attributes="0"/>
-                                  <Component id="txt_header3" linkSize="6" max="32767" attributes="0"/>
-                                  <Component id="txt_header_chandata" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="32" pref="32" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Component id="lbl_8" min="-2" max="-2" attributes="0"/>
                                   <Component id="lbl_9" alignment="1" min="-2" max="-2" attributes="0"/>
                                   <Component id="lbl_10" alignment="1" min="-2" max="-2" attributes="0"/>
                                   <Component id="lbl_7" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
-                          </Group>
-                          <Component id="txt_header5" linkSize="6" max="32767" attributes="0"/>
-                          <Component id="txt_header4" linkSize="6" max="32767" attributes="0"/>
-                          <Component id="txt_header_1_1" linkSize="6" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txt_header8" linkSize="5" min="-2" pref="126" max="-2" attributes="0"/>
-                                  <Component id="txt_header9" linkSize="5" alignment="0" min="-2" pref="126" max="-2" attributes="0"/>
-                                  <Component id="txt_header7" linkSize="5" alignment="0" min="-2" pref="126" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      <Component id="jButton3" min="-2" pref="93" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                                      <Component id="txt_header8" linkSize="5" min="-2" pref="126" max="-2" attributes="0"/>
+                                      <Component id="txt_header9" linkSize="5" alignment="0" min="-2" pref="126" max="-2" attributes="0"/>
+                                      <Component id="txt_header7" linkSize="5" alignment="0" min="-2" pref="126" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                          <Component id="jButton3" min="-2" pref="93" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
+                                  <Component id="txt_header6" linkSize="5" alignment="0" min="-2" pref="187" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="txt_header6" linkSize="5" min="-2" pref="187" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace type="unrelated" max="32767" attributes="0"/>
+                              <Component id="lbl_6" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txt_header5" min="-2" pref="190" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -418,9 +443,46 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lbl_7" linkSize="4" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txt_header_chandata" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txt_header_1_1" linkSize="7" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbl_2" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txt_header4" linkSize="7" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbl_5" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txt_header1" linkSize="7" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbl_1" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                                      <Component id="txt_header5" linkSize="7" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lbl_6" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="lbl_3" linkSize="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txt_header_2" linkSize="7" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="lbl_4" linkSize="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txt_header3" linkSize="7" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Component id="lbl_7" linkSize="4" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="txt_header6" linkSize="8" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -437,46 +499,10 @@
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="txt_header9" linkSize="8" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="lbl_10" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txt_header_chandata" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="txt_header1" linkSize="7" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lbl_1" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lbl_3" linkSize="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txt_header_2" linkSize="7" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lbl_4" linkSize="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txt_header3" linkSize="7" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
+                                      <Component id="jButton3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="txt_header_1_1" linkSize="7" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lbl_2" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="txt_header4" linkSize="7" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lbl_5" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="lbl_6" linkSize="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txt_header5" linkSize="7" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Component id="jButton3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -733,7 +759,11 @@
             </Component>
             <Component class="javax.swing.JButton" name="jButton3">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/button_icon/next_st.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="NEXT"/>
+                <Property name="horizontalTextPosition" type="int" value="2"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton3MouseClicked"/>
@@ -1101,7 +1131,12 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="10" style="0"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/button_icon/cont_st.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Continue"/>
+                <Property name="horizontalAlignment" type="int" value="2"/>
+                <Property name="horizontalTextPosition" type="int" value="2"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnContinueMouseClicked"/>
@@ -1113,7 +1148,11 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="10" style="0"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/button_icon/delete.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Remove All"/>
+                <Property name="horizontalAlignment" type="int" value="4"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnRemoveAllMouseClicked"/>

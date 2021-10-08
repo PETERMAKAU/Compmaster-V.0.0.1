@@ -107,6 +107,7 @@ public class Arc_Import extends javax.swing.JFrame {
      Timer timer_universal;
      String int_backlash="n/a";
      String exp_date="";
+     int import_compesation_id=0;
    static Connection conn = null;
     static ResultSet rs = null;     
     static int ixx_1=0;
@@ -119,6 +120,7 @@ public class Arc_Import extends javax.swing.JFrame {
    int str_base_id_count_1=0;
    int str_base_id_count_2=0;
    String str_chan_name_2="";
+   String cec_footer_1_1="",cec_footer_1_2="",cec_footer_1_3,cec_footer_1_4="",cec_footer_1_5="",cec_footer_1_6="",cec_footer_1_7="",cec_footer_1_8="",cec_footer_1_9="",cec_footer_1_10="";
   //  static String pathxx_1="";
     String str_progress_bar_str="0",filenamexx="";
     ArrayList<String> datacheckbox;   
@@ -133,8 +135,10 @@ public class Arc_Import extends javax.swing.JFrame {
     int used_inserted_status=0;
     String footer_2_footer_text="";
     int count_number_of_loops=1;
+    int mpf_code=0;
     int array_size_for_size_store=0;
     int  int_loop_part_1=0;
+    String cec_minxx="",cec_maxxx="",cec_stepxx="",cec_cec_chandata="",cec_selected_axis="",cec_cec_input_ncu="",cec_cec_input_axis="",cec_cec_output_ncu="",cec_cec_output_axis="",cec_cec_direction="",cec_cec_mult_by_table="",cec_cec_is_modulo="";
       ArrayList<String> data; 
      ArrayList<String> data0; 
      ArrayList<String> data3;
@@ -243,6 +247,7 @@ public class Arc_Import extends javax.swing.JFrame {
     public Arc_Import() {
         initComponents();
        hide_all_checkboxes();
+       hide_panels();
         hide_all_variable_fields();  
         cec_hide_all_variable_fields();
      full_scren();
@@ -332,29 +337,27 @@ public class Arc_Import extends javax.swing.JFrame {
         btnContinue = new javax.swing.JButton();
         btnRemoveAll = new javax.swing.JButton();
         CheckBoxes2 = new javax.swing.JPanel();
-        txt_header2 = new javax.swing.JTextField();
-        txt_header_1_2 = new javax.swing.JComboBox();
-        txt_header_3 = new javax.swing.JComboBox();
-        txt_header10 = new javax.swing.JTextField();
-        txt_header11 = new javax.swing.JComboBox();
-        txt_header12 = new javax.swing.JComboBox();
-        txt_header13 = new javax.swing.JTextField();
-        txt_header14 = new javax.swing.JComboBox();
-        txt_header15 = new javax.swing.JTextField();
-        txt_header16 = new javax.swing.JTextField();
-        lbl_11 = new javax.swing.JLabel();
-        lbl_12 = new javax.swing.JLabel();
-        lbl_13 = new javax.swing.JLabel();
-        lbl_14 = new javax.swing.JLabel();
-        lbl_15 = new javax.swing.JLabel();
-        lbl_16 = new javax.swing.JLabel();
-        lbl_17 = new javax.swing.JLabel();
-        lbl_18 = new javax.swing.JLabel();
-        lbl_19 = new javax.swing.JLabel();
-        lbl_20 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        cec_lbl_8 = new javax.swing.JLabel();
+        cec_lbl_9 = new javax.swing.JLabel();
+        cec_7 = new javax.swing.JComboBox();
         jButton4 = new javax.swing.JButton();
-        txt_header_chandata1 = new javax.swing.JComboBox();
-        jLabel2 = new javax.swing.JLabel();
+        cec_8 = new javax.swing.JComboBox();
+        cec_9 = new javax.swing.JComboBox();
+        cec_lbl_7 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        cec_3 = new javax.swing.JComboBox();
+        cec_2 = new javax.swing.JComboBox();
+        cec_lbl_2 = new javax.swing.JLabel();
+        cec_lbl_3 = new javax.swing.JLabel();
+        cec_lbl_5 = new javax.swing.JLabel();
+        cec_6 = new javax.swing.JComboBox();
+        cec_lbl_4 = new javax.swing.JLabel();
+        cec_lbl_6 = new javax.swing.JLabel();
+        cec_lbl_1 = new javax.swing.JLabel();
+        cec_4 = new javax.swing.JComboBox();
+        cec_5 = new javax.swing.JComboBox();
+        cec_1 = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Compmaster V 1.1.2");
@@ -400,7 +403,7 @@ public class Arc_Import extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -433,7 +436,7 @@ public class Arc_Import extends javax.swing.JFrame {
 
         btn_impo_compesation.setBackground(new java.awt.Color(204, 204, 204));
         btn_impo_compesation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/button_icon/icon_imp2.png"))); // NOI18N
-        btn_impo_compesation.setText("Import ENC compesation file");
+        btn_impo_compesation.setText("Import compesation file");
         btn_impo_compesation.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btn_impo_compesation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -481,7 +484,7 @@ public class Arc_Import extends javax.swing.JFrame {
         jProgressBar1.setBackground(new java.awt.Color(255, 255, 255));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/button_icon/icon_exp1.png"))); // NOI18N
-        jButton1.setText("Export MPF File");
+        jButton1.setText("Export ENC / CEC  MPF file");
         jButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -512,14 +515,15 @@ public class Arc_Import extends javax.swing.JFrame {
                             .addComponent(btn_impo_compesation, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn_normalize, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn_conf_file, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_path2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(path, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn_raw_tbl, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(lbl_per, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lbl_per, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -544,7 +548,7 @@ public class Arc_Import extends javax.swing.JFrame {
                 .addComponent(lbl_per, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         CheckBoxes1.setBorder(javax.swing.BorderFactory.createTitledBorder("..."));
@@ -675,18 +679,19 @@ public class Arc_Import extends javax.swing.JFrame {
         CheckBoxes1Layout.setHorizontalGroup(
             CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CheckBoxes1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(CheckBoxes1Layout.createSequentialGroup()
                         .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(CheckBoxes1Layout.createSequentialGroup()
-                                .addGap(138, 138, 138)
+                                .addGap(126, 126, 126)
                                 .addComponent(lbl_1))
                             .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(CheckBoxes1Layout.createSequentialGroup()
-                                    .addGap(69, 69, 69)
+                                    .addGap(57, 57, 57)
                                     .addComponent(lbl_3))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CheckBoxes1Layout.createSequentialGroup()
-                                    .addContainerGap()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(lbl_4))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -694,7 +699,6 @@ public class Arc_Import extends javax.swing.JFrame {
                             .addComponent(txt_header_2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txt_header3)))
                     .addGroup(CheckBoxes1Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(CheckBoxes1Layout.createSequentialGroup()
                                 .addGap(20, 20, 20)
@@ -720,15 +724,14 @@ public class Arc_Import extends javax.swing.JFrame {
                             .addComponent(lbl_7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txt_header8, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txt_header9, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txt_header7, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CheckBoxes1Layout.createSequentialGroup()
-                                    .addGap(0, 0, Short.MAX_VALUE)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txt_header8, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_header9, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_header7, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CheckBoxes1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txt_header6, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CheckBoxes1Layout.createSequentialGroup()
+                    .addGroup(CheckBoxes1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lbl_6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -736,14 +739,14 @@ public class Arc_Import extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        CheckBoxes1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txt_header6, txt_header7, txt_header8, txt_header9});
+        CheckBoxes1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txt_header5, txt_header6, txt_header7, txt_header8, txt_header9});
 
         CheckBoxes1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txt_header1, txt_header3, txt_header4, txt_header_1_1, txt_header_2, txt_header_chandata});
 
         CheckBoxes1Layout.setVerticalGroup(
             CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CheckBoxes1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(27, 27, 27)
                 .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_header1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_1)
@@ -788,7 +791,7 @@ public class Arc_Import extends javax.swing.JFrame {
                             .addComponent(lbl_10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         CheckBoxes1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {lbl_1, lbl_2, lbl_3, lbl_4, lbl_5, lbl_6});
@@ -1185,111 +1188,27 @@ public class Arc_Import extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(chk30)
                                 .addGap(9, 9, 9)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         CheckBoxes2.setBorder(javax.swing.BorderFactory.createTitledBorder("..."));
         CheckBoxes2.setOpaque(false);
 
-        txt_header2.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        txt_header2.setText(";Header Text");
+        cec_lbl_8.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        cec_lbl_8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        cec_lbl_8.setText("$AN_CEC_MULT_BY_TABLE");
 
-        txt_header_1_2.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        txt_header_1_2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "AX1", "AX2", "AX3", "AX4", "AX5", "AX6", "AX7", "AX8", "AX9", "AX10", "AX11", "AX12", "AX13", "AX14", "AX15", "AX16", "AX17", "AX18", "AX19", "AX20", "AX21", "AX22", "AX23", "AX24", "AX25", "AX26", "AX27", "AX28", "AX29", "AX30" }));
-        txt_header_1_2.addActionListener(new java.awt.event.ActionListener() {
+        cec_lbl_9.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        cec_lbl_9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        cec_lbl_9.setText("$AN_CEC_IS_MODULO");
+
+        cec_7.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        cec_7.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1" }));
+        cec_7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_header_1_2ActionPerformed(evt);
+                cec_7ActionPerformed(evt);
             }
         });
-
-        txt_header_3.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        txt_header_3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "$MA_ENC_COMP_ENABLED[0]=0", "$MA_ENC_COMP_ENABLED[0]=1", "$MA_ENC_COMP_ENABLED[1]=0", "$MA_ENC_COMP_ENABLED[1]=1" }));
-        txt_header_3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_header_3ActionPerformed(evt);
-            }
-        });
-
-        txt_header10.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        txt_header10.setText("NEWCONF");
-        txt_header10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_header10ActionPerformed(evt);
-            }
-        });
-
-        txt_header11.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        txt_header11.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1" }));
-        txt_header11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_header11ActionPerformed(evt);
-            }
-        });
-
-        txt_header12.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        txt_header12.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1" }));
-        txt_header12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_header12ActionPerformed(evt);
-            }
-        });
-
-        txt_header13.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        txt_header13.setText(";End Text");
-
-        txt_header14.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        txt_header14.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "$MA_ENC_COMP_ENABLED[0]=0", "$MA_ENC_COMP_ENABLED[0]=1", "$MA_ENC_COMP_ENABLED[1]=0", "$MA_ENC_COMP_ENABLED[1]=1" }));
-        txt_header14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_header14ActionPerformed(evt);
-            }
-        });
-
-        txt_header15.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        txt_header15.setText("NEWCONF");
-
-        txt_header16.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        txt_header16.setText("M7");
-
-        lbl_11.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        lbl_11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_11.setText(";Header Text");
-
-        lbl_12.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        lbl_12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_12.setText("$MN_AXCONF_LOGIC_MACHAX_TAB");
-
-        lbl_13.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        lbl_13.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_13.setText("$MA-ENC-COMP-ENABLED");
-
-        lbl_14.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        lbl_14.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_14.setText("NEWCONF");
-
-        lbl_15.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        lbl_15.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_15.setText("$AA_ENC_COMP_ENABLED[0]=0");
-
-        lbl_16.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        lbl_16.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_16.setText("$AA_ENC_COMP_IS_MODULO");
-
-        lbl_17.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        lbl_17.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_17.setText(";End Text");
-
-        lbl_18.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        lbl_18.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_18.setText("$MA-ENC-COMP-ENABLED");
-
-        lbl_19.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        lbl_19.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_19.setText("NEWCONF");
-
-        lbl_20.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        lbl_20.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_20.setText("M7");
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/button_icon/next_st.png"))); // NOI18N
         jButton4.setText("NEXT");
@@ -1300,136 +1219,228 @@ public class Arc_Import extends javax.swing.JFrame {
             }
         });
 
-        txt_header_chandata1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        txt_header_chandata1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CHANDATA(1)", "CHANDATA(2)", "CHANDATA(3)" }));
-        txt_header_chandata1.addActionListener(new java.awt.event.ActionListener() {
+        cec_8.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        cec_8.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1" }));
+        cec_8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_header_chandata1ActionPerformed(evt);
+                cec_8ActionPerformed(evt);
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        jLabel2.setText("CHANDATA");
+        cec_9.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        cec_9.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1" }));
+        cec_9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cec_9ActionPerformed(evt);
+            }
+        });
+
+        cec_lbl_7.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        cec_lbl_7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        cec_lbl_7.setText("$AN_CEC_DIRECTION");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cec_lbl_9)
+                            .addComponent(cec_lbl_8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cec_8, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cec_9, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cec_lbl_7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cec_7, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cec_7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cec_lbl_7))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cec_8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(cec_lbl_8, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cec_9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cec_lbl_9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton4)
+                .addContainerGap())
+        );
+
+        cec_3.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        cec_3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1" }));
+        cec_3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cec_3ActionPerformed(evt);
+            }
+        });
+
+        cec_2.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        cec_2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61" }));
+        cec_2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cec_2ActionPerformed(evt);
+            }
+        });
+
+        cec_lbl_2.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        cec_lbl_2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        cec_lbl_2.setText("$SN_CEC_TABLE_ENABLED _INDICES");
+
+        cec_lbl_3.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        cec_lbl_3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        cec_lbl_3.setText("$AN_CEC_INPUT_NCU");
+
+        cec_lbl_5.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        cec_lbl_5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        cec_lbl_5.setText("$AN_CEC_OUTPUT_NCU");
+
+        cec_6.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        cec_6.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "AX1", "AX2", "AX3", "AX4", "AX5", "AX6", "AX7", "AX8", "AX9", "AX10", "AX11", "AX12", "AX13", "AX14", "AX15", "AX16", "AX17", "AX18", "AX19", "AX20", "AX21", "AX22", "AX23", "AX24", "AX25", "AX26", "AX27", "AX28", "AX29", "AX30" }));
+        cec_6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cec_6ActionPerformed(evt);
+            }
+        });
+
+        cec_lbl_4.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        cec_lbl_4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        cec_lbl_4.setText("$AN_CEC_INPUT_AXIS");
+
+        cec_lbl_6.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        cec_lbl_6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        cec_lbl_6.setText("$AN_CEC_OUTPUT_AXIS");
+
+        cec_lbl_1.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        cec_lbl_1.setText("CHANDATA");
+
+        cec_4.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        cec_4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "AX1", "AX2", "AX3", "AX4", "AX5", "AX6", "AX7", "AX8", "AX9", "AX10", "AX11", "AX12", "AX13", "AX14", "AX15", "AX16", "AX17", "AX18", "AX19", "AX20", "AX21", "AX22", "AX23", "AX24", "AX25", "AX26", "AX27", "AX28", "AX29", "AX30" }));
+        cec_4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cec_4ActionPerformed(evt);
+            }
+        });
+
+        cec_5.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        cec_5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1" }));
+        cec_5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cec_5ActionPerformed(evt);
+            }
+        });
+
+        cec_1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        cec_1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CHANDATA(1)", "CHANDATA(2)", "CHANDATA(3)" }));
+        cec_1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cec_1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(cec_lbl_5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cec_lbl_2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                            .addGap(20, 20, 20)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cec_lbl_1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(cec_lbl_3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cec_lbl_4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(cec_lbl_6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cec_2, 0, 127, Short.MAX_VALUE)
+                    .addComponent(cec_3, 0, 127, Short.MAX_VALUE)
+                    .addComponent(cec_1, 0, 178, Short.MAX_VALUE)
+                    .addComponent(cec_5, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cec_6, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cec_4, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        jPanel4Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cec_1, cec_2, cec_3});
+
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cec_1)
+                    .addComponent(cec_lbl_1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cec_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cec_lbl_2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cec_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cec_lbl_3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cec_lbl_4)
+                    .addComponent(cec_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cec_lbl_5)
+                    .addComponent(cec_5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cec_lbl_6)
+                    .addComponent(cec_6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        jPanel4Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cec_lbl_2, cec_lbl_3, cec_lbl_4, cec_lbl_5, cec_lbl_6});
+
+        jPanel4Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cec_1, cec_2, cec_3});
 
         javax.swing.GroupLayout CheckBoxes2Layout = new javax.swing.GroupLayout(CheckBoxes2);
         CheckBoxes2.setLayout(CheckBoxes2Layout);
         CheckBoxes2Layout.setHorizontalGroup(
             CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CheckBoxes2Layout.createSequentialGroup()
-                .addGroup(CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(CheckBoxes2Layout.createSequentialGroup()
-                        .addGroup(CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(CheckBoxes2Layout.createSequentialGroup()
-                                .addGap(138, 138, 138)
-                                .addComponent(lbl_11))
-                            .addGroup(CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(CheckBoxes2Layout.createSequentialGroup()
-                                    .addGap(69, 69, 69)
-                                    .addComponent(lbl_13))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CheckBoxes2Layout.createSequentialGroup()
-                                    .addContainerGap()
-                                    .addComponent(lbl_14))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_header2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_header_3, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_header10, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(CheckBoxes2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(CheckBoxes2Layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(lbl_15))
-                            .addComponent(lbl_12)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGroup(CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(CheckBoxes2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txt_header_1_2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_header11, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(CheckBoxes2Layout.createSequentialGroup()
-                                .addGap(34, 34, 34)
-                                .addComponent(txt_header_chandata1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGroup(CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(CheckBoxes2Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addGroup(CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lbl_18)
-                            .addComponent(lbl_19)
-                            .addComponent(lbl_20)
-                            .addComponent(lbl_17))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txt_header15, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txt_header16, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txt_header14, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CheckBoxes2Layout.createSequentialGroup()
-                                    .addGap(0, 0, Short.MAX_VALUE)
-                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(txt_header13, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CheckBoxes2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lbl_16)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_header12, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(48, 48, 48))
+                .addContainerGap()
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        CheckBoxes2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txt_header12, txt_header13, txt_header14, txt_header15, txt_header16});
-
-        CheckBoxes2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txt_header10, txt_header11, txt_header2, txt_header_1_2, txt_header_3, txt_header_chandata1});
-
         CheckBoxes2Layout.setVerticalGroup(
             CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CheckBoxes2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_header2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_11)
-                    .addComponent(txt_header12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_16))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(CheckBoxes2Layout.createSequentialGroup()
-                        .addGroup(CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_13)
-                            .addComponent(txt_header_3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_14)
-                            .addComponent(txt_header10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(txt_header_chandata1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_header_1_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_12))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_header11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_15)))
-                    .addComponent(lbl_17)
-                    .addGroup(CheckBoxes2Layout.createSequentialGroup()
-                        .addComponent(txt_header13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_header14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_18))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_header15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_19))
-                        .addGap(8, 8, 8)
-                        .addGroup(CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_header16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_20))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -1446,17 +1457,24 @@ public class Arc_Import extends javax.swing.JFrame {
                 .addComponent(CheckBoxes2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {CheckBoxes1, CheckBoxes2});
+
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(CheckBoxes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(CheckBoxes1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(CheckBoxes2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CheckBoxes2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CheckBoxes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(CheckBoxes1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
+
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {CheckBoxes, CheckBoxes1, CheckBoxes2, jPanel1});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1483,14 +1501,106 @@ public class Arc_Import extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_impo_compesationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_impo_compesationActionPerformed
-         
-        
+      
+        open_options();
+       
+    }//GEN-LAST:event_btn_impo_compesationActionPerformed
+   private void open_options(){
+      Object[] options = {"ENC",
+                "CEC"};
+int p = JOptionPane.showOptionDialog(null,
+"ENC OR CEC",
+"SELECT OPTION",
+JOptionPane.YES_NO_OPTION,
+JOptionPane.QUESTION_MESSAGE,
+null,     //do not use a custom Icon
+options,  //the titles of buttons
+options[0]);
+          if (p==0){
+              show_panel2();
+       import_compesation_id=1;
+       pass_select();
+          }else if(p==1)
+          {
+              show_panel3();
+         import_compesation_id=2;
+         pass_select();
+          }else if(p==2)
+          {
+      hide_panels();
+         }
+    else{}
+   
+   }
+   private void pass_select(){
+   cec_clearx7();
         clearx7();      
         cec_size_store.clear();
         select_compensation_path();
-       
-    }//GEN-LAST:event_btn_impo_compesationActionPerformed
- private void verify_compefile(){
+   }
+    private void verify_compefile(){
+     try{        
+       //  String pxx=pathxx2;    
+            // pathxx2=txt_path2.getText().toString().trim();
+         FileReader fileReader = new FileReader(pathxx2);
+         try (BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+      //String line;
+         while((line = bufferedReader.readLine()) != null) {
+         
+                str_global_count="Compensating data.";
+               // String input = line;     //input string
+                 comp_body=line.replaceAll("\\s+","");
+                 comp_body=comp_body.toLowerCase();
+                 if(comp_body.contains("referenceposition"))
+                 {
+                 
+                 }else if(comp_body.contains("compensationstart"))
+                 {
+                   int_min=comp_body.replaceAll("([a-z])", "");
+                 ///  JOptionPane.showMessageDialog(null, int_min+"Min");
+                 }
+                 else if(comp_body.contains("compensationend"))
+                 {
+                   int_max=comp_body.replaceAll("([a-z])", "");
+                 //  JOptionPane.showMessageDialog(null, int_max+"Max");
+                 }
+                 else if(comp_body.contains("compensationspacing"))
+                 {
+                   int_step=comp_body.replaceAll("([a-z])", "");
+                   //JOptionPane.showMessageDialog(null, int_step+"Step");
+                 }
+                   else if(comp_body.contains("backlasherror"))
+                 {
+                   int_backlash=comp_body.replaceAll("([a-z])", "");
+                   //JOptionPane.showMessageDialog(null, int_step+"Step");
+                 }
+                 else if(comp_body.contains("compensationoutput"))
+                 {
+                   error_collect_status=1;
+                   //JOptionPane.showMessageDialog(null, int_step+"Step");
+                 }
+                 else if(comp_body.contains("compensationoutput"))
+                 {
+                  // error_collect_status=0;
+                   //JOptionPane.showMessageDialog(null, int_step+"Step");
+                 }
+                 else if (error_collect_status==1 && !comp_body.equals("")){
+                 compesation_errors.add(comp_body);
+                 }
+                 else{
+                 
+                 }
+                 
+              
+      }  
+      error_collect_status=0;  
+    }
+    }catch(Exception e){
+    
+    }
+ }
+ 
+ private void verify_compefile2(){
      try{        
        //  String pxx=pathxx2;    
             // pathxx2=txt_path2.getText().toString().trim();
@@ -1554,7 +1664,8 @@ public class Arc_Import extends javax.swing.JFrame {
     
     private void select_compensation_path(){
       path.setText("");     
-        select_file_2();
+      //txt_path3_cec.setText("");  
+      select_file_2();
  }
     
     private void extract_data(){
@@ -1832,7 +1943,7 @@ lbl_per.setText("0%");
     private void btnContinueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnContinueMouseClicked
         // TODO add your handling code here:
              
-                
+                hide_panels();
                data_used_name.clear();             
                continue_with_loop();
                btnContinue.setVisible(false);
@@ -2273,7 +2384,18 @@ lbl_per.setText("0%");
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-      switch_table();
+        mpf_code=1;
+     generate_txt();
+    }//GEN-LAST:event_jButton1ActionPerformed
+     private void generate_txt(){
+         if(mpf_code==1){
+          switch_table();
+         }else if(mpf_code==2){
+          switch_table_2();
+         }else{
+         
+         }
+     
         JFileChooser chooser =new JFileChooser();
         chooser.showOpenDialog(null);
         chooser.setDialogTitle("Name MPF file");
@@ -2298,8 +2420,7 @@ lbl_per.setText("0%");
       JOptionPane.showMessageDialog(null, "An error occurred." );
       e.printStackTrace();
     }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+     }
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
         
@@ -2312,7 +2433,7 @@ lbl_per.setText("0%");
 
     private void btnRemoveAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveAllActionPerformed
         // TODO add your handling code here:
-          
+          hide_panels();
               //JOptionPane.showMessageDialog(null, data_used_name.size());
         skip_all_id=1;
             btnContinue.setVisible(false);
@@ -2351,11 +2472,26 @@ lbl_per.setText("0%");
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
         // TODO add your handling code here:
-          hide_all_variable_fields();
-          insert_compesantation_vars_inputs();       
-          extract_data_2();
+        
+          next();
     }//GEN-LAST:event_jButton3MouseClicked
-
+   private void next(){
+       hide_panels();
+       //CheckBoxes.setVisible(false);
+           hide_all_variable_fields();
+           cec_hide_all_variable_fields();
+           if( import_compesation_id==1){
+           insert_compesantation_vars_inputs();
+          }else if( import_compesation_id==2){
+            cec_insert_compesantation_vars_inputs();
+          }else{
+          
+          }
+                 
+          extract_data_2();
+          
+          
+   }
     private void txt_header_1_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_header_1_1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_header_1_1ActionPerformed
@@ -2364,37 +2500,46 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_header_chandataActionPerformed
 
-    private void txt_header_1_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_header_1_2ActionPerformed
+    private void cec_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cec_2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_header_1_2ActionPerformed
+    }//GEN-LAST:event_cec_2ActionPerformed
 
-    private void txt_header_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_header_3ActionPerformed
+    private void cec_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cec_3ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_header_3ActionPerformed
+    }//GEN-LAST:event_cec_3ActionPerformed
 
-    private void txt_header10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_header10ActionPerformed
+    private void cec_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cec_7ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_header10ActionPerformed
-
-    private void txt_header11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_header11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_header11ActionPerformed
-
-    private void txt_header12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_header12ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_header12ActionPerformed
-
-    private void txt_header14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_header14ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_header14ActionPerformed
+    }//GEN-LAST:event_cec_7ActionPerformed
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
         // TODO add your handling code here:
+        next();
     }//GEN-LAST:event_jButton4MouseClicked
 
-    private void txt_header_chandata1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_header_chandata1ActionPerformed
+    private void cec_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cec_1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_header_chandata1ActionPerformed
+    }//GEN-LAST:event_cec_1ActionPerformed
+
+    private void cec_8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cec_8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cec_8ActionPerformed
+
+    private void cec_9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cec_9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cec_9ActionPerformed
+
+    private void cec_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cec_5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cec_5ActionPerformed
+
+    private void cec_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cec_6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cec_6ActionPerformed
+
+    private void cec_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cec_4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cec_4ActionPerformed
   
     
     private void open_explorer(){
@@ -2472,6 +2617,7 @@ lbl_per.setText("0%");
     exp.printStackTrace();
 }
     JOptionPane.showMessageDialog(null, "File Created Successfully!" );
+    mpf_code=0;
     open_explorer();
    }
      
@@ -2558,6 +2704,24 @@ lbl_per.setText("0%");
     private javax.swing.JButton btn_impo_compesation;
     private javax.swing.JButton btn_normalize;
     private javax.swing.JButton btn_raw_tbl;
+    private javax.swing.JComboBox cec_1;
+    private javax.swing.JComboBox cec_2;
+    private javax.swing.JComboBox cec_3;
+    private javax.swing.JComboBox cec_4;
+    private javax.swing.JComboBox cec_5;
+    private javax.swing.JComboBox cec_6;
+    private javax.swing.JComboBox cec_7;
+    private javax.swing.JComboBox cec_8;
+    private javax.swing.JComboBox cec_9;
+    private javax.swing.JLabel cec_lbl_1;
+    private javax.swing.JLabel cec_lbl_2;
+    private javax.swing.JLabel cec_lbl_3;
+    private javax.swing.JLabel cec_lbl_4;
+    private javax.swing.JLabel cec_lbl_5;
+    private javax.swing.JLabel cec_lbl_6;
+    private javax.swing.JLabel cec_lbl_7;
+    private javax.swing.JLabel cec_lbl_8;
+    private javax.swing.JLabel cec_lbl_9;
     private javax.swing.JCheckBox chk1;
     private javax.swing.JCheckBox chk10;
     private javax.swing.JCheckBox chk11;
@@ -2593,25 +2757,16 @@ lbl_per.setText("0%");
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_1;
     private javax.swing.JLabel lbl_10;
-    private javax.swing.JLabel lbl_11;
-    private javax.swing.JLabel lbl_12;
-    private javax.swing.JLabel lbl_13;
-    private javax.swing.JLabel lbl_14;
-    private javax.swing.JLabel lbl_15;
-    private javax.swing.JLabel lbl_16;
-    private javax.swing.JLabel lbl_17;
-    private javax.swing.JLabel lbl_18;
-    private javax.swing.JLabel lbl_19;
     private javax.swing.JLabel lbl_2;
-    private javax.swing.JLabel lbl_20;
     private javax.swing.JLabel lbl_3;
     private javax.swing.JLabel lbl_4;
     private javax.swing.JLabel lbl_5;
@@ -2622,14 +2777,6 @@ lbl_per.setText("0%");
     private javax.swing.JLabel lbl_per;
     private javax.swing.JTextField path;
     private javax.swing.JTextField txt_header1;
-    private javax.swing.JTextField txt_header10;
-    private javax.swing.JComboBox txt_header11;
-    private javax.swing.JComboBox txt_header12;
-    private javax.swing.JTextField txt_header13;
-    private javax.swing.JComboBox txt_header14;
-    private javax.swing.JTextField txt_header15;
-    private javax.swing.JTextField txt_header16;
-    private javax.swing.JTextField txt_header2;
     private javax.swing.JTextField txt_header3;
     private javax.swing.JComboBox txt_header4;
     private javax.swing.JComboBox txt_header5;
@@ -2638,11 +2785,8 @@ lbl_per.setText("0%");
     private javax.swing.JTextField txt_header8;
     private javax.swing.JTextField txt_header9;
     private javax.swing.JComboBox txt_header_1_1;
-    private javax.swing.JComboBox txt_header_1_2;
     private javax.swing.JComboBox txt_header_2;
-    private javax.swing.JComboBox txt_header_3;
     private javax.swing.JComboBox txt_header_chandata;
-    private javax.swing.JComboBox txt_header_chandata1;
     private javax.swing.JTextField txt_path2;
     // End of variables declaration//GEN-END:variables
    
@@ -2777,6 +2921,130 @@ lbl_per.setText("0%");
      }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     } 
+     static void update_table_4() {
+         select_col_size();
+         non_zero_columns=non_zero_columns+1;
+        String sql="";
+             if(non_zero_columns==1){
+        
+          sql = "select col1 as '..',col30 as '..' from  cec_tbl_compensation_var_inputs order by col30 ASC";
+        }else if (non_zero_columns==2){
+        sql = "select col1 as '..',col2 as '..' from  cec_tbl_compensation_var_inputs";     
+        }
+        else if (non_zero_columns==3){
+        sql = "select col1 as '..',col2 as '..',col3 as '..' from  cec_tbl_compensation_var_inputs";     
+        }
+         else if (non_zero_columns==4){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..' from  cec_tbl_compensation_var_inputs";     
+        }
+         else if (non_zero_columns==5){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..' from  cec_tbl_compensation_var_inputs";     
+        }
+         else if (non_zero_columns==6){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..' from  cec_tbl_compensation_var_inputs";     
+         }
+           else if (non_zero_columns==7){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..' from  cec_tbl_compensation_var_inputs";     
+         }
+            else if (non_zero_columns==8){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..' from  cec_tbl_compensation_var_inputs";     
+         }
+             else if (non_zero_columns==9){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..' from  cec_tbl_compensation_var_inputs";     
+         }
+             else if (non_zero_columns==10){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..' from  cec_tbl_compensation_var_inputs";     
+         }
+             else if (non_zero_columns==11){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..' from  cec_tbl_compensation_var_inputs";     
+         }
+             else if (non_zero_columns==12){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..' from  cec_tbl_compensation_var_inputs";     
+         }
+             else if (non_zero_columns==13){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..' from  cec_tbl_compensation_var_inputs";     
+         }
+             else if (non_zero_columns==14){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..' from  cec_tbl_compensation_var_inputs";     
+         }
+             else if (non_zero_columns==15){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..' from  cec_tbl_compensation_var_inputs";     
+         }
+             else if (non_zero_columns==16){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..' from  cec_tbl_compensation_var_inputs";     
+         }
+             else if (non_zero_columns==17){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..' from  cec_tbl_compensation_var_inputs";     
+         }
+             else if (non_zero_columns==18){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..' from  cec_tbl_compensation_var_inputs";     
+         }
+             else if (non_zero_columns==19){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..' from  cec_tbl_compensation_var_inputs";     
+         }
+              else if (non_zero_columns==20){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..' from  cec_tbl_compensation_var_inputs";     
+         }
+              else if (non_zero_columns==21){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..' from  cec_tbl_compensation_var_inputs";     
+         }
+              else if (non_zero_columns==22){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..' from  cec_tbl_compensation_var_inputs";     
+         }
+              else if (non_zero_columns==23){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..' from  cec_tbl_compensation_var_inputs";     
+         }
+              else if (non_zero_columns==24){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..' from  cec_tbl_compensation_var_inputs";     
+         }
+              else if (non_zero_columns==25){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..' from  cec_tbl_compensation_var_inputs";     
+         }
+              else if (non_zero_columns==26){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..' from  cec_tbl_compensation_var_inputs";     
+         }
+              else if (non_zero_columns==27){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..' from  cec_tbl_compensation_var_inputs";     
+         }
+              else if (non_zero_columns==28){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..',col28 as '..' from  cec_tbl_compensation_var_inputs";     
+         }
+              else if (non_zero_columns==29){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..',col28 as '..',col29 as '..' from  cec_tbl_compensation_var_inputs";     
+         }
+              else if (non_zero_columns==30){
+        sql = "select col1 as '..',col2 as '..',col3 as '..',col4 as '..',col5 as '..',col6 as '..',col7 as '..',col8 as '..',col9 as '..',col10 as '..',col11 as '..',col12 as '..',col13 as '..',col14 as '..',col15 as '..',"
+                + "col16 as '..',col17 as '..',col18 as '..',col19 as '..',col20 as '..',col21 as '..',col22 as '..',col23 as '..',col24 as '..',col25 as '..',col26 as '..',col27 as '..',col28 as '..',col29 as '..',col30 as '..' from  cec_tbl_compensation_var_inputs";     
+         }             
+        else{
+        
+        }
+        
+     try{
+    pst = conn.prepareStatement(sql);
+    rs = pst.executeQuery();
+    SqliteDataTable.setModel(DbUtils.resultSetToTableModel(rs));    
+}
+     catch (Exception e){
+    // JOptionPane.showMessageDialog(null, e);
+     }
+     set_jtables3();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     static void update_table_3() {
          select_col_size();
          non_zero_columns=non_zero_columns+1;
@@ -3242,15 +3510,24 @@ private void select_file_2() {
         pathxx2 =filename;
         txt_path2.setText(filename);
         disable_components();
-        verify_compefile();
+       verify_compefile();
         if(compesation_errors.size() > 0){
             compesation_errors.clear();
+          if(import_compesation_id==1){
+              show_all_variable_fields();
+               //verify_compefile();
+          }else if (import_compesation_id==2){
+              cec_show_all_variable_fields();
+              // verify_compefile2();
+          }else{
           
-          show_all_variable_fields();
+          }
+          
         
         }else{
             enable_components();
         txt_path2.setText("");
+         //txt_path3_cec.setText("");
         JOptionPane.showMessageDialog(null, "Invalid Compensation file !");
         }
       
@@ -3323,6 +3600,7 @@ private void select_file_2() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 
    private void hide_all_checkboxes() {
+     
          chk1.setVisible(false);
         chk2.setVisible(false);
         chk3.setVisible(false);
@@ -3650,6 +3928,7 @@ private boolean start_loop_par1_2(){
                // JOptionPane.showMessageDialog(null, comp_body);
       }  
         // JOptionPane.showMessageDialog(null, "My errors "+compesation_errors);
+       if(import_compesation_id==1){
          calculate_segments();
          select_row();
          // select_row_2();
@@ -3661,6 +3940,23 @@ private boolean start_loop_par1_2(){
          
          insert_compes();
          insert_compes2();
+       
+       }else if(import_compesation_id==2){
+       cec_calculate_segments();
+        // cec_select_row();
+         // select_row_2();
+         cec_select_row_0();
+         cec_add_header_array();
+         cec_add_body_array();
+         cec_add_footer_1_array();
+        // cec_add_footer_2_array();
+         
+         insert_compes();
+         insert_compes2();
+       }
+       else{
+       
+       }
     }
     }catch(Exception e){
     
@@ -3672,6 +3968,22 @@ private boolean start_loop_par1_2(){
         
        }
  private void calculate_segments(){
+     String int_min_xc=int_min;
+    String int_max_xc=int_max;
+    String int_step_xc=int_step;
+    double mincc = Double.parseDouble(int_min_xc);
+    double maxcc = Double.parseDouble(int_max_xc);
+    double stepcc = Double.parseDouble(int_step_xc);
+     
+  //   int mincc = Integer.parseInt(int_min_xc);
+   //  int maxcc = Integer.parseInt(int_max_xc);
+  //   int stepcc = Integer.parseInt(int_step_xc);
+     //int_min
+     //int_max
+     ///int_step
+compesation_segments=(maxcc-mincc)/stepcc;
+ }
+ private void cec_calculate_segments(){
      String int_min_xc=int_min;
     String int_max_xc=int_max;
     String int_step_xc=int_step;
@@ -3755,6 +4067,62 @@ compesation_segments=(maxcc-mincc)/stepcc;
 //System.out.println(ex.getMessage());
 JOptionPane.showMessageDialog(null, ex.getMessage());
      }}
+private void cec_select_row_0(){
+    String sql = "select * from cec_tbl_compensation_var_inputs";
+      try (
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)) {
+           
+            // loop through the result set
+            while (rs.next()) {
+                
+                
+                  // String minxx = rs.getString("comp_min_0");  
+                    String minxx =int_min;
+                 //  String maxxx = rs.getString("comp_max_0"); 
+                    String maxxx = int_max;
+                  // String stepxx = rs.getString("comp_step_0"); 
+                    String stepxx = int_step; 
+                    
+                   String cec_chandata =rs.getString("chandata");
+                    String selected_axis =rs.getString("selected_axis");
+                   String cec_input_ncu =rs.getString("cec_input_ncu");
+                     String cec_input_axis =rs.getString("cec_input_axis");
+                   String cec_output_ncu =rs.getString("cec_output_ncu");
+                   String cec_output_axis=rs.getString("cec_output_axis");
+                  String cec_direction=rs.getString("cec_direction");
+                   String cec_mult_by_table=rs.getString("cec_mult_by_table");
+                    String cec_is_modulo=rs.getString("cec_is_modulo");
+                    // String str_footer_new_conf=rs.getString("footer_newconf");
+                   //  String str_m=rs.getString("footer_m17");
+                   
+            
+                  cec_cec_chandata=cec_chandata;
+                
+                   cec_selected_axis=selected_axis;
+                 //  body_part3 = rs.getString("logic_machax");
+                   cec_cec_input_axis= cec_input_axis;
+                   body_part1="$AN_CEC";
+                   body_part4="";
+                   
+                    cec_footer_1_1="$AN_CEC_INPUT_NCU["+cec_selected_axis+ "]="+cec_input_ncu;
+                   cec_footer_1_2="$AN_CEC_INPUT_AXIS[" +cec_selected_axis+ "]="+cec_input_axis;
+                   cec_footer_1_3="$AN_CEC_OUTPUT_NCU["+cec_selected_axis+ "]="+cec_output_ncu;
+                   cec_footer_1_4="$AN_CEC_OUTPUT_AXIS[" +cec_selected_axis+ "]="+cec_output_axis;                   
+                    cec_footer_1_5="$AN_CEC_STEP["+cec_selected_axis+ "]="+stepxx;
+                   cec_footer_1_6="$AN_CEC_MIN[" +cec_selected_axis+ "]="+minxx ;
+                   cec_footer_1_7="$AN_CEC_MAX[" +cec_selected_axis+ "]="+maxxx;
+                   cec_footer_1_8="$AN_CEC_DIRECTION["+cec_selected_axis+ "]="+cec_direction;
+                   cec_footer_1_9="$AN_CEC_MULT_BY_TABLE["+cec_selected_axis+ "]="+cec_mult_by_table;
+                   cec_footer_1_10="";
+               
+                    
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+     
+   } 
  private boolean select_row(){
      
      
@@ -3779,6 +4147,65 @@ JOptionPane.showMessageDialog(null, ex.getMessage());
    }
    catch (SQLException ex){
       header_part4="CHANDATA(-)";
+       select_row_2();
+//System.out.println(ex.getMessage());
+//JOptionPane.showMessageDialog(null, ex.getMessage());
+
+
+     }
+     
+     
+     
+    /* String sql = "select * from tbl_enc_comp_compesation WHERE comp_min_1=?,comp_max_1=?, comp_step_1=? ";
+       
+        try{
+            pst = conn.prepareStatement(sql);            
+            pst.setString(1, int_min);
+            pst.setString(2, int_max);
+            pst.setString(3, int_step);
+            rs = pst.executeQuery();  
+           
+            if (rs.next()) {
+            String min = rs.getString("comp_min_1");  
+            String max = rs.getString("comp_max_1"); 
+            String step = rs.getString("comp_step_1"); 
+            
+            JOptionPane.showMessageDialog(null, min+" "+max+" "+step);
+            }else{
+            JOptionPane.showMessageDialog(null, "No data found");
+            }
+            }
+            catch (Exception e)
+            {
+            }*/
+     
+     return true;
+    
+         }
+ private boolean cec_select_row(){
+     String cec_chandata;
+     
+     try{
+         String sql = "select * from cec_tbl_compensation_var_inputs WHERE comp_min_1='"+int_min+"' AND comp_max_1='"+int_max+"' AND  comp_step_1='"+int_step+"' ";
+         //String sql = "select * from tbl_enc_comp_compesation";
+          //  String sql = "select * from tbl_enc_comp_compesation WHERE comp_min_1='"+int_min+"' AND comp_max_1='"+int_max+"' AND  comp_step_1='"+int_step+"' ";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();  
+         //   String minxxg = rs.getString("comp_min_1");  
+                 //  String maxxxg = rs.getString("comp_max_1");
+            if (rs.next()) {
+                  cec_chandata=rs.getString("chandata");  
+                  return true;
+            
+               }else{
+                cec_chandata="CHANDATA(-)";
+                select_row_2();
+                 return true;
+           // JOptionPane.showMessageDialog(null, "No data");
+            }    
+   }
+   catch (SQLException ex){
+      cec_chandata="CHANDATA(-)";
        select_row_2();
 //System.out.println(ex.getMessage());
 //JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -3871,6 +4298,63 @@ JOptionPane.showMessageDialog(null, ex.getMessage());
      return true;
     
          }
+  private boolean cec_select_row_2(){
+     
+     
+     try{
+         String sql = "select * from tbl_enc_comp_compesation WHERE comp_min_0='"+int_min+"' AND comp_max_0='"+int_max+"' AND  comp_step_0='"+int_step+"' ";
+         //String sql = "select * from tbl_enc_comp_compesation";
+          //  String sql = "select * from tbl_enc_comp_compesation WHERE comp_min_1='"+int_min+"' AND comp_max_1='"+int_max+"' AND  comp_step_1='"+int_step+"' ";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();  
+         //   String minxxg = rs.getString("comp_min_1");  
+                 //  String maxxxg = rs.getString("comp_max_1");
+            if (rs.next()) {
+                  header_part4=rs.getString("chandata");  
+                  return true;
+            
+               }else{
+                header_part4="CHANDATA(-)";
+                 return true;
+           // JOptionPane.showMessageDialog(null, "No data");
+            }    
+   }
+   catch (SQLException ex){
+      header_part4="CHANDATA(-)";
+//System.out.println(ex.getMessage());
+//JOptionPane.showMessageDialog(null, ex.getMessage());
+
+
+     }
+     
+     
+     
+    /* String sql = "select * from tbl_enc_comp_compesation WHERE comp_min_1=?,comp_max_1=?, comp_step_1=? ";
+       
+        try{
+            pst = conn.prepareStatement(sql);            
+            pst.setString(1, int_min);
+            pst.setString(2, int_max);
+            pst.setString(3, int_step);
+            rs = pst.executeQuery();  
+           
+            if (rs.next()) {
+            String min = rs.getString("comp_min_1");  
+            String max = rs.getString("comp_max_1"); 
+            String step = rs.getString("comp_step_1"); 
+            
+            JOptionPane.showMessageDialog(null, min+" "+max+" "+step);
+            }else{
+            JOptionPane.showMessageDialog(null, "No data found");
+            }
+            }
+            catch (Exception e)
+            {
+            }*/
+     
+     return true;
+    
+         }
  private void add_header_array(){
      
      
@@ -3893,8 +4377,39 @@ JOptionPane.showMessageDialog(null, ex.getMessage());
              dataxx=header_part4;
          }
           else if(i==4){
+            dataxx="";
+         }
+          else if(i==5){
              dataxx=header_part5;
          }
+         else{
+         
+         }
+        compesation_data_1.add(dataxx);
+       // /(compesation_data_1);
+        }
+ //System.out.println("Header"+compesation_data_1);
+ }
+ private void cec_add_header_array(){
+     
+     
+         /* String header_part1="$MA_ENC_COMP_ENABLED[0]=0";
+          String header_part2="NEWCONF";
+          String header_part3="";
+          String header_part4="CHANDATA(1)";*/
+          int ixx=2;
+         for(int i=0; i <ixx; i++){
+         String dataxx="";
+         if(i==0){
+            dataxx="";
+         }else if(i==1){
+            // here
+            dataxx=cec_cec_chandata;
+         }
+         else if(i==2){
+          dataxx="";
+         }
+          
          else{
          dataxx="";
          }
@@ -3921,7 +4436,24 @@ JOptionPane.showMessageDialog(null, ex.getMessage());
  // compesation_data_1.add("");
 // System.out.println("body"+compesation_data_1);
  }
- 
+ private void cec_add_body_array(){
+     
+        /*  String body_part1="$AA_ENC_COMP";
+          String body_part2="1";
+          String body_part3="AX1";
+          String body_part4="0";*/
+     int ixxb= (int) Math.round(compesation_segments);
+         // int ixxb=compesation_segments;
+ for(int i=0; i <ixxb+1; i++){
+          String error_value =compesation_errors.get(i);
+          String dataxx=body_part1+"["+cec_selected_axis+","+i+"]"+"="+error_value;
+        
+        compesation_data_1.add(dataxx);
+        
+        }
+ // compesation_data_1.add("");
+// System.out.println("body"+compesation_data_1);
+ }
  private void add_footer_1_array(){
      
          /* String footer_1_1="$AA_ENC_COMP_STEP[0,AX1]=50";
@@ -3932,6 +4464,7 @@ JOptionPane.showMessageDialog(null, ex.getMessage());
           int ixx=5;
          for(int i=0; i <ixx; i++){
          String dataxx="";
+          
          if(i==0){
             dataxx=footer_1_1;
          }else if(i==1){
@@ -3951,7 +4484,83 @@ JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         // System.out.println("footer_1"+compesation_data_1);
  }
+ private void cec_add_footer_1_array(){
+     compesation_data_1.add("");
+          int ixx=11;
+         for(int i=0; i <ixx; i++){
+         String dataxx="";
+         if(i==0){
+            dataxx=cec_footer_1_1;
+         }else if(i==1){
+            dataxx=cec_footer_1_2;
+         }
+         else if(i==2){
+          dataxx=cec_footer_1_3;
+         }
+          else if(i==3){
+             dataxx=cec_footer_1_4;
+         }else if(i==4){
+            dataxx=cec_footer_1_5;
+         }
+         else if(i==5){
+          dataxx=cec_footer_1_6;
+         }
+          else if(i==6){
+             dataxx=cec_footer_1_7;
+         }
+          else if(i==7){
+            dataxx=cec_footer_1_8;
+         }
+         else if(i==8){
+          dataxx=cec_footer_1_9;
+         }
+          else if(i==9){
+             dataxx=cec_footer_1_10;
+         }
+          
+         else{
+         //dataxx="";
+         }
+        compesation_data_1.add(dataxx);
+       // System.out.println(compesation_data_1);
+        }
+ }
  private void add_footer_2_array(){
+     
+        /*  String footer_2_1="$MA_BACKLASH[0,AX1]=0";
+          String footer_2_2="$MA_ENC_COMP_ENABLE[0]=1";
+          String footer_2_3="NEWCONF";
+          String footer_2_4="M17";*/
+         int ixx=7;
+         for(int i=0; i <ixx; i++){
+         String dataxx="";
+         if(i==0){
+            dataxx=footer_2_1;
+         }else if(i==1){
+            dataxx=footer_2_2;
+            //footer_2_footer_text
+         }
+         else if(i==2){
+          dataxx=footer_2_3;
+         }
+          else if(i==3){
+             dataxx=footer_2_4;
+         }
+           else if(i==4){
+             dataxx=footer_2_5;
+         }
+            else if(i==5){
+             dataxx=footer_2_6;
+         }
+         else{
+         dataxx="";
+         }
+        compesation_data_1.add(dataxx);
+      //  System.out.println(compesation_data_1);
+        }
+         //System.out.println("footer_2"+compesation_data_1);
+ }
+ private void cec_add_footer_2_array(){
      
         /*  String footer_2_1="$MA_BACKLASH[0,AX1]=0";
           String footer_2_2="$MA_ENC_COMP_ENABLE[0]=1";
@@ -4242,6 +4851,22 @@ reader.close();
     private void clearx7() {
         
          String sql = " delete from  tbl_compensation_var_inputs where id > ?";
+        //String sql = "TRUNCATE TABLE tbl_chandata";
+         
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, "0");            
+            pst.execute();
+         
+        }
+        catch (Exception e){
+                 
+        }
+   
+    }
+    private void cec_clearx7() {
+        
+         String sql = " delete from  cec_tbl_compensation_var_inputs where id > ?";
         //String sql = "TRUNCATE TABLE tbl_chandata";
          
         try {
@@ -7090,6 +7715,7 @@ data29_3rd.clear();
        // insert_cec_size();
         
         insert_used_only_names();
+        show_panel1();
         // cec_insert_used_only_names();
         cont_2();
     }
@@ -7107,6 +7733,7 @@ data29_3rd.clear();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void cont_2(){
+        
        // set_check_box();
         stop_timer();
         int p = JOptionPane.showConfirmDialog(null,"Do you want to choose axes for "+chandata_loop+" ?");
@@ -7274,16 +7901,17 @@ private void enable_btns() {
     
     }      
         }
-       // compesation_data_1.clear();
-       
-//compesation_errors.clear();
+     // compesation_data_1.clear();       
+      //   compesation_errors.clear();
       //  clear_compesation_varia();
-        
-      // JOptionPane.showMessageDialog(null, "Completed !");
-     //  lbl_per.setText("Process has completed !");
+       // enable_components();
+      //  import_compesation_id=0;
+       //JOptionPane.showMessageDialog(null, "Completed !");
+      // txt_path2.setText("");
+      // lbl_per.setText("Process completed !");
      //  stop_timer();
       //  stop_threads(); 
-       // open_table();
+      //  open_table();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_compes2() {
@@ -7339,6 +7967,7 @@ private void enable_btns() {
          compesation_errors.clear();
         clear_compesation_varia();
         enable_components();
+        import_compesation_id=0;
        JOptionPane.showMessageDialog(null, "Completed !");
        txt_path2.setText("");
        lbl_per.setText("Process completed !");
@@ -7355,6 +7984,7 @@ private void enable_btns() {
   footer_2_1=""; footer_2_2="";footer_2_3="";footer_2_4="";
   comp_body=""; int_max="";int_min="";int_step="";
    error_collect_status=0;
+   cec_footer_1_1="";cec_footer_1_2="";cec_footer_1_3="";cec_footer_1_4="";cec_footer_1_5="";cec_footer_1_6="";cec_footer_1_7="";cec_footer_1_9="";cec_footer_1_10="";
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
@@ -7960,10 +8590,38 @@ private void enable_btns() {
         }   
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    private void cec_insert_compesantation_vars_inputs() {
+        
+         String sql = "insert into cec_tbl_compensation_var_inputs (chandata,selected_axis,cec_input_ncu,cec_input_axis,cec_output_ncu,cec_output_axis,cec_direction, cec_mult_by_table,cec_is_modulo) values(?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+       
+        try{
+            pst = conn.prepareStatement(sql);            
+            pst.setString(1, cec_1.getSelectedItem().toString().trim());
+            pst.setString(2, cec_2.getSelectedItem().toString().trim());
+            pst.setString(3, cec_3.getSelectedItem().toString().trim()); 
+             pst.setString(4, cec_4.getSelectedItem().toString().trim());
+            pst.setString(5, cec_5.getSelectedItem().toString().trim()); 
+            pst.setString(6, cec_6.getSelectedItem().toString().trim());
+            pst.setString(7, cec_7.getSelectedItem().toString().trim());
+            pst.setString(8, cec_8.getSelectedItem().toString().trim());
+            pst.setString(9, cec_9.getSelectedItem().toString().trim());
+           
+
+            pst.execute();  
+            //JOptionPane.showMessageDialog(null, "Patient Registered");
+            
+            
+        }catch (Exception e){
+           // JOptionPane.showMessageDialog(null, e);
+        
+        }   
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     private void hide_all_variable_fields() {
-        btnContinue.setVisible(false);
-        btnRemoveAll.setVisible(false);
+      //  btnContinue.setVisible(false);
+       // btnRemoveAll.setVisible(false);
+      
         txt_header1.setVisible(false);
          txt_header_2.setVisible(false);
        txt_header_1_1.setVisible(false);
@@ -7987,37 +8645,46 @@ private void enable_btns() {
                lbl_9.setVisible(false);
                 lbl_10.setVisible(false);
                 jButton3.setVisible(false);
+               
         //txt_header10.setVisible(false);
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
      private void cec_hide_all_variable_fields() {
-       txt_header2.setVisible(false);
-         txt_header_3.setVisible(false);
-     txt_header10.setVisible(false);
-        txt_header_chandata1.setVisible(false);
-       txt_header_1_2.setVisible(false);
-        txt_header12.setVisible(false);
-        txt_header11.setVisible(false);
-        txt_header13.setVisible(false);
-        txt_header14.setVisible(false);
-       txt_header15.setVisible(false);
-        txt_header16.setVisible(false);      
-        lbl_11.setVisible(false);
-         lbl_13.setVisible(false);
-          lbl_14.setVisible(false);
-           jLabel2.setVisible(false);
-            lbl_12.setVisible(false);
-            lbl_15.setVisible(false);
-             lbl_16.setVisible(false);
-              lbl_17.setVisible(false);
-               lbl_18.setVisible(false);
-                lbl_19.setVisible(false);
-                lbl_20.setVisible(false);
+        
+       cec_1.setVisible(false);
+         cec_2.setVisible(false);
+         cec_3.setVisible(false);
+     cec_4.setVisible(false);
+       cec_5.setVisible(false);
+       cec_6.setVisible(false);
+        cec_7.setVisible(false);
+        cec_3.setVisible(false);
+        cec_8.setVisible(false);
+      
+       cec_9.setVisible(false);
+        
+           cec_lbl_1.setVisible(false);
+           cec_lbl_2.setVisible(false);
+             cec_lbl_3.setVisible(false);
+             cec_lbl_4.setVisible(false);
+              cec_lbl_5.setVisible(false);
+             cec_lbl_6.setVisible(false);
+                cec_lbl_7.setVisible(false);
+             cec_lbl_8.setVisible(false);
+             cec_lbl_9.setVisible(false);
+               
+                
                 jButton4.setVisible(false);
     }
      private void show_all_variable_fields() {
-         txt_header1.setVisible(true);
+        // btnContinue
+           // btnContinue.setVisible(true);
+      //  btnRemoveAll.setVisible(true);
+      
+      
+        
+        txt_header1.setVisible(true);
          txt_header_2.setVisible(true);
        txt_header_1_1.setVisible(true);
         txt_header3.setVisible(true);
@@ -8040,33 +8707,31 @@ private void enable_btns() {
                lbl_9.setVisible(true);
                 lbl_10.setVisible(true);
                 jButton3.setVisible(true);
-       
         //txt_header10.setVisible(false);
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
  private void cec_show_all_variable_fields() {
-         txt_header2.setVisible(true);
-         txt_header_3.setVisible(true);
-     txt_header10.setVisible(true);
-        txt_header_chandata1.setVisible(true);
-       txt_header_1_2.setVisible(true);
-        txt_header12.setVisible(true);
-        txt_header11.setVisible(true);
-        txt_header13.setVisible(true);
-        txt_header14.setVisible(true);
-       txt_header15.setVisible(true);
-        txt_header16.setVisible(true);      
-        lbl_11.setVisible(true);
-         lbl_13.setVisible(true);
-          lbl_14.setVisible(true);
-           jLabel2.setVisible(true);
-            lbl_12.setVisible(true);
-            lbl_15.setVisible(true);
-             lbl_16.setVisible(true);
-              lbl_17.setVisible(true);
-               lbl_18.setVisible(true);
-                lbl_19.setVisible(true);
-                lbl_20.setVisible(true);
+   
+  
+         cec_1.setVisible(true);
+         cec_2.setVisible(true);
+         cec_3.setVisible(true);
+     cec_4.setVisible(true);
+       cec_5.setVisible(true);
+       cec_6.setVisible(true);
+        cec_7.setVisible(true);
+        cec_3.setVisible(true);
+        cec_8.setVisible(true);      
+       cec_9.setVisible(true);        
+           cec_lbl_1.setVisible(true);
+           cec_lbl_2.setVisible(true);
+             cec_lbl_3.setVisible(true);
+             cec_lbl_4.setVisible(true);
+              cec_lbl_5.setVisible(true);
+             cec_lbl_6.setVisible(true);
+                cec_lbl_7.setVisible(true);
+             cec_lbl_8.setVisible(true);
+             cec_lbl_9.setVisible(true);
                 jButton4.setVisible(true);
        
         //txt_header10.setVisible(false);
@@ -8119,7 +8784,12 @@ private void enable_btns() {
         update_table_3();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+private void switch_table_2() {
+        
+        select_col_size();
+        update_table_4();
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     private void clean_mpf() {
          try{        
        //  String pxx=pathxx2;    
@@ -8145,11 +8815,12 @@ private void enable_btns() {
     }
 
     private void disable_components() {
-        
+         //btn_impo_compesation_cec.setEnabled(false);
+        // txt_path3_cec.setEnabled(false);
          btn_conf_file.setEnabled(false);
-        btn_impo_compesation.setEnabled(false);
-        path.setEnabled(false);
-        txt_path2.setEnabled(false);
+         btn_impo_compesation.setEnabled(false);
+         path.setEnabled(false);
+         txt_path2.setEnabled(false);
       //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
  private void enable_components() {
@@ -8158,7 +8829,34 @@ private void enable_btns() {
         btn_impo_compesation.setEnabled(true);
         path.setEnabled(true);
         txt_path2.setEnabled(true);
+        
+       // btn_impo_compesation_cec.setEnabled(true);
+             //   txt_path3_cec.setEnabled(true);
       //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-   
+
+    private void hide_panels() {
+        CheckBoxes.setVisible(true);
+        CheckBoxes1.setVisible(true);
+        CheckBoxes2.setVisible(true);
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+   private void show_panel1() {
+        CheckBoxes.setVisible(true);
+        CheckBoxes1.setVisible(false);
+        CheckBoxes2.setVisible(false);
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    private void show_panel2() {
+        CheckBoxes.setVisible(false);
+        CheckBoxes1.setVisible(true);
+        CheckBoxes2.setVisible(false);
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+     private void show_panel3() {
+        CheckBoxes.setVisible(false);
+        CheckBoxes1.setVisible(false);
+        CheckBoxes2.setVisible(true);
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

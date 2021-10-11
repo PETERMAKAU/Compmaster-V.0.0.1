@@ -58,6 +58,7 @@ import java.util.Random;
 import java.util.StringJoiner;
 
 import java.util.TimerTask;
+import java.util.prefs.Preferences;
 
 import javax.swing.ButtonModel;
 import javax.swing.JFrame;
@@ -107,6 +108,7 @@ public class Arc_Import extends javax.swing.JFrame {
      Timer timer_universal;
      String int_backlash="n/a";
      String exp_date="";
+     String cec_str_header_1="",cec_str_header_2="",cec_str_footer_1="",cec_str_footer_2="",cec_str_footer_3="";
      int import_compesation_id=0;
    static Connection conn = null;
     static ResultSet rs = null;     
@@ -114,6 +116,7 @@ public class Arc_Import extends javax.swing.JFrame {
     int skip_all_id=0;
    static PreparedStatement pst = null;    
    ArrayList<String> arr1;
+    ArrayList<String> arr2;
     //static String pathx ="n/a";     
    public  String pathxx="";
    public  String pathxx2="";
@@ -303,6 +306,7 @@ public class Arc_Import extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         txt_header_chandata = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
+        btn_exit_2 = new javax.swing.JButton();
         CheckBoxes = new javax.swing.JPanel();
         chk16 = new javax.swing.JCheckBox();
         chk3 = new javax.swing.JCheckBox();
@@ -336,31 +340,43 @@ public class Arc_Import extends javax.swing.JFrame {
         chk1 = new javax.swing.JCheckBox();
         btnContinue = new javax.swing.JButton();
         btnRemoveAll = new javax.swing.JButton();
+        btn_exit_1 = new javax.swing.JButton();
         CheckBoxes2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         cec_lbl_8 = new javax.swing.JLabel();
         cec_lbl_9 = new javax.swing.JLabel();
-        cec_7 = new javax.swing.JComboBox();
         jButton4 = new javax.swing.JButton();
-        cec_8 = new javax.swing.JComboBox();
-        cec_9 = new javax.swing.JComboBox();
         cec_lbl_7 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        cec_3 = new javax.swing.JComboBox();
+        txt_cec_header_footer_3 = new javax.swing.JTextField();
+        txt_cec_header_footer_4 = new javax.swing.JTextField();
+        txt_cec_header_footer_5 = new javax.swing.JTextField();
+        lbl_cechecderfoot_4 = new javax.swing.JLabel();
+        lbl_cechecderfoot_5 = new javax.swing.JLabel();
+        lbl_cechecderfoot_6 = new javax.swing.JLabel();
+        txt_auto_5 = new javax.swing.JTextField();
+        txt_auto_6 = new javax.swing.JTextField();
+        txt_auto_7 = new javax.swing.JTextField();
+        btn_exit_3 = new javax.swing.JButton();
+        lbl_cechecderfoot_2 = new javax.swing.JPanel();
         cec_2 = new javax.swing.JComboBox();
         cec_lbl_2 = new javax.swing.JLabel();
         cec_lbl_3 = new javax.swing.JLabel();
         cec_lbl_5 = new javax.swing.JLabel();
-        cec_6 = new javax.swing.JComboBox();
         cec_lbl_4 = new javax.swing.JLabel();
-        cec_lbl_6 = new javax.swing.JLabel();
-        cec_lbl_1 = new javax.swing.JLabel();
-        cec_4 = new javax.swing.JComboBox();
-        cec_5 = new javax.swing.JComboBox();
+        lbl_cechecderfoot_3 = new javax.swing.JLabel();
         cec_1 = new javax.swing.JComboBox();
+        txt_cec_header_footer_1 = new javax.swing.JTextField();
+        txt_cec_header_footer_2 = new javax.swing.JTextField();
+        lbl_cechecderfoot_1 = new javax.swing.JLabel();
+        lbl_12 = new javax.swing.JLabel();
+        txt_auto_1 = new javax.swing.JTextField();
+        txt_auto_2 = new javax.swing.JTextField();
+        txt_auto_3 = new javax.swing.JTextField();
+        txt_auto_4 = new javax.swing.JTextField();
+        cec_lbl_6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Compmaster V 1.1.2");
+        setTitle("Compmaster V 1.1.3");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -403,7 +419,7 @@ public class Arc_Import extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -421,7 +437,7 @@ public class Arc_Import extends javax.swing.JFrame {
         });
 
         btn_raw_tbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/button_icon/icon_view2.png"))); // NOI18N
-        btn_raw_tbl.setText("View raw table");
+        btn_raw_tbl.setText("View last extract");
         btn_raw_tbl.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btn_raw_tbl.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -528,7 +544,7 @@ public class Arc_Import extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_conf_file)
                     .addComponent(path, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -547,8 +563,7 @@ public class Arc_Import extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbl_per, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         CheckBoxes1.setBorder(javax.swing.BorderFactory.createTitledBorder("..."));
@@ -655,7 +670,7 @@ public class Arc_Import extends javax.swing.JFrame {
         lbl_10.setText("M7");
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/button_icon/next_st.png"))); // NOI18N
-        jButton3.setText("NEXT");
+        jButton3.setText("Next ");
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -674,6 +689,13 @@ public class Arc_Import extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabel1.setText("CHANDATA");
 
+        btn_exit_2.setText("Exit");
+        btn_exit_2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_exit_2MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout CheckBoxes1Layout = new javax.swing.GroupLayout(CheckBoxes1);
         CheckBoxes1.setLayout(CheckBoxes1Layout);
         CheckBoxes1Layout.setHorizontalGroup(
@@ -690,10 +712,8 @@ public class Arc_Import extends javax.swing.JFrame {
                                 .addGroup(CheckBoxes1Layout.createSequentialGroup()
                                     .addGap(57, 57, 57)
                                     .addComponent(lbl_3))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CheckBoxes1Layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(lbl_4))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lbl_4, javax.swing.GroupLayout.Alignment.TRAILING)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
                         .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_header1, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
                             .addComponent(txt_header_2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -705,16 +725,17 @@ public class Arc_Import extends javax.swing.JFrame {
                                 .addComponent(lbl_5))
                             .addComponent(lbl_2)
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(CheckBoxes1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txt_header_1_1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txt_header4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(CheckBoxes1Layout.createSequentialGroup()
-                                .addGap(34, 34, 34)
-                                .addComponent(txt_header_chandata, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_header_1_1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txt_header4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txt_header_chandata, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(CheckBoxes1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lbl_6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_header5, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(CheckBoxes1Layout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -724,24 +745,23 @@ public class Arc_Import extends javax.swing.JFrame {
                             .addComponent(lbl_7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_header8, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_header9, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_header7, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CheckBoxes1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txt_header6, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(CheckBoxes1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lbl_6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_header5, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CheckBoxes1Layout.createSequentialGroup()
+                                    .addComponent(btn_exit_2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGap(102, 102, 102))
+                                .addComponent(txt_header8, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txt_header9, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txt_header7, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txt_header6, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
 
         CheckBoxes1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txt_header5, txt_header6, txt_header7, txt_header8, txt_header9});
 
-        CheckBoxes1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txt_header1, txt_header3, txt_header4, txt_header_1_1, txt_header_2, txt_header_chandata});
+        CheckBoxes1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txt_header1, txt_header3, txt_header4, txt_header_1_1, txt_header_2});
+
+        CheckBoxes1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btn_exit_2, jButton3});
 
         CheckBoxes1Layout.setVerticalGroup(
             CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -773,10 +793,12 @@ public class Arc_Import extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txt_header4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_5)))
-                    .addComponent(lbl_7)
+                            .addComponent(lbl_5))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(CheckBoxes1Layout.createSequentialGroup()
-                        .addComponent(txt_header6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_header6)
+                            .addComponent(lbl_7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txt_header7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -789,18 +811,22 @@ public class Arc_Import extends javax.swing.JFrame {
                         .addGroup(CheckBoxes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txt_header9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbl_10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_exit_2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)))
-                .addContainerGap(57, Short.MAX_VALUE))
+                        .addComponent(jButton3)
+                        .addGap(9, 9, 9))))
         );
 
         CheckBoxes1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {lbl_1, lbl_2, lbl_3, lbl_4, lbl_5, lbl_6});
 
-        CheckBoxes1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {lbl_10, lbl_7, lbl_8, lbl_9});
+        CheckBoxes1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {lbl_10, lbl_8, lbl_9});
 
         CheckBoxes1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txt_header1, txt_header3, txt_header4, txt_header5, txt_header_1_1, txt_header_2, txt_header_chandata});
 
         CheckBoxes1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txt_header6, txt_header7, txt_header8, txt_header9});
+
+        CheckBoxes1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btn_exit_2, jButton3});
 
         //CheckBoxes = new RoundedPanel(10, new Color(40, 40, 40));
         CheckBoxes.setBorder(javax.swing.BorderFactory.createTitledBorder("..."));
@@ -1057,6 +1083,14 @@ public class Arc_Import extends javax.swing.JFrame {
             }
         });
 
+        btn_exit_1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        btn_exit_1.setText("Exit");
+        btn_exit_1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_exit_1MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout CheckBoxesLayout = new javax.swing.GroupLayout(CheckBoxes);
         CheckBoxes.setLayout(CheckBoxesLayout);
         CheckBoxesLayout.setHorizontalGroup(
@@ -1069,7 +1103,7 @@ public class Arc_Import extends javax.swing.JFrame {
                     .addComponent(chk3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chk4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chk5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(chk6, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
+                    .addComponent(chk6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(chk7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1077,7 +1111,7 @@ public class Arc_Import extends javax.swing.JFrame {
                     .addComponent(chk9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chk10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chk11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(chk12, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
+                    .addComponent(chk12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(chk13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1085,7 +1119,7 @@ public class Arc_Import extends javax.swing.JFrame {
                     .addComponent(chk15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chk16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chk17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(chk18, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
+                    .addComponent(chk18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(chk19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1093,7 +1127,7 @@ public class Arc_Import extends javax.swing.JFrame {
                     .addComponent(chk21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chk22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chk23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(chk24, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
+                    .addComponent(chk24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(CheckBoxesLayout.createSequentialGroup()
@@ -1104,10 +1138,14 @@ public class Arc_Import extends javax.swing.JFrame {
                             .addComponent(chk26, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(chk25, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnRemoveAll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnContinue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(99, Short.MAX_VALUE))
+                        .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(CheckBoxesLayout.createSequentialGroup()
+                                .addGroup(CheckBoxesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnRemoveAll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnContinue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(0, 2, Short.MAX_VALUE))
+                            .addComponent(btn_exit_1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
                     .addGroup(CheckBoxesLayout.createSequentialGroup()
                         .addComponent(chk30)
                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -1184,11 +1222,13 @@ public class Arc_Import extends javax.swing.JFrame {
                                         .addComponent(chk29))
                                     .addGroup(CheckBoxesLayout.createSequentialGroup()
                                         .addGap(5, 5, 5)
-                                        .addComponent(btnRemoveAll)))
+                                        .addComponent(btnRemoveAll)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btn_exit_1)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(chk30)
                                 .addGap(9, 9, 9)))))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         CheckBoxes2.setBorder(javax.swing.BorderFactory.createTitledBorder("..."));
@@ -1202,36 +1242,17 @@ public class Arc_Import extends javax.swing.JFrame {
         cec_lbl_9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         cec_lbl_9.setText("$AN_CEC_IS_MODULO");
 
-        cec_7.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        cec_7.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1" }));
-        cec_7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cec_7ActionPerformed(evt);
-            }
-        });
-
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/button_icon/next_st.png"))); // NOI18N
-        jButton4.setText("NEXT");
+        jButton4.setText("Next ");
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton4MouseClicked(evt);
             }
         });
-
-        cec_8.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        cec_8.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1" }));
-        cec_8.addActionListener(new java.awt.event.ActionListener() {
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cec_8ActionPerformed(evt);
-            }
-        });
-
-        cec_9.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        cec_9.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1" }));
-        cec_9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cec_9ActionPerformed(evt);
+                jButton4ActionPerformed(evt);
             }
         });
 
@@ -1239,64 +1260,142 @@ public class Arc_Import extends javax.swing.JFrame {
         cec_lbl_7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         cec_lbl_7.setText("$AN_CEC_DIRECTION");
 
+        txt_cec_header_footer_3.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        txt_cec_header_footer_3.setText(";End Text");
+        txt_cec_header_footer_3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_cec_header_footer_3ActionPerformed(evt);
+            }
+        });
+
+        txt_cec_header_footer_4.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        txt_cec_header_footer_4.setText("NEWCONF");
+
+        txt_cec_header_footer_5.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        txt_cec_header_footer_5.setText("M7");
+        txt_cec_header_footer_5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_cec_header_footer_5ActionPerformed(evt);
+            }
+        });
+
+        lbl_cechecderfoot_4.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        lbl_cechecderfoot_4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbl_cechecderfoot_4.setText(";End Text");
+
+        lbl_cechecderfoot_5.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        lbl_cechecderfoot_5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbl_cechecderfoot_5.setText("NEWCONF");
+
+        lbl_cechecderfoot_6.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        lbl_cechecderfoot_6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbl_cechecderfoot_6.setText("M7");
+
+        txt_auto_5.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        txt_auto_5.setFocusable(false);
+        txt_auto_5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_auto_5ActionPerformed(evt);
+            }
+        });
+
+        txt_auto_6.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        txt_auto_6.setFocusable(false);
+        txt_auto_6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_auto_6ActionPerformed(evt);
+            }
+        });
+
+        txt_auto_7.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        txt_auto_7.setFocusable(false);
+
+        btn_exit_3.setText("Exit");
+        btn_exit_3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_exit_3MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cec_lbl_9)
-                            .addComponent(cec_lbl_8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(202, 202, 202)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cec_8, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cec_9, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cec_lbl_7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cec_7, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                            .addComponent(btn_exit_3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(lbl_cechecderfoot_5)
+                                .addComponent(cec_lbl_9)
+                                .addComponent(cec_lbl_8)
+                                .addComponent(lbl_cechecderfoot_4)
+                                .addComponent(lbl_cechecderfoot_6))
+                            .addComponent(cec_lbl_7, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_auto_5, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_auto_6, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_auto_7, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_cec_header_footer_3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_cec_header_footer_4, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_cec_header_footer_5, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE))))
+                .addContainerGap(117, Short.MAX_VALUE))
         );
+
+        jPanel5Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txt_auto_5, txt_auto_6, txt_auto_7, txt_cec_header_footer_3, txt_cec_header_footer_4, txt_cec_header_footer_5});
+
+        jPanel5Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btn_exit_3, jButton4});
+
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cec_7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_auto_5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cec_lbl_7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cec_8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addComponent(cec_lbl_8, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cec_9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cec_lbl_9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txt_auto_6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cec_lbl_8, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_auto_7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cec_lbl_9, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_cec_header_footer_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_cechecderfoot_4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_cec_header_footer_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_cechecderfoot_5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_cec_header_footer_5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_cechecderfoot_6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_exit_3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4)
-                .addContainerGap())
+                .addGap(25, 25, 25))
         );
 
-        cec_3.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        cec_3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1" }));
-        cec_3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cec_3ActionPerformed(evt);
-            }
-        });
+        jPanel5Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txt_auto_5, txt_auto_6, txt_auto_7, txt_cec_header_footer_3, txt_cec_header_footer_4, txt_cec_header_footer_5});
+
+        jPanel5Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btn_exit_3, jButton4});
 
         cec_2.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        cec_2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61" }));
+        cec_2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Select index--", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61" }));
+        cec_2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cec_2ItemStateChanged(evt);
+            }
+        });
         cec_2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cec_2ActionPerformed(evt);
@@ -1315,40 +1414,12 @@ public class Arc_Import extends javax.swing.JFrame {
         cec_lbl_5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         cec_lbl_5.setText("$AN_CEC_OUTPUT_NCU");
 
-        cec_6.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        cec_6.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "AX1", "AX2", "AX3", "AX4", "AX5", "AX6", "AX7", "AX8", "AX9", "AX10", "AX11", "AX12", "AX13", "AX14", "AX15", "AX16", "AX17", "AX18", "AX19", "AX20", "AX21", "AX22", "AX23", "AX24", "AX25", "AX26", "AX27", "AX28", "AX29", "AX30" }));
-        cec_6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cec_6ActionPerformed(evt);
-            }
-        });
-
         cec_lbl_4.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         cec_lbl_4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         cec_lbl_4.setText("$AN_CEC_INPUT_AXIS");
 
-        cec_lbl_6.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        cec_lbl_6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        cec_lbl_6.setText("$AN_CEC_OUTPUT_AXIS");
-
-        cec_lbl_1.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        cec_lbl_1.setText("CHANDATA");
-
-        cec_4.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        cec_4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "AX1", "AX2", "AX3", "AX4", "AX5", "AX6", "AX7", "AX8", "AX9", "AX10", "AX11", "AX12", "AX13", "AX14", "AX15", "AX16", "AX17", "AX18", "AX19", "AX20", "AX21", "AX22", "AX23", "AX24", "AX25", "AX26", "AX27", "AX28", "AX29", "AX30" }));
-        cec_4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cec_4ActionPerformed(evt);
-            }
-        });
-
-        cec_5.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        cec_5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1" }));
-        cec_5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cec_5ActionPerformed(evt);
-            }
-        });
+        lbl_cechecderfoot_3.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        lbl_cechecderfoot_3.setText("CHANDATA");
 
         cec_1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         cec_1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CHANDATA(1)", "CHANDATA(2)", "CHANDATA(3)" }));
@@ -1358,89 +1429,156 @@ public class Arc_Import extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        txt_cec_header_footer_1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        txt_cec_header_footer_1.setText(";Header Text");
+        txt_cec_header_footer_1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_cec_header_footer_1ActionPerformed(evt);
+            }
+        });
+
+        txt_cec_header_footer_2.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        txt_cec_header_footer_2.setText("NEWCONF");
+        txt_cec_header_footer_2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_cec_header_footer_2ActionPerformed(evt);
+            }
+        });
+
+        lbl_cechecderfoot_1.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        lbl_cechecderfoot_1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbl_cechecderfoot_1.setText(";Header Text");
+
+        lbl_12.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        lbl_12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbl_12.setText("NEWCONF");
+
+        txt_auto_1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        txt_auto_1.setFocusable(false);
+        txt_auto_1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_auto_1ActionPerformed(evt);
+            }
+        });
+
+        txt_auto_2.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        txt_auto_2.setFocusable(false);
+
+        txt_auto_3.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        txt_auto_3.setFocusable(false);
+
+        txt_auto_4.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        txt_auto_4.setFocusable(false);
+
+        cec_lbl_6.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        cec_lbl_6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        cec_lbl_6.setText("$AN_CEC_OUTPUT_AXIS");
+
+        javax.swing.GroupLayout lbl_cechecderfoot_2Layout = new javax.swing.GroupLayout(lbl_cechecderfoot_2);
+        lbl_cechecderfoot_2.setLayout(lbl_cechecderfoot_2Layout);
+        lbl_cechecderfoot_2Layout.setHorizontalGroup(
+            lbl_cechecderfoot_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(lbl_cechecderfoot_2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(cec_lbl_5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cec_lbl_2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                            .addGap(20, 20, 20)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(cec_lbl_1, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(cec_lbl_3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(cec_lbl_4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(cec_lbl_6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cec_2, 0, 127, Short.MAX_VALUE)
-                    .addComponent(cec_3, 0, 127, Short.MAX_VALUE)
-                    .addComponent(cec_1, 0, 178, Short.MAX_VALUE)
-                    .addComponent(cec_5, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cec_6, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cec_4, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(lbl_cechecderfoot_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, lbl_cechecderfoot_2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(lbl_cechecderfoot_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbl_cechecderfoot_1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbl_12, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(lbl_cechecderfoot_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_cec_header_footer_2)
+                            .addComponent(txt_cec_header_footer_1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(lbl_cechecderfoot_2Layout.createSequentialGroup()
+                        .addGroup(lbl_cechecderfoot_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cec_lbl_5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cec_lbl_2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, lbl_cechecderfoot_2Layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addGroup(lbl_cechecderfoot_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbl_cechecderfoot_3, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(cec_lbl_3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cec_lbl_4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cec_lbl_6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(lbl_cechecderfoot_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, lbl_cechecderfoot_2Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(lbl_cechecderfoot_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txt_auto_2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, lbl_cechecderfoot_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txt_auto_1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(lbl_cechecderfoot_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(cec_1, javax.swing.GroupLayout.Alignment.TRAILING, 0, 178, Short.MAX_VALUE)
+                                            .addComponent(cec_2, javax.swing.GroupLayout.Alignment.TRAILING, 0, 127, Short.MAX_VALUE)))))
+                            .addGroup(lbl_cechecderfoot_2Layout.createSequentialGroup()
+                                .addComponent(txt_auto_3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txt_auto_4))))
                 .addContainerGap())
         );
 
-        jPanel4Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cec_1, cec_2, cec_3});
+        lbl_cechecderfoot_2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cec_1, cec_2, txt_auto_1, txt_auto_2, txt_auto_3, txt_cec_header_footer_1, txt_cec_header_footer_2});
 
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        lbl_cechecderfoot_2Layout.setVerticalGroup(
+            lbl_cechecderfoot_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, lbl_cechecderfoot_2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cec_1)
-                    .addComponent(cec_lbl_1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(lbl_cechecderfoot_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_cec_header_footer_1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_cechecderfoot_1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(lbl_cechecderfoot_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_cec_header_footer_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_12))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(lbl_cechecderfoot_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_cechecderfoot_3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cec_1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(lbl_cechecderfoot_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cec_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cec_lbl_2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cec_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cec_lbl_3))
+                .addGroup(lbl_cechecderfoot_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cec_lbl_3)
+                    .addComponent(txt_auto_1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cec_lbl_4)
-                    .addComponent(cec_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(lbl_cechecderfoot_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_auto_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cec_lbl_4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(lbl_cechecderfoot_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cec_lbl_5)
-                    .addComponent(cec_5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_auto_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cec_lbl_6)
-                    .addComponent(cec_6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGroup(lbl_cechecderfoot_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_auto_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cec_lbl_6))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel4Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cec_lbl_2, cec_lbl_3, cec_lbl_4, cec_lbl_5, cec_lbl_6});
-
-        jPanel4Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cec_1, cec_2, cec_3});
+        lbl_cechecderfoot_2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cec_1, cec_2});
 
         javax.swing.GroupLayout CheckBoxes2Layout = new javax.swing.GroupLayout(CheckBoxes2);
         CheckBoxes2.setLayout(CheckBoxes2Layout);
         CheckBoxes2Layout.setHorizontalGroup(
             CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CheckBoxes2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(lbl_cechecderfoot_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         CheckBoxes2Layout.setVerticalGroup(
             CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CheckBoxes2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addGroup(CheckBoxes2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lbl_cechecderfoot_2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 22, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -1451,7 +1589,7 @@ public class Arc_Import extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(CheckBoxes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(CheckBoxes1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CheckBoxes2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1465,16 +1603,13 @@ public class Arc_Import extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(CheckBoxes2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(CheckBoxes1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(CheckBoxes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CheckBoxes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(CheckBoxes1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addComponent(CheckBoxes2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {CheckBoxes, CheckBoxes1, CheckBoxes2, jPanel1});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1483,20 +1618,19 @@ public class Arc_Import extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(6, 6, 6))
+                .addGap(1, 1, 1)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        setSize(new java.awt.Dimension(2629, 745));
+        setSize(new java.awt.Dimension(2829, 824));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -1536,6 +1670,7 @@ options[0]);
    cec_clearx7();
         clearx7();      
         cec_size_store.clear();
+        
         select_compensation_path();
    }
     private void verify_compefile(){
@@ -1732,6 +1867,8 @@ lbl_per.setText("0%");
                               clearx();
                               clearx2();
                               clearx3();
+                                      clear_8();
+
                               clear_cec_x2();
                               clear_col_size();   
                               clear_cec_col_size(); 
@@ -1779,6 +1916,7 @@ lbl_per.setText("0%");
        // disable_btns();
       //  String ext1 = FilenameUtils.getExtension("/path/to/file/foo.txt");
      // String ext = Files.getFileExtension(path);
+        
         if(active_state==0){
                select_file();
                // clear_arrays();
@@ -1834,6 +1972,7 @@ lbl_per.setText("0%");
                                  compesation_data_1 = new ArrayList<String>();
                                  compesation_data_2 = new ArrayList<String>();
                                  arr1 = new ArrayList<String>();
+                                  arr2 = new ArrayList<String>();
                                  compesation_errors= new ArrayList<String>();
                                  used_inserted_status=0;
                               //  List<Integer> myArrayList = new ArrayList<>(100);                           
@@ -1870,8 +2009,9 @@ lbl_per.setText("0%");
 
     private void btn_raw_tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_raw_tblMouseClicked
         // TODO add your handling code here:
-        
-        UpdateJTable();
+       // test();
+       // UpdateJTable();
+        switch_table();
     }//GEN-LAST:event_btn_raw_tblMouseClicked
  private static void set_jtables() {
         TableColumnModel columnModel = SqliteDataTable.getColumnModel();
@@ -1948,6 +2088,9 @@ lbl_per.setText("0%");
                continue_with_loop();
                btnContinue.setVisible(false);
                 btnRemoveAll.setVisible(false);
+                btn_exit_1.setVisible(false);
+                      // btn_exit_2.setVisible(false);
+                      // btn_exit_3.setVisible(false);
            
     }//GEN-LAST:event_btnContinueMouseClicked
 
@@ -2396,10 +2539,17 @@ lbl_per.setText("0%");
          
          }
      
-        JFileChooser chooser =new JFileChooser();
-        chooser.showOpenDialog(null);
-        chooser.setDialogTitle("Name MPF file");
-        File f = chooser.getSelectedFile();
+          String LAST_USED_FOLDER="";
+    Preferences prefs = Preferences.userRoot().node(getClass().getName());
+JFileChooser chooser = new JFileChooser(prefs.get(LAST_USED_FOLDER,
+    new File(".").getAbsolutePath()));
+int returnVal = chooser.showOpenDialog(null);
+if (returnVal == JFileChooser.APPROVE_OPTION) {
+    // do something
+    prefs.put(LAST_USED_FOLDER, chooser.getSelectedFile().getParent());
+}
+File f = chooser.getSelectedFile();
+      //  String filename=f.getAbsolutePath();
         filenamex=f.getAbsolutePath();
        // JOptionPane.showMessageDialog(null, filename+".mdf");
         txt_file_path=filenamex+".MPF";
@@ -2438,6 +2588,9 @@ lbl_per.setText("0%");
         skip_all_id=1;
             btnContinue.setVisible(false);
         btnRemoveAll.setVisible(false);
+        btn_exit_1.setVisible(false);
+                    //   btn_exit_2.setVisible(false);
+                     //  btn_exit_3.setVisible(false);
         clear_all();
         continue_with_loop();
     }//GEN-LAST:event_btnRemoveAllActionPerformed
@@ -2502,44 +2655,125 @@ lbl_per.setText("0%");
 
     private void cec_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cec_2ActionPerformed
         // TODO add your handling code here:
+        
+        
     }//GEN-LAST:event_cec_2ActionPerformed
-
-    private void cec_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cec_3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cec_3ActionPerformed
-
-    private void cec_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cec_7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cec_7ActionPerformed
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
         // TODO add your handling code here:
+        String selectstring =cec_2.getSelectedItem().toString().trim();
+        if(!selectstring.equals("--Select index--")){
         next();
+        }else{
+        JOptionPane.showMessageDialog(null, "No selected axis!");
+        }
+        
     }//GEN-LAST:event_jButton4MouseClicked
 
     private void cec_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cec_1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cec_1ActionPerformed
 
-    private void cec_8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cec_8ActionPerformed
+    private void txt_cec_header_footer_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cec_header_footer_5ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cec_8ActionPerformed
+    }//GEN-LAST:event_txt_cec_header_footer_5ActionPerformed
 
-    private void cec_9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cec_9ActionPerformed
+    private void txt_cec_header_footer_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cec_header_footer_1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cec_9ActionPerformed
+    }//GEN-LAST:event_txt_cec_header_footer_1ActionPerformed
 
-    private void cec_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cec_5ActionPerformed
+    private void txt_cec_header_footer_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cec_header_footer_2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cec_5ActionPerformed
+    }//GEN-LAST:event_txt_cec_header_footer_2ActionPerformed
 
-    private void cec_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cec_6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cec_6ActionPerformed
+    private void cec_2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cec_2ItemStateChanged
+        
+      try{ 
 
-    private void cec_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cec_4ActionPerformed
+                    Statement stmt2;
+                    String selected=cec_2.getSelectedItem().toString().trim();
+                    String Table_click="41300["+selected+"]";
+                    stmt2= conn.createStatement();
+                    String sql ="select * from tbl_cec_comp_compesation where var1='"+Table_click+"' ";
+                    rs=stmt2.executeQuery(sql);
+                    if(rs.next()){
+                
+            String add1=rs.getString("var1");  
+            String add2=rs.getString("var2");  
+            String add3=rs.getString("var3");   
+            String add4=rs.getString("var4"); 
+            String add5=rs.getString("var5");   
+            String add6=rs.getString("var6");   
+            String add7=rs.getString("var7");
+            String add8=rs.getString("var8"); 
+            String add9=rs.getString("var9");  
+            String add10=rs.getString("var10");  
+            String add11=rs.getString("var11"); 
+            String add12=rs.getString("var12");  
+            String add13=rs.getString("var13");   
+            String add14=rs.getString("var14");
+            
+                txt_auto_1.setText(add5);
+                txt_auto_2.setText(add6);
+                txt_auto_3.setText(add7);
+                txt_auto_4.setText(add8);
+                txt_auto_5.setText(add12);
+                txt_auto_6.setText(add13);
+                txt_auto_7.setText(add14);  
+            jButton4.setEnabled(true);
+           // String Stringx=add1+" "+add2+" "+add3+" "+add4+" "+add5+" "+add6+" "+add7+" "+add8+" "+add9+" "+add10+" "+add11+" "+add12+" "+add13+" "+add14;
+           // txtage.setText(add10);
+           // JOptionPane.showMessageDialog(null, Stringx); 
+               
+                    
+       
+        }else{
+           jButton4.setEnabled(false);
+      JOptionPane.showMessageDialog(null, "Selection Out Of Rage"); 
+         }
+      
+      
+      } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+     
+    }//GEN-LAST:event_cec_2ItemStateChanged
+
+    private void txt_cec_header_footer_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cec_header_footer_3ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cec_4ActionPerformed
+    }//GEN-LAST:event_txt_cec_header_footer_3ActionPerformed
+
+    private void txt_auto_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_auto_1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_auto_1ActionPerformed
+
+    private void txt_auto_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_auto_6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_auto_6ActionPerformed
+
+    private void txt_auto_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_auto_5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_auto_5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void btn_exit_1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_exit_1MouseClicked
+        // TODO add your handling code here:
+        
+        abort_process();
+    }//GEN-LAST:event_btn_exit_1MouseClicked
+
+    private void btn_exit_2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_exit_2MouseClicked
+        // TODO add your handling code here:
+        abort_process();
+    }//GEN-LAST:event_btn_exit_2MouseClicked
+
+    private void btn_exit_3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_exit_3MouseClicked
+        // TODO add your handling code here:
+        abort_process();
+    }//GEN-LAST:event_btn_exit_3MouseClicked
   
     
     private void open_explorer(){
@@ -2701,19 +2935,14 @@ lbl_per.setText("0%");
     private javax.swing.JButton btnContinue;
     private javax.swing.JButton btnRemoveAll;
     private javax.swing.JButton btn_conf_file;
+    private javax.swing.JButton btn_exit_1;
+    private javax.swing.JButton btn_exit_2;
+    private javax.swing.JButton btn_exit_3;
     private javax.swing.JButton btn_impo_compesation;
     private javax.swing.JButton btn_normalize;
     private javax.swing.JButton btn_raw_tbl;
     private javax.swing.JComboBox cec_1;
     private javax.swing.JComboBox cec_2;
-    private javax.swing.JComboBox cec_3;
-    private javax.swing.JComboBox cec_4;
-    private javax.swing.JComboBox cec_5;
-    private javax.swing.JComboBox cec_6;
-    private javax.swing.JComboBox cec_7;
-    private javax.swing.JComboBox cec_8;
-    private javax.swing.JComboBox cec_9;
-    private javax.swing.JLabel cec_lbl_1;
     private javax.swing.JLabel cec_lbl_2;
     private javax.swing.JLabel cec_lbl_3;
     private javax.swing.JLabel cec_lbl_4;
@@ -2760,12 +2989,12 @@ lbl_per.setText("0%");
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_1;
     private javax.swing.JLabel lbl_10;
+    private javax.swing.JLabel lbl_12;
     private javax.swing.JLabel lbl_2;
     private javax.swing.JLabel lbl_3;
     private javax.swing.JLabel lbl_4;
@@ -2774,8 +3003,26 @@ lbl_per.setText("0%");
     private javax.swing.JLabel lbl_7;
     private javax.swing.JLabel lbl_8;
     private javax.swing.JLabel lbl_9;
+    private javax.swing.JLabel lbl_cechecderfoot_1;
+    private javax.swing.JPanel lbl_cechecderfoot_2;
+    private javax.swing.JLabel lbl_cechecderfoot_3;
+    private javax.swing.JLabel lbl_cechecderfoot_4;
+    private javax.swing.JLabel lbl_cechecderfoot_5;
+    private javax.swing.JLabel lbl_cechecderfoot_6;
     private javax.swing.JLabel lbl_per;
     private javax.swing.JTextField path;
+    private javax.swing.JTextField txt_auto_1;
+    private javax.swing.JTextField txt_auto_2;
+    private javax.swing.JTextField txt_auto_3;
+    private javax.swing.JTextField txt_auto_4;
+    private javax.swing.JTextField txt_auto_5;
+    private javax.swing.JTextField txt_auto_6;
+    private javax.swing.JTextField txt_auto_7;
+    private javax.swing.JTextField txt_cec_header_footer_1;
+    private javax.swing.JTextField txt_cec_header_footer_2;
+    private javax.swing.JTextField txt_cec_header_footer_3;
+    private javax.swing.JTextField txt_cec_header_footer_4;
+    private javax.swing.JTextField txt_cec_header_footer_5;
     private javax.swing.JTextField txt_header1;
     private javax.swing.JTextField txt_header3;
     private javax.swing.JComboBox txt_header4;
@@ -3503,12 +3750,20 @@ Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
 private void select_file_2() {
     
         process_continuing=0;
-        JFileChooser chooser =new JFileChooser();
-        chooser.showOpenDialog(null);
-        File f = chooser.getSelectedFile();
+         String LAST_USED_FOLDER="";
+    Preferences prefs = Preferences.userRoot().node(getClass().getName());
+JFileChooser chooser = new JFileChooser(prefs.get(LAST_USED_FOLDER,
+    new File(".").getAbsolutePath()));
+int returnVal = chooser.showOpenDialog(null);
+if (returnVal == JFileChooser.APPROVE_OPTION) {
+    // do something
+    prefs.put(LAST_USED_FOLDER, chooser.getSelectedFile().getParent());
+}
+File f = chooser.getSelectedFile();
         String filename=f.getAbsolutePath();
         pathxx2 =filename;
-        txt_path2.setText(filename);
+      
+        txt_path2.setText(pathxx2);
         disable_components();
        verify_compefile();
         if(compesation_errors.size() > 0){
@@ -3533,14 +3788,23 @@ private void select_file_2() {
       
        
     }
+   
     private void select_file() {
+        
         process_continuing=0;
-        JFileChooser chooser =new JFileChooser();
-        chooser.showOpenDialog(null);
-        File f = chooser.getSelectedFile();
+              String LAST_USED_FOLDER="";
+    Preferences prefs = Preferences.userRoot().node(getClass().getName());
+JFileChooser chooser = new JFileChooser(prefs.get(LAST_USED_FOLDER,
+    new File(".").getAbsolutePath()));
+int returnVal = chooser.showOpenDialog(null);
+if (returnVal == JFileChooser.APPROVE_OPTION) {
+    // do something
+    prefs.put(LAST_USED_FOLDER, chooser.getSelectedFile().getParent());
+}
+File f = chooser.getSelectedFile();
         String filename=f.getAbsolutePath();
         pathxx =filename;
-        path.setText(filename);
+       path.setText(pathxx);
         disable_components();
         extract_data();       
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -3644,7 +3908,9 @@ private void select_file_2() {
          data_used_name.remove(int_checkbox_index);
         btnContinue.setVisible(true);
         btnRemoveAll.setVisible(true);
-        
+        btn_exit_1.setVisible(true);
+                     //  btn_exit_2.setVisible(false);
+                      // btn_exit_3.setVisible(false);
       //  JOptionPane.showMessageDialog(null, datacheckbox.size()+" removed");
       // System.out.println(data_used_only_xx);
       //   System.out.println(data_used_only_indices);
@@ -3946,9 +4212,12 @@ private boolean start_loop_par1_2(){
         // cec_select_row();
          // select_row_2();
          cec_select_row_0();
+         cec_add_header_array_0();         
          cec_add_header_array();
          cec_add_body_array();
          cec_add_footer_1_array();
+         cec_add_footer_array_0();
+         
         // cec_add_footer_2_array();
          
          insert_compes();
@@ -4046,7 +4315,7 @@ compesation_segments=(maxcc-mincc)/stepcc;
                    footer_1_2="$AA_ENC_COMP_MIN[" + body_part2+"," +ax+ "]="+minxx ;
                    footer_1_3="$AA_ENC_COMP_MAX[" + body_part2+"," +ax+ "]="+maxxx;
                    footer_1_4="$AA_ENC_COMP_IS_MODULO[" + body_part2+"," +ax+ "]="+modulo;
-                   footer_1_5="";
+                  // footer_1_5="";
                    
                    
                    
@@ -4093,9 +4362,18 @@ private void cec_select_row_0(){
                   String cec_direction=rs.getString("cec_direction");
                    String cec_mult_by_table=rs.getString("cec_mult_by_table");
                     String cec_is_modulo=rs.getString("cec_is_modulo");
-                    // String str_footer_new_conf=rs.getString("footer_newconf");
-                   //  String str_m=rs.getString("footer_m17");
-                   
+                    
+                    String str_header_1=rs.getString("cec_header");
+                     String str_header_2=rs.getString("cec_header_newconf");
+                     String str_footer_1=rs.getString("cec_fooeter");
+                     String str_footer_2=rs.getString("cec_footer_newconf");
+                     String str_footer_3=rs.getString("m7");
+                     
+                    cec_str_header_1=str_header_1;
+                    cec_str_header_2=str_header_2;
+                    cec_str_footer_1=str_footer_1;
+                    cec_str_footer_2=str_footer_2;
+                    cec_str_footer_3=str_footer_3;
             
                   cec_cec_chandata=cec_chandata;
                 
@@ -4390,6 +4668,57 @@ private void cec_select_row_0(){
         }
  //System.out.println("Header"+compesation_data_1);
  }
+ 
+ private void cec_add_header_array_0(){
+                 
+                    
+                   int ixx=2;
+         for(int i=0; i <ixx; i++){
+         String dataxx="";
+         if(i==0){
+            dataxx= cec_str_header_1;
+         }else if(i==1){
+            // here
+            dataxx=cec_str_header_2;
+         }
+                   
+         else{
+         //dataxx="";
+         }
+        compesation_data_1.add(dataxx);
+       // /(compesation_data_1);
+        }    
+                    
+ 
+ }
+ 
+  private void cec_add_footer_array_0(){
+                    
+                  
+                    
+                   int ixx=3;
+         for(int i=0; i <ixx; i++){
+         String dataxx="";
+         if(i==0){
+            dataxx= cec_str_footer_1;
+         }else if(i==1){
+            // here
+            dataxx=cec_str_footer_2;
+         }
+         else if(i==2){
+            // here
+            dataxx=cec_str_footer_3;
+         }
+                   
+         else{
+         //dataxx="";
+         }
+        compesation_data_1.add(dataxx);
+       // /(compesation_data_1);
+        }    
+                    
+ 
+ }
  private void cec_add_header_array(){
      
      
@@ -4476,12 +4805,16 @@ private void cec_select_row_0(){
           else if(i==3){
              dataxx=footer_1_4;
          }
+          else if(i==4){
+             dataxx=footer_2_1;
+         }
          else{
          //dataxx="";
          }
         compesation_data_1.add(dataxx);
-       // System.out.println(compesation_data_1);
+        
         }
+         System.out.println(compesation_data_1);
         // System.out.println("footer_1"+compesation_data_1);
  }
  private void cec_add_footer_1_array(){
@@ -4531,29 +4864,25 @@ private void cec_select_row_0(){
           String footer_2_2="$MA_ENC_COMP_ENABLE[0]=1";
           String footer_2_3="NEWCONF";
           String footer_2_4="M17";*/
-         int ixx=7;
+         int ixx=5;
          for(int i=0; i <ixx; i++){
          String dataxx="";
          if(i==0){
-            dataxx=footer_2_1;
-         }else if(i==1){
             dataxx=footer_2_2;
+         }else if(i==1){
+            dataxx=footer_2_3;
             //footer_2_footer_text
          }
          else if(i==2){
-          dataxx=footer_2_3;
+          dataxx=footer_2_4;
          }
           else if(i==3){
-             dataxx=footer_2_4;
-         }
-           else if(i==4){
              dataxx=footer_2_5;
          }
-            else if(i==5){
+           else if(i==4){
              dataxx=footer_2_6;
-         }
-         else{
-         dataxx="";
+         } else{
+        // dataxx="";
          }
         compesation_data_1.add(dataxx);
       //  System.out.println(compesation_data_1);
@@ -4848,6 +5177,23 @@ reader.close();
    
     }
     
+            
+             private void clear_8() {
+        
+         String sql = " delete from tbl_cec_comp_compesation where id > ?";
+        //String sql = "TRUNCATE TABLE tbl_chandata";
+         
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, "0");            
+            pst.execute();
+         
+        }
+        catch (Exception e){
+                 
+        }
+   
+    }
     private void clearx7() {
         
          String sql = " delete from  tbl_compensation_var_inputs where id > ?";
@@ -5188,7 +5534,7 @@ reader.close();
                                 if(str_base_id==1){
                                     data_used_only_xx.add(str_asset_status);
                                     
-                                    data_used_only_indices.add("("+str_pos_counter_1+")");
+                                    data_used_only_indices.add(""+str_pos_counter_1+"");
                                  //   System.out.println(data_used_only_indices);
                                     size_store.add(str_pos_counter);
                                     str_base_id=0;
@@ -5218,7 +5564,7 @@ reader.close();
                          if (str_base_id==2){
                                       cec_data_used_only_xx.add(str_asset_status);
                                       cec_data_2.add(str_asset_status);
-                                      cec_data_used_only_indices.add("41300"+"("+str_pos_counter_1+")");
+                                      cec_data_used_only_indices.add("41300"+"["+str_pos_counter_1+"]");
                                       cec_size_store.add(str_pos_counter); 
                                      str_base_id=0;
                                       old_str_asset_def_body =str_asset_def_body;
@@ -5241,14 +5587,14 @@ reader.close();
                          
                           if(str_base_id==1){
                                     data_used_only_xx.add(str_asset_status);
-                                    data_used_only_indices.add("("+str_pos_counter_1+")");
+                                    data_used_only_indices.add(""+str_pos_counter_1+"");
                                   //   System.out.println(data_used_only_indices);
                                     size_store.add(str_pos_counter);
                                 
                                 }else if (str_base_id==2){
                                      cec_data_used_only_xx.add(str_asset_status);
                                      cec_data_2.add(str_asset_status);
-                                     cec_data_used_only_indices.add("("+str_pos_counter_1+")");
+                                     cec_data_used_only_indices.add("["+str_pos_counter_1+"]");
                                      cec_size_store.add(str_pos_counter); 
                                 
                                 }else{
@@ -6419,9 +6765,12 @@ data.clear();
     }catch(Exception e){}    
          SW1.cancel(true);           
          SW2.cancel(true);
+           arr1.clear();
+            arr2.clear();
        //  JOptionPane.showMessageDialog(null, ""); 
         // SW1.addPropertyChangeListener(null);
-         create_muliti_dimentional_array();
+         //create_muliti_dimentional_array();
+         cec_create_muliti_dimentional_array();
          finish_loops();
         
          stop_threads();
@@ -7741,6 +8090,9 @@ data29_3rd.clear();
           set_check_box();
          btnContinue.setVisible(true);
          btnRemoveAll.setVisible(true);
+         btn_exit_1.setVisible(true);
+                     //  btn_exit_2.setVisible(false);
+                      // btn_exit_3.setVisible(false);
           }else if(p==1)
           {
           continue_with_loop();
@@ -7989,10 +8341,7 @@ private void enable_btns() {
     }
     
 
-
-
-
-    private void create_muliti_dimentional_array() {
+private void create_muliti_dimentional_array() {
           
         String input="";
         for(int i=0; i<data5.size(); i++){
@@ -8028,6 +8377,116 @@ private void enable_btns() {
         }
         
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
+    private boolean cec_create_muliti_dimentional_array() {
+      
+          if(cec_data_used_only_indices.size() > 0){
+        String input="";
+        for(int i=0; i<cec_data_used_only_indices.size(); i++){
+           
+            System.out.println(cec_data_used_only_indices.get(i));
+            
+            input=cec_data_used_only_indices.get(i);
+            arr2.add(input);
+            input=cec_data_1.get(i);
+            arr2.add(input);
+            input=cec_data_2.get(i);
+            arr2.add(input);
+            input=cec_data_3.get(i);
+            arr2.add(input);
+            input=cec_data_4.get(i);
+            arr2.add(input);
+            input=cec_data_5.get(i);
+            arr2.add(input);
+            input=cec_data_6.get(i);
+            arr2.add(input);
+            input=cec_data_7.get(i);
+            arr2.add(input);
+            input=cec_data_8.get(i);
+            arr2.add(input);
+            input=cec_data_9.get(i);
+            arr2.add(input);
+            input=cec_data_10.get(i);
+            arr2.add(input);
+            input=cec_data_11.get(i);
+            arr2.add(input);
+            input=cec_data_12.get(i);
+            arr2.add(input);
+            input=cec_data_13.get(i);
+            arr2.add(input);
+            input=cec_data_14.get(i);
+            arr2.add(input);
+             cec_insert_compesations(); 
+        
+        }
+        return true;
+          }
+          return true;
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    private void cec_insert_compesations() {
+        System.out.println(arr2);
+       // String compes_1,
+          int lengx = arr2.size(); 
+            String[] stringArray = arr2.toArray(new String[arr2.size()]);    
+               
+                  try {    var1x=stringArray[0]; } catch (IndexOutOfBoundsException e) { var1x="n/a"; }
+                  try {    var2x=stringArray[1]; } catch (IndexOutOfBoundsException e) { var2x="n/a"; }
+                  try {    var3x=stringArray[2]; } catch (IndexOutOfBoundsException e) { var3x="n/a"; }
+                  try {    var4x=stringArray[3]; } catch (IndexOutOfBoundsException e) { var4x="n/a"; }
+                  try {    var5x=stringArray[4]; } catch (IndexOutOfBoundsException e) { var5x="n/a"; }
+                  try {    var6x=stringArray[5]; } catch (IndexOutOfBoundsException e) { var6x="n/a"; }
+                  try {    var7x=stringArray[6]; } catch (IndexOutOfBoundsException e) { var7x="n/a"; }
+                  try {    var8x=stringArray[7]; } catch (IndexOutOfBoundsException e) { var8x="n/a"; }
+                  try {    var9x=stringArray[8]; } catch (IndexOutOfBoundsException e) { var9x="n/a"; }
+                  try {    var10x=stringArray[9]; } catch (IndexOutOfBoundsException e) { var10x="n/a"; }
+                  try {    var11x=stringArray[10]; } catch (IndexOutOfBoundsException e) { var11x="n/a"; }
+                  try {    var12x=stringArray[11]; } catch (IndexOutOfBoundsException e) { var12x="n/a"; }
+                  try {    var13x=stringArray[12]; } catch (IndexOutOfBoundsException e) { var13x="n/a"; }
+                   try {    var14x=stringArray[13]; } catch (IndexOutOfBoundsException e) { var14x="n/a"; }
+                 // try {    var15x=stringArray[14]; } catch (IndexOutOfBoundsException e) { var15x="n/a"; }
+        
+     if(lengx > 0){
+        try
+    {
+     
+    //  String query = " insert into users (first_name, last_name, date_created, is_admin, num_points)"
+     //   + " values (?, ?, ?, ?, ?)";
+      String sql = "insert into tbl_cec_comp_compesation(var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+      // create the mysql insert preparedstatement
+      PreparedStatement preparedStmt = conn.prepareStatement(sql);
+      preparedStmt.setString (1, var1x);
+      preparedStmt.setString (2, var2x);
+      preparedStmt.setString (3, var3x);
+      preparedStmt.setString(4, var4x);
+      preparedStmt.setString(5, var5x);
+	  preparedStmt.setString (6, var6x);
+      preparedStmt.setString (7, var7x);
+      preparedStmt.setString (8, var8x);
+      preparedStmt.setString(9, var9x);
+      preparedStmt.setString(10, var10x);
+	  preparedStmt.setString (11, var11x);
+      preparedStmt.setString (12, var12x);
+      preparedStmt.setString (13, var13x);
+      preparedStmt.setString(14, var14x);
+     // preparedStmt.setString(15, var15x);
+
+      // execute the preparedstatement
+      preparedStmt.execute();
+      
+      //conn.close();
+    }
+    catch (Exception e)
+    {
+	JOptionPane.showMessageDialog(null, e);	
+	}
+   
+     
+                  }
+    arr2.clear();
+     
     }
 
     private void insert_compesations() {
@@ -8592,19 +9051,25 @@ private void enable_btns() {
     }
     private void cec_insert_compesantation_vars_inputs() {
         
-         String sql = "insert into cec_tbl_compensation_var_inputs (chandata,selected_axis,cec_input_ncu,cec_input_axis,cec_output_ncu,cec_output_axis,cec_direction, cec_mult_by_table,cec_is_modulo) values(?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+         String sql = "insert into cec_tbl_compensation_var_inputs (chandata,selected_axis,cec_input_ncu,cec_input_axis,cec_output_ncu,cec_output_axis,cec_direction, cec_mult_by_table,cec_is_modulo,cec_header,cec_header_newconf,cec_fooeter,cec_footer_newconf,m7) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
        
         try{
             pst = conn.prepareStatement(sql);            
             pst.setString(1, cec_1.getSelectedItem().toString().trim());
             pst.setString(2, cec_2.getSelectedItem().toString().trim());
-            pst.setString(3, cec_3.getSelectedItem().toString().trim()); 
-             pst.setString(4, cec_4.getSelectedItem().toString().trim());
-            pst.setString(5, cec_5.getSelectedItem().toString().trim()); 
-            pst.setString(6, cec_6.getSelectedItem().toString().trim());
-            pst.setString(7, cec_7.getSelectedItem().toString().trim());
-            pst.setString(8, cec_8.getSelectedItem().toString().trim());
-            pst.setString(9, cec_9.getSelectedItem().toString().trim());
+            pst.setString(3, txt_auto_1.getText().toString().trim()); 
+             pst.setString(4, txt_auto_2.getText().toString().trim()); 
+            pst.setString(5, txt_auto_3.getText().toString().trim());  
+            pst.setString(6, txt_auto_4.getText().toString().trim()); 
+            pst.setString(7, txt_auto_5.getText().toString().trim()); 
+            pst.setString(8, txt_auto_6.getText().toString().trim()); 
+            pst.setString(9, txt_auto_7.getText().toString().trim()); 
+            
+            pst.setString(10, txt_cec_header_footer_1.getText().trim());
+            pst.setString(11, txt_cec_header_footer_2.getText().trim());
+            pst.setString(12, txt_cec_header_footer_3.getText().trim());
+            pst.setString(13, txt_cec_header_footer_4.getText().trim());
+            pst.setString(14, txt_cec_header_footer_5.getText().trim());
            
 
             pst.execute();  
@@ -8612,7 +9077,7 @@ private void enable_btns() {
             
             
         }catch (Exception e){
-           // JOptionPane.showMessageDialog(null, e);
+            JOptionPane.showMessageDialog(null, e);
         
         }   
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -8621,7 +9086,7 @@ private void enable_btns() {
     private void hide_all_variable_fields() {
       //  btnContinue.setVisible(false);
        // btnRemoveAll.setVisible(false);
-      
+      btn_exit_1.setVisible(false);
         txt_header1.setVisible(false);
          txt_header_2.setVisible(false);
        txt_header_1_1.setVisible(false);
@@ -8644,6 +9109,9 @@ private void enable_btns() {
               lbl_8.setVisible(false);
                lbl_9.setVisible(false);
                 lbl_10.setVisible(false);
+               // btn_exit_1.setVisible(false);
+                       btn_exit_2.setVisible(false);
+                     //  btn_exit_3.setVisible(false);
                 jButton3.setVisible(false);
                
         //txt_header10.setVisible(false);
@@ -8651,20 +9119,32 @@ private void enable_btns() {
     }
     
      private void cec_hide_all_variable_fields() {
-        
+        CheckBoxes2.setVisible(false);
        cec_1.setVisible(false);
          cec_2.setVisible(false);
-         cec_3.setVisible(false);
-     cec_4.setVisible(false);
-       cec_5.setVisible(false);
-       cec_6.setVisible(false);
-        cec_7.setVisible(false);
-        cec_3.setVisible(false);
-        cec_8.setVisible(false);
-      
-       cec_9.setVisible(false);
-        
-           cec_lbl_1.setVisible(false);
+         txt_auto_1.setVisible(false); 
+     txt_auto_2.setVisible(false);
+       txt_auto_3.setVisible(false);
+       txt_auto_4.setVisible(false);
+        txt_auto_5.setVisible(false);
+        txt_auto_6.setVisible(false);
+        txt_auto_7.setVisible(false);      
+       
+       lbl_cechecderfoot_1.setVisible(false);
+       lbl_cechecderfoot_2.setVisible(false);
+       lbl_cechecderfoot_3.setVisible(false);
+       
+        lbl_cechecderfoot_4.setVisible(false);
+       lbl_cechecderfoot_5.setVisible(false);
+       lbl_cechecderfoot_6.setVisible(false);
+       
+       txt_cec_header_footer_1.setVisible(false);
+       txt_cec_header_footer_2.setVisible(false);
+       txt_cec_header_footer_3.setVisible(false);
+       txt_cec_header_footer_4.setVisible(false);
+       txt_cec_header_footer_5.setVisible(false);
+       
+           lbl_cechecderfoot_3.setVisible(false);
            cec_lbl_2.setVisible(false);
              cec_lbl_3.setVisible(false);
              cec_lbl_4.setVisible(false);
@@ -8673,7 +9153,9 @@ private void enable_btns() {
                 cec_lbl_7.setVisible(false);
              cec_lbl_8.setVisible(false);
              cec_lbl_9.setVisible(false);
-               
+              // btn_exit_1.setVisible(false);
+                     //  btn_exit_2.setVisible(false);
+                       btn_exit_3.setVisible(false);
                 
                 jButton4.setVisible(false);
     }
@@ -8706,24 +9188,41 @@ private void enable_btns() {
               lbl_8.setVisible(true);
                lbl_9.setVisible(true);
                 lbl_10.setVisible(true);
+               // btn_exit_1.setVisible(false);
+                       btn_exit_2.setVisible(true);
+                      // btn_exit_3.setVisible(false);
                 jButton3.setVisible(true);
         //txt_header10.setVisible(false);
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
  private void cec_show_all_variable_fields() {
-   
-  
+   CheckBoxes2.setVisible(true);
          cec_1.setVisible(true);
          cec_2.setVisible(true);
-         cec_3.setVisible(true);
-     cec_4.setVisible(true);
-       cec_5.setVisible(true);
-       cec_6.setVisible(true);
-        cec_7.setVisible(true);
-        cec_3.setVisible(true);
-        cec_8.setVisible(true);      
-       cec_9.setVisible(true);        
-           cec_lbl_1.setVisible(true);
+         txt_auto_1.setVisible(true);
+     txt_auto_2.setVisible(true);
+       txt_auto_3.setVisible(true);
+       txt_auto_4.setVisible(true);
+        txt_auto_5.setVisible(true);
+        txt_auto_6.setVisible(true);
+        txt_auto_7.setVisible(true);      
+      // cec_9.setVisible(true);  
+       
+       lbl_cechecderfoot_1.setVisible(true);
+       lbl_cechecderfoot_2.setVisible(true);
+       lbl_cechecderfoot_3.setVisible(true);       
+        lbl_cechecderfoot_4.setVisible(true);
+       lbl_cechecderfoot_5.setVisible(true);
+       lbl_cechecderfoot_6.setVisible(true);       
+       txt_cec_header_footer_1.setVisible(true);
+       txt_cec_header_footer_2.setVisible(true);
+       txt_cec_header_footer_3.setVisible(true);
+       txt_cec_header_footer_4.setVisible(true);
+       txt_cec_header_footer_5.setVisible(true);
+       
+       
+       
+           lbl_cechecderfoot_3.setVisible(true);
            cec_lbl_2.setVisible(true);
              cec_lbl_3.setVisible(true);
              cec_lbl_4.setVisible(true);
@@ -8732,6 +9231,9 @@ private void enable_btns() {
                 cec_lbl_7.setVisible(true);
              cec_lbl_8.setVisible(true);
              cec_lbl_9.setVisible(true);
+            // btn_exit_1.setVisible(false);
+                    //   btn_exit_2.setVisible(false);
+                       btn_exit_3.setVisible(true);
                 jButton4.setVisible(true);
        
         //txt_header10.setVisible(false);
@@ -8836,9 +9338,9 @@ private void switch_table_2() {
     }
 
     private void hide_panels() {
-        CheckBoxes.setVisible(true);
-        CheckBoxes1.setVisible(true);
-        CheckBoxes2.setVisible(true);
+        CheckBoxes.setVisible(false);
+        CheckBoxes1.setVisible(false);
+        CheckBoxes2.setVisible(false);
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
    private void show_panel1() {
@@ -8857,6 +9359,14 @@ private void switch_table_2() {
         CheckBoxes.setVisible(false);
         CheckBoxes1.setVisible(false);
         CheckBoxes2.setVisible(true);
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void abort_process() {
+        path.setText("");
+        txt_path2.setText("");
+            enable_components();
+           hide_panels();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

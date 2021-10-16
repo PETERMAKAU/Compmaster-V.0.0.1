@@ -194,8 +194,17 @@ public class Arc_Import extends javax.swing.JFrame {
     
     static ArrayList<String> data_chabdata_count;
     static  ArrayList<String> data_used_only_xx;
-    static  ArrayList<String> cec_data_used_only_xx;
-   static  ArrayList<String> data_used_only_indices;  
+     static  ArrayList<String> data_used_only_indices;  
+     
+     
+     static ArrayList<String> pivot_data_used_only_xx;
+    static  ArrayList<String> pivot_data_used_only_indices;
+     static  ArrayList<String> pivot_size_store;  
+      
+ 
+ 
+     
+    static  ArrayList<String> cec_data_used_only_xx;  
    static  ArrayList<String> cec_data_used_only_indices;  
    
    static  ArrayList<String> data_used_name;
@@ -1955,6 +1964,11 @@ lbl_per.setText("0%");
                                  cec_data_used_only_xx= new ArrayList<String>();
                                  data_used_only_indices= new ArrayList<String>();
                                  cec_data_used_only_indices= new ArrayList<String>();
+                                 
+                                   pivot_data_used_only_xx= new ArrayList<String>();
+                                   pivot_data_used_only_indices= new ArrayList<String>();
+                                   pivot_size_store = new ArrayList<String>();
+                                 
                                  cec_data_2= new ArrayList<String>();
                                  data_used_name= new ArrayList<String>();
                                  compesation_data_1 = new ArrayList<String>();
@@ -2071,29 +2085,73 @@ lbl_per.setText("0%");
 
     private void btnContinueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnContinueMouseClicked
         // TODO add your handling code here:
-             
+               
+                   continue_loop();
+           
+    }//GEN-LAST:event_btnContinueMouseClicked
+    private void continue_loop(){
+        interchange_arrays();
                 hide_panels();
                data_used_name.clear();             
                continue_with_loop();
                btnContinue.setVisible(false);
                 btnRemoveAll.setVisible(false);
                 btn_exit_1.setVisible(false);
-                      // btn_exit_2.setVisible(false);
-                      // btn_exit_3.setVisible(false);
-           
-    }//GEN-LAST:event_btnContinueMouseClicked
 
+}
+    private void interchange_arrays(){
+        
+         System.out.println("P Det "+pivot_data_used_only_xx);
+     System.out.println("P Det "+pivot_data_used_only_indices);
+     System.out.println("P Det "+pivot_size_store);
+        data_used_only_xx.clear();
+        data_used_only_indices.clear();
+        size_store.clear();
+ if(pivot_data_used_only_xx.size() >  0){
+ 
+     
+     for(int i=0; i< pivot_data_used_only_xx.size(); i++){
+ String dat1= pivot_data_used_only_xx.get(i);
+ String dat2= pivot_data_used_only_indices.get(i);
+ String dat3=  pivot_size_store.get(i);
+ 
+ if(dat1.length() > 0){
+ data_used_only_xx.add(dat1);
+ }
+ 
+ if(dat2.length() > 0){
+ data_used_only_indices.add(dat2);
+ }
+ 
+ if(dat3.length() > 0){
+ size_store.add(dat3);
+ }
+ 
+     }
+     
+     System.out.println("Det "+data_used_only_xx);
+     System.out.println("Det "+data_used_only_indices);
+     System.out.println("Det "+size_store);
+      System.out.println(size_store);
+ 
+ }
+ 
+    
+    }
+    
     private void chk1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chk1ItemStateChanged
         // TODO add your handling code here:
         
         if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
-              checkbox_index="0"; 
-              //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
+            checkbox_index="0"; 
+            
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk1.setVisible(true);
-             update_arraylist();
+              update_pivot_array();
+             //schk1.setVisible(true);
+        } else {//checkbox has been deselected
+              
+            /// update_arraylist();
            //  set_check_box();
              // set_check_box();
             // JOptionPane.showMessageDialog(null, int_checkbox_index+" removed");
@@ -2104,12 +2162,14 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
-              checkbox_index="1"; 
-              //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
+             checkbox_index="1"; 
+             
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk2.setVisible(true);
-             update_arraylist();
+              update_pivot_array();
+        } else {//checkbox has been deselected
+              
+             //chk2.setVisible(true);
+            // update_arraylist();
           
         };
     }//GEN-LAST:event_chk2ItemStateChanged
@@ -2118,12 +2178,15 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
-              checkbox_index="2"; 
-              //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
+             checkbox_index="2";               
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk3.setVisible(true);
-             update_arraylist();
+              update_pivot_array();
+        } else {//checkbox has been deselected
+             // checkbox_index="2"; 
+           // //  //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
+             //int_checkbox_index=Integer.parseInt(checkbox_index);
+           //  chk3.setVisible(true);
+            // update_arraylist();
           
         };
     }//GEN-LAST:event_chk3ItemStateChanged
@@ -2132,12 +2195,14 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
               checkbox_index="3"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk4.setVisible(true);
-             update_arraylist();
+              update_pivot_array();
+        } else {//checkbox has been deselected
+             
+            // chk4.setVisible(true);
+           //  update_arraylist();
           
         };
     }//GEN-LAST:event_chk4ItemStateChanged
@@ -2146,12 +2211,14 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
               checkbox_index="4"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk5.setVisible(true);
-             update_arraylist();
+              update_pivot_array();
+        } else {//checkbox has been deselected
+             
+           //  chk5.setVisible(true);
+           //  update_arraylist();
           
         };
     }//GEN-LAST:event_chk5ItemStateChanged
@@ -2160,12 +2227,14 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
               checkbox_index="5"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk6.setVisible(true);
-             update_arraylist();
+              update_pivot_array();
+        } else {//checkbox has been deselected
+             
+          //   chk6.setVisible(true);
+           //  update_arraylist();
           
         };
     }//GEN-LAST:event_chk6ItemStateChanged
@@ -2174,12 +2243,14 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
-              checkbox_index="6"; 
+             checkbox_index="6"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk7.setVisible(true);
-             update_arraylist();
+              update_pivot_array();
+        } else {//checkbox has been deselected
+              
+          //  chk7.setVisible(true);
+           //  update_arraylist();
           
         };
     }//GEN-LAST:event_chk7ItemStateChanged
@@ -2188,12 +2259,15 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
-              checkbox_index="7"; 
+             
+             checkbox_index="7"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk8.setVisible(true);
-             update_arraylist();
+              update_pivot_array();
+        } else {//checkbox has been deselected
+              
+           ///  chk8.setVisible(true);
+            // update_arraylist();
           
         };
     }//GEN-LAST:event_chk8ItemStateChanged
@@ -2202,12 +2276,14 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
-              checkbox_index="8"; 
+             checkbox_index="8"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk9.setVisible(true);
-             update_arraylist();
+              update_pivot_array();
+        } else {//checkbox has been deselected
+              
+            // chk9.setVisible(true);
+            // update_arraylist();
           
         };
     }//GEN-LAST:event_chk9ItemStateChanged
@@ -2216,12 +2292,14 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
               checkbox_index="9"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk10.setVisible(true);
-             update_arraylist();
+              update_pivot_array();
+        } else {//checkbox has been deselected
+             
+             //chk10.setVisible(true);
+           //  update_arraylist();
           
         };
     }//GEN-LAST:event_chk10ItemStateChanged
@@ -2231,12 +2309,14 @@ lbl_per.setText("0%");
         
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
               checkbox_index="10"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk11.setVisible(true);
-             update_arraylist();
+              update_pivot_array();
+        } else {//checkbox has been deselected
+             
+           //  chk11.setVisible(true);
+           //  update_arraylist();
           
         };
     }//GEN-LAST:event_chk11ItemStateChanged
@@ -2245,12 +2325,14 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
-              checkbox_index="11"; 
+             checkbox_index="11"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk12.setVisible(true);
-             update_arraylist();
+              update_pivot_array();
+        } else {//checkbox has been deselected
+              
+            // chk12.setVisible(true);
+           //  update_arraylist();
           
         };
     }//GEN-LAST:event_chk12ItemStateChanged
@@ -2259,12 +2341,14 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
               checkbox_index="12"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk13.setVisible(true);
-             update_arraylist();
+              update_pivot_array();
+        } else {//checkbox has been deselected
+             
+           //  chk13.setVisible(true);
+          //   update_arraylist();
           
         };
     }//GEN-LAST:event_chk13ItemStateChanged
@@ -2273,12 +2357,14 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
-              checkbox_index="13"; 
+             checkbox_index="13"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk14.setVisible(true);
-             update_arraylist();
+              update_pivot_array();
+        } else {//checkbox has been deselected
+              
+             //chk14.setVisible(true);
+           //  update_arraylist();
           
         };
     }//GEN-LAST:event_chk14ItemStateChanged
@@ -2287,12 +2373,14 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
               checkbox_index="14"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk15.setVisible(true);
-             update_arraylist();
+              update_pivot_array();
+        } else {//checkbox has been deselected
+             
+          //   chk15.setVisible(true);
+            // update_arraylist();
           
         };
     }//GEN-LAST:event_chk15ItemStateChanged
@@ -2301,12 +2389,14 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
-              checkbox_index="15"; 
+             checkbox_index="15"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk16.setVisible(true);
-             update_arraylist();
+              update_pivot_array();
+        } else {//checkbox has been deselected
+              
+           //  chk16.setVisible(true);
+           //  update_arraylist();
           
         };
     }//GEN-LAST:event_chk16ItemStateChanged
@@ -2315,12 +2405,14 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
-              checkbox_index="16"; 
+             checkbox_index="16"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk17.setVisible(true);
-             update_arraylist();
+              update_pivot_array();
+        } else {//checkbox has been deselected
+              
+           //  chk17.setVisible(true);
+            /// update_arraylist();
           
         };
     }//GEN-LAST:event_chk17ItemStateChanged
@@ -2329,12 +2421,14 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
-              checkbox_index="17"; 
+             checkbox_index="17"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk18.setVisible(true);
-             update_arraylist();
+              update_pivot_array();
+        } else {//checkbox has been deselected
+              
+           ///  chk18.setVisible(true);
+            // update_arraylist();
           
         };
     }//GEN-LAST:event_chk18ItemStateChanged
@@ -2343,12 +2437,14 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
-              checkbox_index="18"; 
+             checkbox_index="18"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk19.setVisible(true);
-             update_arraylist();
+              update_pivot_array();
+        } else {//checkbox has been deselected
+              
+            // chk19.setVisible(true);
+            // update_arraylist();
           
         };
     }//GEN-LAST:event_chk19ItemStateChanged
@@ -2357,12 +2453,14 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
-              checkbox_index="19"; 
+             checkbox_index="19"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk20.setVisible(true);
-             update_arraylist();
+              update_pivot_array();
+        } else {//checkbox has been deselected
+              
+           /// chk20.setVisible(true);
+           //  update_arraylist();
           
         };
     }//GEN-LAST:event_chk20ItemStateChanged
@@ -2371,12 +2469,14 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
-              checkbox_index="20"; 
+             checkbox_index="20"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk21.setVisible(true);
-             update_arraylist();
+             update_pivot_array();
+        } else {//checkbox has been deselected
+              
+           //  chk21.setVisible(true);
+            // update_arraylist();
           
         };
     }//GEN-LAST:event_chk21ItemStateChanged
@@ -2385,12 +2485,14 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
               checkbox_index="21"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk22.setVisible(true);
-             update_arraylist();
+             update_pivot_array();
+        } else {//checkbox has been deselected
+             
+            // chk22.setVisible(true);
+            //update_arraylist();
           
         };
     }//GEN-LAST:event_chk22ItemStateChanged
@@ -2400,12 +2502,14 @@ lbl_per.setText("0%");
         
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
-              checkbox_index="22"; 
+             checkbox_index="22"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk23.setVisible(true);
-             update_arraylist();
+             update_pivot_array();
+        } else {//checkbox has been deselected
+              
+            // chk23.setVisible(true);
+            // update_arraylist();
           
         };
     }//GEN-LAST:event_chk23ItemStateChanged
@@ -2415,12 +2519,14 @@ lbl_per.setText("0%");
         
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
-              checkbox_index="23"; 
+               checkbox_index="23"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk24.setVisible(true);
-             update_arraylist();
+             update_pivot_array();
+        } else {//checkbox has been deselected
+            
+           //  chk24.setVisible(true);
+            // update_arraylist();
           
         };
     }//GEN-LAST:event_chk24ItemStateChanged
@@ -2429,12 +2535,14 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
               checkbox_index="24"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk25.setVisible(true);
-             update_arraylist();
+             update_pivot_array();
+        } else {//checkbox has been deselected
+             
+            // chk25.setVisible(true);
+            // update_arraylist();
           
         };
     }//GEN-LAST:event_chk25ItemStateChanged
@@ -2443,12 +2551,14 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
               checkbox_index="25"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk26.setVisible(true);
-             update_arraylist();
+             update_pivot_array();
+        } else {//checkbox has been deselected
+             
+           //  chk26.setVisible(true);
+          //   update_arraylist();
           
         };
     }//GEN-LAST:event_chk26ItemStateChanged
@@ -2457,12 +2567,14 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
-              checkbox_index="26"; 
+             checkbox_index="26"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk27.setVisible(true);
-             update_arraylist();
+             update_pivot_array();
+        } else {//checkbox has been deselected
+              
+           //  chk27.setVisible(true);
+           //  update_arraylist();
           
         };
     }//GEN-LAST:event_chk27ItemStateChanged
@@ -2471,12 +2583,14 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
               checkbox_index="27"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk28.setVisible(true);
-             update_arraylist();
+             update_pivot_array();
+        } else {//checkbox has been deselected
+             
+           //  chk28.setVisible(true);
+            // update_arraylist();
           
         };
     }//GEN-LAST:event_chk28ItemStateChanged
@@ -2486,12 +2600,14 @@ lbl_per.setText("0%");
         
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
-              checkbox_index="28"; 
+                checkbox_index="28"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
-             int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk29.setVisible(true);
-             update_arraylist();
+                int_checkbox_index=Integer.parseInt(checkbox_index);
+                update_pivot_array();
+        } else {//checkbox has been deselected
+           
+           //  chk29.setVisible(true);
+          //   update_arraylist();
           
         };
     }//GEN-LAST:event_chk29ItemStateChanged
@@ -2500,12 +2616,14 @@ lbl_per.setText("0%");
         // TODO add your handling code here:
          if(evt.getStateChange() == evt.SELECTED) {//checkbox has been selected
             //do something...
-        } else {//checkbox has been deselected
-              checkbox_index="29"; 
+             checkbox_index="29"; 
               //checkbox_index = checkbox_index.replaceAll("[^0-9]", "");
              int_checkbox_index=Integer.parseInt(checkbox_index);
-             chk30.setVisible(true);
-             update_arraylist();
+             update_pivot_array();
+        } else {//checkbox has been deselected
+              
+           //  chk30.setVisible(true);
+            // update_arraylist();
           
         };
     }//GEN-LAST:event_chk30ItemStateChanged
@@ -2571,17 +2689,10 @@ File f = chooser.getSelectedFile();
     }//GEN-LAST:event_btnRemoveAllMouseClicked
 
     private void btnRemoveAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveAllActionPerformed
-        // TODO add your handling code here:
-          hide_panels();
-              //JOptionPane.showMessageDialog(null, data_used_name.size());
-        skip_all_id=1;
-        btnContinue.setVisible(false);
-        btnRemoveAll.setVisible(false);
-        btn_exit_1.setVisible(false);
-                    //   btn_exit_2.setVisible(false);
-                     //  btn_exit_3.setVisible(false);
-        clear_all();
-        continue_with_loop();
+     
+       //   hide_panels();
+           select_all();   
+        
     }//GEN-LAST:event_btnRemoveAllActionPerformed
 
     private void chk26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk26ActionPerformed
@@ -4108,8 +4219,59 @@ File f = chooser.getSelectedFile();
         chk30.setVisible(false);
       //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-           
-
+      private void update_pivot_array_2(){
+          clear_pivot();
+         set_pivote_arrays();
+      // set_pos_variables();
+      // data3.set(int_checkbox_index, str_asset_status);
+          for(int i=0; i < data_used_only_xx.size(); i++){
+           String str_pv1=data_used_only_xx.get(i);
+       String str_pv2=data_used_only_indices.get(i);
+       String str_pv3=size_store.get(i);
+       
+       
+       pivot_data_used_only_xx.set(i, str_pv1);
+      pivot_data_used_only_indices.set(i, str_pv2);
+       pivot_size_store.set(i, str_pv3);
+          }
+      
+       
+     //  data_used_only_xx.remove(int_checkbox_index);
+      //  data_used_only_indices.remove(int_checkbox_index);
+      //  size_store.remove(int_checkbox_index);
+      ////  data_used_name.remove(int_checkbox_index);
+        
+        System.out.println( "y"+pivot_data_used_only_xx);
+        System.out.println( "y"+pivot_data_used_only_indices);
+        System.out.println( "y"+pivot_size_store);
+          System.out.println( pivot_size_store);
+          continue_loop();
+       //System.out.println(data_used_name);
+   }      
+   private void update_pivot_array(){
+      // set_pos_variables();
+      // data3.set(int_checkbox_index, str_asset_status);
+       String str_pv1=data_used_only_xx.get(int_checkbox_index);
+       String str_pv2=data_used_only_indices.get(int_checkbox_index);
+       String str_pv3=size_store.get(int_checkbox_index);
+       
+       
+       pivot_data_used_only_xx.set(int_checkbox_index, str_pv1);
+      pivot_data_used_only_indices.set(int_checkbox_index, str_pv2);
+       pivot_size_store.set(int_checkbox_index, str_pv3);
+       
+     //  data_used_only_xx.remove(int_checkbox_index);
+      //  data_used_only_indices.remove(int_checkbox_index);
+      //  size_store.remove(int_checkbox_index);
+      ////  data_used_name.remove(int_checkbox_index);
+        
+        System.out.println( pivot_data_used_only_xx);
+        System.out.println( pivot_data_used_only_indices);
+        System.out.println( pivot_size_store);
+          System.out.println( pivot_size_store);
+       //System.out.println(data_used_name);
+   }
+  
    private void update_arraylist() {
        int xx=data_used_only_xx.size();
         
@@ -4117,11 +4279,18 @@ File f = chooser.getSelectedFile();
         data_used_only_indices.remove(int_checkbox_index);
         size_store.remove(int_checkbox_index);
         data_used_name.remove(int_checkbox_index);
+        
+        System.out.println(data_used_only_xx);
+        System.out.println(data_used_only_indices);
+        System.out.println(size_store);
+        System.out.println(data_used_name);
+        
+        
         btnContinue.setVisible(true);
         btnRemoveAll.setVisible(true);
         btn_exit_1.setVisible(true);
                      
-      // set_check_box();
+       set_check_box();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
    
@@ -4142,153 +4311,153 @@ File f = chooser.getSelectedFile();
              if(i==0){
                   chk1.setVisible(true);
              chk1.setText(str_caption+" ["+str_caption2+"]");
-             chk1.setSelected(true);
+             chk1.setSelected(false);
              }
              else if(i==1){
              chk2.setVisible(true);
              chk2.setText(str_caption+" ["+str_caption2+"]");
-             chk2.setSelected(true);
+             chk2.setSelected(false);
              }
              else if(i==2){
              chk3.setVisible(true);
              chk3.setText(str_caption+" ["+str_caption2+"]");
-             chk3.setSelected(true);
+             chk3.setSelected(false);
              }
              else if(i==3){
              chk4.setVisible(true);
              chk4.setText(str_caption+" ["+str_caption2+"]");
-             chk4.setSelected(true);
+             chk4.setSelected(false);
              }
              else if(i==4){
              chk5.setVisible(true);
              chk5.setText(str_caption+" ["+str_caption2+"]");
-             chk5.setSelected(true);
+             chk5.setSelected(false);
              }
              else if(i==5){
              chk6.setVisible(true);
              chk6.setText(str_caption+" ["+str_caption2+"]");
-             chk6.setSelected(true);
+             chk6.setSelected(false);
              }
              else if(i==6){
              chk7.setVisible(true);
              chk7.setText(str_caption+" ["+str_caption2+"]");
-             chk7.setSelected(true);
+             chk7.setSelected(false);
              }
              else if(i==7){
              chk8.setVisible(true);
              chk8.setText(str_caption+" ["+str_caption2+"]");
-             chk8.setSelected(true);
+             chk8.setSelected(false);
              }
              else if(i==8){
              chk9.setVisible(true);
              chk9.setText(str_caption+" ["+str_caption2+"]");
-             chk9.setSelected(true);
+             chk9.setSelected(false);
              }
              else if(i==9){
              chk10.setVisible(true);
              chk10.setText(str_caption+" ["+str_caption2+"]");
-             chk10.setSelected(true);
+             chk10.setSelected(false);
              }
              else if(i==10){
              chk11.setVisible(true);
              chk11.setText(str_caption+" ["+str_caption2+"]");
-             chk11.setSelected(true);
+             chk11.setSelected(false);
              }
              else if(i==11){
              chk12.setVisible(true);
              chk12.setText(str_caption+" ["+str_caption2+"]");
-             chk12.setSelected(true);
+             chk12.setSelected(false);
              }
               else if(i==12){
              chk13.setVisible(true);
              chk13.setText(str_caption+" ["+str_caption2+"]");
-             chk13.setSelected(true);
+             chk13.setSelected(false);
              }
                else if(i==13){
              chk14.setVisible(true);
              chk14.setText(str_caption+" ["+str_caption2+"]");
-             chk14.setSelected(true);
+             chk14.setSelected(false);
              }
              else if(i==14){
              chk15.setVisible(true);
              chk15.setText(str_caption+" ["+str_caption2+"]");
-             chk15.setSelected(true);
+             chk15.setSelected(false);
              }
              else if(i==15){
              chk16.setVisible(true);
              chk16.setText(str_caption+" ["+str_caption2+"]");
-             chk16.setSelected(true);
+             chk16.setSelected(false);
              }
              //////
                else if(i==16){
              chk17.setVisible(true);
              chk17.setText(str_caption+" ["+str_caption2+"]");
-             chk17.setSelected(true);
+             chk17.setSelected(false);
              }
              else if(i==17){
              chk18.setVisible(true);
              chk18.setText(str_caption+" ["+str_caption2+"]");
-             chk18.setSelected(true);
+             chk18.setSelected(false);
              }
              else if(i==18){
              chk19.setVisible(true);
              chk19.setText(str_caption+" ["+str_caption2+"]");
-             chk19.setSelected(true);
+             chk19.setSelected(false);
              }
              else if(i==19){
              chk20.setVisible(true);
              chk20.setText(str_caption+" ["+str_caption2+"]");
-             chk20.setSelected(true);
+             chk20.setSelected(false);
              }
              else if(i==20){
              chk21.setVisible(true);
              chk21.setText(str_caption+" ["+str_caption2+"]");
-             chk21.setSelected(true);
+             chk21.setSelected(false);
              }
              else if(i==21){
              chk22.setVisible(true);
              chk22.setText(str_caption+" ["+str_caption2+"]");
-             chk22.setSelected(true);
+             chk22.setSelected(false);
              }
              else if(i==22){
              chk23.setVisible(true);
              chk23.setText(str_caption+" ["+str_caption2+"]");
-             chk23.setSelected(true);
+             chk23.setSelected(false);
              }
              else if(i==23){
              chk24.setVisible(true);
              chk24.setText(str_caption+" ["+str_caption2+"]");
-             chk24.setSelected(true);
+             chk24.setSelected(false);
              }
              else if(i==24){
              chk25.setVisible(true);
              chk25.setText(str_caption+" ["+str_caption2+"]");
-             chk25.setSelected(true);
+             chk25.setSelected(false);
              }
              else if(i==25){
              chk26.setVisible(true);
              chk26.setText(str_caption+" ["+str_caption2+"]");
-             chk26.setSelected(true);
+             chk26.setSelected(false);
              }
              else if(i==26){
              chk27.setVisible(true);
              chk27.setText(str_caption+" ["+str_caption2+"]");
-             chk27.setSelected(true);
+             chk27.setSelected(false);
              }
               else if(i==27){
              chk28.setVisible(true);
              chk28.setText(str_caption+" ["+str_caption2+"]");
-             chk28.setSelected(true);
+             chk28.setSelected(false);
              }
              else if(i==28){
              chk29.setVisible(true);
              chk29.setText(str_caption+" ["+str_caption2+"]");
-             chk29.setSelected(true);
+             chk29.setSelected(false);
              }
              else if(i==29){
              chk30.setVisible(true);
              chk30.setText(str_caption+" ["+str_caption2+"]");
-             chk30.setSelected(true);
+             chk30.setSelected(false);
              }
              
              else{
@@ -5204,6 +5373,7 @@ private void cec_select_row_0(){
 
        private void reset_progres_bar() {
            lbl_per.setText("Process has completed successfully!");
+           clear_pivot();
            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
        }
 
@@ -5823,6 +5993,8 @@ reader.close();
                     System.out.println(" USED "+data_used_only_xx);
                      System.out.println(" ENABLE "+data_used_only_xx);
                    // insert_used_values_row();
+                     
+                     clear_pivot();
                     open_choose_used_axis(); 
                     str_base_id_count_1=0;
                     str_base_id_count_2=0;
@@ -8219,14 +8391,30 @@ data29_3rd.clear();
       //  JOptionPane.showMessageDialog(null, cec_size_store);
         //cec_data_used_only_indices cec_size_store
        // insert_cec_size();
-        
+        set_pivote_arrays();
         insert_used_only_names();
         show_panel1();
         // cec_insert_used_only_names();
         cont_2();
     }
     
+    private void set_pivote_arrays(){
+                try{
+                    
+                     int ix=data_used_only_xx.size();
+        for(int i=0; i < ix; i++){
+            System.out.println(i);
+      pivot_data_used_only_xx.add("");
+      pivot_data_used_only_indices.add("");
+      pivot_size_store.add("");
+              }
+                }catch(Exception e){
+                }       
+       
     
+
+    
+    }
        
     private void upate_action() {
         
@@ -8741,15 +8929,40 @@ private void create_muliti_dimentional_array() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private void clear_all() {
-       // data_used_name.clear();
-        data_used_only_xx.clear();
-         data_used_only_indices.clear();
-         size_store.clear();
-         data_used_name.clear();
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    private void select_all(){
+          update_pivot_array_2();
+    chk1.setSelected(true);
+    chk2.setSelected(true);
+    chk3.setSelected(true);
+    chk4.setSelected(true);
+    chk5.setSelected(true);
+    chk6.setSelected(true);
+    chk7.setSelected(true);
+    chk8.setSelected(true);
+    chk9.setSelected(true);
+    chk10.setSelected(true);
+    chk11.setSelected(true);
+    chk12.setSelected(true);
+    chk13.setSelected(true);
+    chk14.setSelected(true);
+    chk15.setSelected(true);
+    chk16.setSelected(true);
+    chk17.setSelected(true);
+    chk18.setSelected(true);
+    chk19.setSelected(true);
+    chk20.setSelected(true);
+    chk21.setSelected(true);
+    chk22.setSelected(true);
+    chk23.setSelected(true);
+    chk24.setSelected(true);
+    chk25.setSelected(true);
+    chk26.setSelected(true);
+    chk27.setSelected(true);
+    chk28.setSelected(true);
+    chk29.setSelected(true);
+    chk30.setSelected(true);
     }
-
     private void proceed_to_re_fill() {
         
         
@@ -9527,5 +9740,12 @@ private void switch_table_2() {
             enable_components();
            hide_panels();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void clear_pivot() {
+         pivot_data_used_only_xx.clear();
+ pivot_data_used_only_indices.clear();
+ pivot_size_store.clear();
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

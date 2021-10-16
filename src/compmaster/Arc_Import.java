@@ -126,6 +126,7 @@ public class Arc_Import extends javax.swing.JFrame {
    public  String pathxx2="";
    int str_base_id_count_1=0;
    int str_base_id_count_2=0;
+   int str_base_id_count_3=0;
    String str_chan_name_2="";
    String cec_footer_1_1="",cec_footer_1_2="",cec_footer_1_3,cec_footer_1_4="",cec_footer_1_5="",cec_footer_1_6="",cec_footer_1_7="",cec_footer_1_8="",cec_footer_1_9="",cec_footer_1_10="";
   //  static String pathxx_1="";
@@ -205,6 +206,7 @@ public class Arc_Import extends javax.swing.JFrame {
  
      
     static  ArrayList<String> cec_data_used_only_xx;  
+     static  ArrayList<String> point_cec_data;  
    static  ArrayList<String> cec_data_used_only_indices;  
    
    static  ArrayList<String> data_used_name;
@@ -1962,6 +1964,7 @@ lbl_per.setText("0%");
                                  data_chabdata_count= new ArrayList<String>();
                                  data_used_only_xx= new ArrayList<String>();
                                  cec_data_used_only_xx= new ArrayList<String>();
+                                 point_cec_data= new ArrayList<String>();
                                  data_used_only_indices= new ArrayList<String>();
                                  cec_data_used_only_indices= new ArrayList<String>();
                                  
@@ -2085,8 +2088,27 @@ lbl_per.setText("0%");
 
     private void btnContinueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnContinueMouseClicked
         // TODO add your handling code here:
+               int xv=0;
                
-                   continue_loop();
+               for(int i=0; i < pivot_data_used_only_xx.size(); i++){
+                   String xcc=pivot_data_used_only_xx.get(i);
+                   if(xcc.length() > 0){
+                   xv=xv+1;
+                   
+                   }else{
+                   
+                   }
+                   
+                 
+               
+               }
+               if( xv > 0){
+               
+                 continue_loop();
+               }else{
+               JOptionPane.showMessageDialog(null, "No selected checkbox.");
+               }
+                   
            
     }//GEN-LAST:event_btnContinueMouseClicked
     private void continue_loop(){
@@ -5723,7 +5745,7 @@ reader.close();
                // str_global_count="["+chandata_loop+"]"+""+row_of_rows;
               
        //  System.out.println("["+chandata_loop+"]"+""+row_of_rows); 
-              if(firstFourChars.equals("CHANDATA") || first6Char.equals("N20000") || first6Char.equals("N10000") || first6Char.equals("N41300") ){
+              if(firstFourChars.equals("CHANDATA") || first6Char.equals("N20000") || first6Char.equals("N10000") || first6Char.equals("N41300") || first6Char.equals("N18342")  ){
                if(first6Char.equals("N10000")){
                    str_base_id_count_1=str_base_id_count_1+1;
                   
@@ -5734,6 +5756,12 @@ reader.close();
                   
                     str_base_id=2;
                }  
+                
+                if(first6Char.equals("N18342")){
+                    str_base_id_count_3=str_base_id_count_3+1;
+                  
+                    str_base_id=3;
+               } 
                   
               if(firstFourChars.equals("CHANDATA")){
             // txt_percentage.setText("0.00");
@@ -5839,6 +5867,19 @@ reader.close();
                                loop_pass=0;
                                }
                        // str_asset_status=str_asset_status;
+                        }else if(str_base_id==3){
+                            
+                               if(!str_asset_status.equals("")){
+                                loop_pass=1;
+                        
+                               }else{
+                               loop_pass=0;
+                               }
+                       // str_asset_status=str_asset_status;
+                        }
+                        
+                        else{
+                        
                         }
                        if(loop_pass==1){
                         insert_data();
@@ -5871,7 +5912,17 @@ reader.close();
                                     cec_data_used_only_indices.add("41300"+"["+str_pos_counter_1+"]");
                                     cec_size_store.add(str_pos_counter); 
                                      str_base_id=0;
-                                }else{
+                                }else if(str_base_id==3){
+                                    
+                                if(!str_asset_status.equals("0")){
+                                point_cec_data.add(str_asset_status);
+                                
+                                }
+                                str_base_id=0;
+                                }
+                                
+                                
+                                else{
                                 
                                 }
                     
@@ -5893,6 +5944,15 @@ reader.close();
                                       cec_data_2.add(str_asset_status);
                                       cec_data_used_only_indices.add("41300"+"["+str_pos_counter_1+"]");
                                       cec_size_store.add(str_pos_counter); 
+                                     str_base_id=0;
+                                      old_str_asset_def_body =str_asset_def_body;
+                                }
+                         
+                          if (str_base_id==3){
+                                      if(!str_asset_status.equals("0")){
+                                point_cec_data.add(str_asset_status);
+                                
+                                }
                                      str_base_id=0;
                                       old_str_asset_def_body =str_asset_def_body;
                                 }
@@ -5924,7 +5984,16 @@ reader.close();
                                      cec_data_used_only_indices.add("["+str_pos_counter_1+"]");
                                      cec_size_store.add(str_pos_counter); 
                                 
-                                }else{
+                                }else if(str_base_id==3){
+                                    
+                                if(!str_asset_status.equals("0")){
+                                point_cec_data.add(str_asset_status);
+                                
+                                }
+                               // str_base_id=0;
+                                }
+                                
+                                else{
                                 
                                 }
                          
@@ -5985,19 +6054,21 @@ reader.close();
     }
     
     private void loop23(){
-     if(data_used_only_xx.size() != 0 || cec_data_used_only_xx.size() != 0){
+     if(data_used_only_xx.size() != 0 || cec_data_used_only_xx.size() != 0 || point_cec_data.size() != 0){
               //  if(end_used_only==0 && old_str_asset_def_body.equals("$MC_AXCONF_MACHAX_USED")){
                   //  if(old_str_asset_def_body.equals("$MC_AXCONF_MACHAX_USED") || old_str_asset_def_body.equals("$SN_CEC_TABLE_ENABLE")){
                 //used_chennel_count=data_used_only_xx.size();
                 if(last_chandata_loop.equals(chandata_loop)){
                     System.out.println(" USED "+data_used_only_xx);
                      System.out.println(" ENABLE "+data_used_only_xx);
+                     System.out.println(" POINT "+point_cec_data);
                    // insert_used_values_row();
                      
                      clear_pivot();
                     open_choose_used_axis(); 
                     str_base_id_count_1=0;
                     str_base_id_count_2=0;
+                     str_base_id_count_3=0;
                   //  return true;
                            
                //  }
@@ -6008,6 +6079,7 @@ reader.close();
                     continue_with_loop();
                       str_base_id_count_1=0;
                     str_base_id_count_2=0;
+                    str_base_id_count_3=0;
                 // JOptionPane.showMessageDialog(null, "Error"+ last_chandata_loop+" and "+chandata_loop+" are ");
                 }
                  }else{
@@ -6017,6 +6089,7 @@ reader.close();
                     continue_with_loop();
                       str_base_id_count_1=0;
                     str_base_id_count_2=0;
+                    str_base_id_count_3=0;
                      }
     }
     private void reset_dble() {
@@ -7381,11 +7454,35 @@ data.clear();
         old_str_asset_def_body="$MN_MM_CEC_MAX_POINTS";  
         asset_code_dif_col="N18342";
         data.clear();
+        if(cec_data_1.size() > 0){
         data=cec_data_1;
+        }else{
+            //insert_size();
+       data= point_cec_data;
+       insert_size();
+       
+        }
+        
        insert_array_cc();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }   
-         
+       private void insert_size(){
+      String col_size=point_cec_data.size()+"";
+       String sql = "insert into tbl_cec_col_size(count) values(?) ";
+     
+        try{
+            pst = conn.prepareStatement(sql);            
+            pst.setString(1, col_size);
+           
+            pst.execute();  
+            //JOptionPane.showMessageDialog(null, "Patient Registered");
+            
+            
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        
+        }  
+     }  
      private void cec_data_2() {
         old_str_asset_def_body="$SN_CEC_TABLE_ENABLE";  
         asset_code_dif_col="N41300";
@@ -8060,7 +8157,7 @@ data.clear();
 cec_data_used_only_xx.clear();
 cec_size_store.clear();                                
    
-
+point_cec_data.clear();
 
 data26_3rd.clear();
 data27_3rd.clear();

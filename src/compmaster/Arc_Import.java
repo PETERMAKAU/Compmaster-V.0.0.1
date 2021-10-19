@@ -8288,6 +8288,7 @@ data29_3rd.clear();
        for(int i=0; i<2; i++ ){
            if(i==0){
                strs_parent_insert="";
+               asset_code_dif_col="";
           // chandata_loop="";
           // str_chan_name="";
            }else if(i==1){

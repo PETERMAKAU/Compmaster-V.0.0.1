@@ -1346,7 +1346,7 @@ public class Arc_Import extends javax.swing.JFrame {
                 .addComponent(btn_next)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_exit_3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         jPanel5Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txt_auto_5, txt_auto_6, txt_auto_7, txt_cec_header_footer_3, txt_cec_header_footer_4, txt_cec_header_footer_5});
@@ -5430,6 +5430,12 @@ private void cec_select_row_0(){
                                       insert_multiple_pockets();
                                       
                                          }
+                                         if(quick_finish_mode==1){
+                                          //here
+                                           //  insert_table_transition();
+                                      insert_cec_table_transition();
+                                    //  here
+                                         }
                                      clear_arrays();
                                      
                                      
@@ -5555,13 +5561,13 @@ reader.close();
      
      
       private void clearx3() {
-        
-         String sql = " delete from  tbl_enc_comp_compesation where id > ?";
+        String sql = "truncate table tbl_enc_comp_compesation";
+        // String sql = " delete from  tbl_enc_comp_compesation where id > ?";
         //String sql = "TRUNCATE TABLE tbl_chandata";
          
         try {
             pst = conn.prepareStatement(sql);
-            pst.setString(1, "0");            
+            //pst.setString(1, "0");            
             pst.execute();
            // JOptionPane.showMessageDialog(null, "Drug Deleted");
           
@@ -5590,13 +5596,13 @@ reader.close();
        
     }
     private void clearx2() {
-        
-         String sql = " delete from  tbl_processed_table where id > ?";
+         String sql = "truncate table tbl_processed_table";
+        // String sql = " delete from  tbl_processed_table where id > ?";
         //String sql = "TRUNCATE TABLE tbl_chandata";
          
         try {
             pst = conn.prepareStatement(sql);
-            pst.setString(1, "0");            
+            //pst.setString(1, "0");            
             pst.execute();
          
         }
@@ -5608,13 +5614,13 @@ reader.close();
     
             
              private void clear_8() {
-        
-         String sql = " delete from tbl_cec_comp_compesation where id > ?";
+        String sql = "truncate table tbl_cec_comp_compesation";
+        // String sql = " delete from tbl_cec_comp_compesation where id > ?";
         //String sql = "TRUNCATE TABLE tbl_chandata";
          
         try {
             pst = conn.prepareStatement(sql);
-            pst.setString(1, "0");            
+           // pst.setString(1, "0");            
             pst.execute();
          
         }
@@ -5656,13 +5662,13 @@ reader.close();
    
     }
      private void clear_cec_x2() {
-        
-         String sql = " delete from  tbl_processed_cec_table where id > ?";
+        String sql = "truncate table tbl_processed_cec_table";
+         //String sql = " delete from  tbl_processed_cec_table where id > ?";
         //String sql = "TRUNCATE TABLE tbl_chandata";
          
         try {
             pst = conn.prepareStatement(sql);
-            pst.setString(1, "0");            
+           // pst.setString(1, "0");            
             pst.execute();
            // JOptionPane.showMessageDialog(null, "Drug Deleted");
           
@@ -5677,12 +5683,12 @@ reader.close();
     }
     private void clearx() {
         
-         String sql = " delete from tbl_chandata where id > ?";
+          String sql = "truncate table tbl_chandata";
         //String sql = "TRUNCATE TABLE tbl_chandata";
          
         try {
             pst = conn.prepareStatement(sql);
-            pst.setString(1, "0");            
+            //pst.setString(1, "0");            
             pst.execute();
            // JOptionPane.showMessageDialog(null, "Drug Deleted");
           
@@ -5691,9 +5697,28 @@ reader.close();
         catch (Exception e){
             //JOptionPane.showMessageDialog(null, e);        
         }
+       // trancate_table1();
         // Arc_Import mainClass = new Arc_Import();                 
         // mainClass.UpdateJTable();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    private void trancate_table1(){
+        
+         String sql = "truncate table tbl_chandata";
+        //String sql = "TRUNCATE TABLE tbl_chandata";
+         
+        try {
+            pst = conn.prepareStatement(sql);
+           // pst.setString(1, "0");            
+            pst.execute();
+           // JOptionPane.showMessageDialog(null, "Drug Deleted");
+          
+            
+        }
+        catch (Exception e){
+            //JOptionPane.showMessageDialog(null, e);        
+        }
+    
     }
     private boolean insert_used_only_names() {
         
@@ -7710,10 +7735,7 @@ data.clear();
         insert_12();
         }else if(i==1){
             insert_15();
-            insert_29();  
-           insert_26();  
-           insert_used();
-           insert_27();
+           
         insert_4();
         }
         else if(i==2){
@@ -7789,6 +7811,10 @@ data.clear();
         }
         else if(i==23){
         insert_23_a();
+         insert_29();  
+           insert_26();  
+           insert_used();
+           insert_27();
         }
         else if(i==24){
         //insert_22();
@@ -7904,12 +7930,13 @@ data.clear();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void clear_col_size() {
-        String sql = " delete from tbl_col_size where Id > ?";
+        String sql = "truncate table tbl_col_size";
+        ///String sql = " delete from tbl_col_size where Id > ?";
         //String sql = "TRUNCATE TABLE tbl_chandata";
          
         try {
             pst = conn.prepareStatement(sql);
-            pst.setString(1, "0");            
+            //pst.setString(1, "0");            
             pst.execute();    
         }
         catch (Exception e){//JOptionPane.showMessageDialog(null, e);        
@@ -7918,12 +7945,13 @@ data.clear();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
      private void clear_cec_col_size() {
-        String sql = " delete from tbl_cec_col_size where Id > ?";
+      //  String sql = " delete from tbl_cec_col_size where Id > ?";
+        String sql = "truncate table tbl_cec_col_size";
         //String sql = "TRUNCATE TABLE tbl_chandata";
          
         try {
             pst = conn.prepareStatement(sql);
-            pst.setString(1, "0");            
+          //  pst.setString(1, "0");            
             pst.execute();    
         }
         catch (Exception e){//JOptionPane.showMessageDialog(null, e);        
@@ -8257,7 +8285,7 @@ data29_3rd.clear();
         String xxx2=str_chan_name;
         str_chan_name_2=str_chan_name;
         String strs_parent_insert="";
-       for(int i=0; i==0; i++ ){
+       for(int i=0; i<2; i++ ){
            if(i==0){
                strs_parent_insert="";
           // chandata_loop="";
@@ -8332,10 +8360,12 @@ data29_3rd.clear();
        for(int i=0; i < 3; i++ ){
            if(i==0){
                strs_parent_insert="";
+               asset_code_dif_col="";
           // chandata_loop="";
           // str_chan_name="";
            }else if(i==1){
            strs_parent_insert=xxx;
+           asset_code_dif_col="";
           // str_chan_name="";
            }else if(i==2){
               strs_parent_insert=xxx2;  
@@ -8345,6 +8375,7 @@ data29_3rd.clear();
        //  strs_parent_insert="";
            }else{
            strs_parent_insert=""; 
+           asset_code_dif_col="";
            }
            //here
             String sql = "insert into tbl_processed_cec_table(col1, col2, col3, col4,col5,col6, col7, col8, col9,col10,col11, col12,col13, col14, col15,col16, col17, col18, col19,col20,col21, col22, col23, col24,col25,col26, col27, col28, col29, col30,col31, col32, col33, col34,col35,col36, col37, col38, col39,col40,col41, col42,col43, col44, col45,col46, col47, col48, col49,col50,col51, col52, col53, col54,col55,col56, col57, col58, col59, col60, col61) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
@@ -8622,10 +8653,13 @@ data29_3rd.clear();
                       // btn_exit_3.setVisible(false);
           }else if(p==1)
           {
-          continue_with_loop();
+              select_all(); 
+         // continue_with_loop();
           }else if(p==2)
           {
-         continue_with_loop();
+               clear_starter();
+        abort_process();
+        // continue_with_loop();
          }
     else{}
     }

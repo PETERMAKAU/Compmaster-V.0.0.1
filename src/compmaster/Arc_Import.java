@@ -1418,7 +1418,6 @@ public class Arc_Import extends javax.swing.JFrame {
         lbl_12.setText("NEWCONF");
 
         txt_auto_1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        txt_auto_1.setFocusable(false);
         txt_auto_1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_auto_1ActionPerformed(evt);
@@ -5369,7 +5368,8 @@ private void cec_select_row_0(){
                                      //start_timer();
                                      countLines();
                                      chandata_loop=data_chabdata_count.get(ixx);
-                                     insert_table_transition();
+                                     str_chandata=chandata_loop;
+                                   //  insert_table_transition();
                                      if(!chandata_loop.equals("")){
                                          
                                          
@@ -5408,7 +5408,9 @@ private void cec_select_row_0(){
                 //your code here
                                      if(quick_finish_mode==0){
                                        hide_all_checkboxes();
+                                      // if(ixx==0){
                                        insert_used_values_row();
+                                        //}
                                         
                                      }
                                       initialise_the_other_arraylista(); 
@@ -5763,7 +5765,8 @@ reader.close();
                   if(firstFourChars.equals("CHANDATA")){
             // txt_percentage.setText("0.00");
                
-                str_chandata=line;
+              //  str_chandata=line;
+                      str_chandata=chandata_loop;
                
 				}
                   normalize_line();  
@@ -5872,7 +5875,8 @@ reader.close();
             // txt_percentage.setText("0.00");
                 str_chandata_code = UUID.randomUUID().toString();
                 str_chandata_code = str_chandata_code.substring(0, 8);
-                str_chandata=line;
+              //  str_chandata=line;
+                str_chandata=chandata_loop;
                 str_asset_number="-";
                 str_asset_body="-";
                 str_asset_def_body="-";
@@ -6170,6 +6174,7 @@ reader.close();
                    // insert_used_values_row();
                      
                      clear_pivot();
+                     
                     open_choose_used_axis(); 
                     str_base_id_count_1=0;
                     str_base_id_count_2=0;
@@ -7811,6 +7816,7 @@ data.clear();
         }
         else if(i==23){
         insert_23_a();
+        insert_table_transition();
          insert_29();  
            insert_26();  
            insert_used();
@@ -8351,6 +8357,79 @@ data29_3rd.clear();
       //  insert_code=0;
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    private void insert_table_transition2() {
+       // insert_code=8880;
+        pick_chan_name();
+        String xxx=chandata_loop;
+        String xxx2=str_chan_name;
+        str_chan_name_2=str_chan_name;
+        String strs_parent_insert="";
+       for(int i=0; i<2; i++ ){
+           if(i==0){
+               strs_parent_insert="";
+               asset_code_dif_col="";
+          // chandata_loop="";
+          // str_chan_name="";
+           }else if(i==1){
+           strs_parent_insert=xxx2;
+           asset_code_dif_col="N20000";
+           
+          // str_chan_name="";
+           }else{
+           //chandata_loop="";
+       //  strs_parent_insert=xxx2;
+           }
+           
+            String sql = "insert into tbl_processed_table(col1, col2, col3, col4,col5,col6, col7, col8, col9,col10,col11, col12,col13, col14, col15,col16, col17, col18, col19,col20,col21, col22, col23, col24,col25,col26, col27, col28, col29, col30) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+     
+  
+    try {
+       pst = conn.prepareStatement(sql);
+            pst.setString(1, strs_parent_insert);
+            pst.setString(2, "");
+            pst.setString(3, "");      
+            pst.setString(4, ""); 
+            pst.setString(5, "");
+            pst.setString(6, "");
+            pst.setString(7, "");
+            pst.setString(8, "");
+            pst.setString(9, "");
+            pst.setString(10, "");     
+            pst.setString(11, ""); 
+            pst.setString(12, "");            
+            pst.setString(13, "");       
+            pst.setString(14, ""); 
+            pst.setString(15, ""); 
+            pst.setString(16, "");
+            pst.setString(17, "");
+            pst.setString(18, "");
+            pst.setString(19, "");
+            pst.setString(20, "");      
+            pst.setString(21, "");
+            pst.setString(22, "");            
+            pst.setString(23, "");
+            pst.setString(24, "");
+            pst.setString(25, "");
+            pst.setString(26, "");     
+            pst.setString(27, ""); 
+            pst.setString(28, "");
+            pst.setString(29, asset_code_dif_col); 
+            pst.setString(30, "");   
+           
+
+            pst.execute();  
+      
+         pst.close();         
+         data.clear();
+    }catch(Exception e){
+    
+    }      
+       
+       }
+       str_chan_name="";
+      //  insert_code=0;
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     private void insert_cec_table_transition() {
         //pick_chan_name();
        
@@ -8532,6 +8611,7 @@ data29_3rd.clear();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_used_indices() {
+                        
                            old_str_asset_def_body ="INDEX";  
                            asset_code_dif_col="N10000";
                          //  used_chennel_count=data_used_only_xx.size();
@@ -8549,7 +8629,13 @@ data29_3rd.clear();
     }
     private void insert_used_values_row() {
                         int ss = data_used_only_xx.size();
+                      //  if(ixx==0){
+                        if(ixx==0){
                            insert_used_indices();
+                        
+                        }
+                        
+                       // }
                            old_str_asset_def_body ="$MN_AXCONF_MACHAX_NAME_TAB";  
                            asset_code_dif_col="N10000";
                            used_chennel_count=data_used_only_xx.size();
@@ -8557,7 +8643,8 @@ data29_3rd.clear();
                            System.out.println(data);
                            insert_column_size();  
                            insert_cec_column_size();
-                           insert_array();
+                           if(ixx==0){
+                           insert_array();}
                            
                            used_inserted_status=1;
                           

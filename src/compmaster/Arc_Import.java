@@ -99,12 +99,24 @@ public class Arc_Import extends javax.swing.JFrame {
       String last_chandata_loop="";
       int insert_code=0;
       int  proceed_code=0;
+      int loop_count=0;
+      int break_type=0;
+        String dataxpp ="";
+        int my_count_num=0;
+        int old_ix=0;    
+        
+          String str_iff="";
+         ArrayList <String> check_val;
+         ArrayList<String> empty_cout_array;
+      int int_selected_axis=0;
+      String str_count_extract="";
       String asset_code_dif_col="";
      String loop1_global_count="";
      int int_data_chabdata_count=0;
      int stop_timer_status=0;
      double compesation_segments=0;
      int diffInDays=0;
+     int int_count_extract_xx=0;
      int cec_comp_btn_number=0;
      int quick_finish_mode=0;
      String str_data_chabdata_count="";
@@ -199,6 +211,7 @@ public class Arc_Import extends javax.swing.JFrame {
     static ArrayList<String> data_chabdata_count;
     static  ArrayList<String> data_used_only_xx;
      static  ArrayList<String> data_used_only_indices;  
+      static  ArrayList<String> sec_insert_data_used_only_indices;  
      
      
      static ArrayList<String> pivot_data_used_only_xx;
@@ -206,7 +219,7 @@ public class Arc_Import extends javax.swing.JFrame {
      static  ArrayList<String> pivot_size_store;  
       
  
- 
+    int index_loop_count=0;
      
     static  ArrayList<String> cec_data_used_only_xx;  
      static  ArrayList<String> point_cec_data;  
@@ -454,7 +467,7 @@ public class Arc_Import extends javax.swing.JFrame {
         });
 
         btn_raw_tbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/button_icon/icon_view2.png"))); // NOI18N
-        btn_raw_tbl.setText("View last extract");
+        btn_raw_tbl.setText("View last 2 extract");
         btn_raw_tbl.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btn_raw_tbl.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -571,6 +584,11 @@ public class Arc_Import extends javax.swing.JFrame {
 
         txt_header_1_1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         txt_header_1_1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "AX1", "AX2", "AX3", "AX4", "AX5", "AX6", "AX7", "AX8", "AX9", "AX10", "AX11", "AX12", "AX13", "AX14", "AX15", "AX16", "AX17", "AX18", "AX19", "AX20", "AX21", "AX22", "AX23", "AX24", "AX25", "AX26", "AX27", "AX28", "AX29", "AX30" }));
+        txt_header_1_1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                txt_header_1_1ItemStateChanged(evt);
+            }
+        });
         txt_header_1_1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_header_1_1ActionPerformed(evt);
@@ -1249,7 +1267,7 @@ public class Arc_Import extends javax.swing.JFrame {
         txt_cec_header_footer_4.setText("NEWCONF");
 
         txt_cec_header_footer_5.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        txt_cec_header_footer_5.setText("M7");
+        txt_cec_header_footer_5.setText("M30");
         txt_cec_header_footer_5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_cec_header_footer_5ActionPerformed(evt);
@@ -1266,7 +1284,7 @@ public class Arc_Import extends javax.swing.JFrame {
 
         lbl_cechecderfoot_6.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         lbl_cechecderfoot_6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_cechecderfoot_6.setText("M7");
+        lbl_cechecderfoot_6.setText("M30");
 
         txt_auto_5.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         txt_auto_5.addActionListener(new java.awt.event.ActionListener() {
@@ -1616,6 +1634,7 @@ options[0]);
           }else if(p==1)
           {
               show_panel3();
+              clear_fields();
          import_compesation_id=2;
          pass_select();
           }else if(p==2)
@@ -1641,7 +1660,7 @@ options[0]);
                ArrayList<String> status_pro_arr3= new ArrayList<String>();
                ArrayList<String> status_pro_arr4= new ArrayList<String>();
                ArrayList<String> status_pro_arr5= new ArrayList<String>();
-               String datax1="", datax2="", datax3="",datax4="";
+               String datax1="", datax2="", datax3="",datax4="",datax5="";
                //String header1="Header 1";
               // String header2="Subheader 1";
      try{   
@@ -1667,7 +1686,7 @@ options[0]);
                  datax1=line.split(";")[1];
                  datax1 = datax1.replaceAll(",$", ".");
                 // datax1 = datax1.replaceAll("$", ".");
-                 if(!datax1.equals("DIST [mm]")){
+                 if(!datax1.equals("AX2 [mm]")){
                  status_pro_arr1.add(datax1);
                  }
                  ///////////Array 2////////////
@@ -1682,7 +1701,7 @@ options[0]);
              
               datax3=line.split(";")[3];
               datax3 = datax3.replaceAll(",$", ".");
-               if(!datax3.equals("Y [mm]")){
+               if(!datax3.equals("AX1 [mm]")){
                  status_pro_arr3.add(datax3);               
                  }
              
@@ -1691,12 +1710,12 @@ options[0]);
               datax4=line.split(";")[5];
               datax4 = datax4.replaceAll(",$", ".");
              
-             if(!datax4.equals("Z [mm]")){
+             if(!datax4.equals("AX3 [mm]")){
                  status_pro_arr4.add(datax4);            
                  }
              
              ////////////////////////
-           
+         
            
            //compesation_errors.add(comp_body);
            
@@ -1707,17 +1726,27 @@ options[0]);
              }  
            System.out.println("xx"+status_pro_arr1);
               System.out.println("xx"+status_pro_arr2);
-               System.out.println("xx"+status_pro_arr3);
-                System.out.println("xx"+status_pro_arr4);
+               System.out.println("ax1"+status_pro_arr3);
+                System.out.println("aX3"+status_pro_arr4);
+                 System.out.println("AX2"+status_pro_arr5);
          int_min=status_pro_arr1.get(0);
            int_max=status_pro_arr1.get(status_pro_arr1.size()-1);
            int_step=status_pro_arr2.get(1);
            compesation_errors.clear();
+           if(int_selected_axis==1){
+           compesation_errors=status_pro_arr3;
+           }else if (int_selected_axis==2){
+           compesation_errors=status_pro_arr1;
+           }else if (int_selected_axis==3){
            compesation_errors=status_pro_arr4;
+           }else{
+           compesation_errors.add("");
+           }
            System.out.println("MIN "+int_min);
            System.out.println("MAX "+int_max);
            System.out.println("STEP "+int_step);
            System.out.println("Errors "+compesation_errors);
+           int_selected_axis=0;
      ////////////////to heer////
          }
          
@@ -2026,6 +2055,7 @@ size_store.clear();
         select_expiry();
         String xx=exp_date;
         
+        
        find_dif();
           
           if(diffInDays>0){
@@ -2041,8 +2071,9 @@ size_store.clear();
                                  cec_data_used_only_xx= new ArrayList<String>();
                                  point_cec_data= new ArrayList<String>();
                                  data_used_only_indices= new ArrayList<String>();
+                                 sec_insert_data_used_only_indices= new ArrayList<String>();
                                  cec_data_used_only_indices= new ArrayList<String>();
-                                 
+                                  empty_cout_array= new ArrayList<String>();
                                    pivot_data_used_only_xx= new ArrayList<String>();
                                    pivot_data_used_only_indices= new ArrayList<String>();
                                    pivot_size_store = new ArrayList<String>();
@@ -2818,7 +2849,7 @@ File f = chooser.getSelectedFile();
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
         // TODO add your handling code here:
-        
+          selection_id_enc();
           next();
     }//GEN-LAST:event_jButton3MouseClicked
    private void next(){
@@ -2854,11 +2885,11 @@ File f = chooser.getSelectedFile();
     private void btn_nextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nextMouseClicked
         // TODO add your handling code here:
         //compensate_normally();
-         
+         cec_selection_id();
           //cec_comp_count=cec_comp_count+1;
      //  cec_comp_btn_number=2;
         if(!cec_2.getSelectedItem().toString().trim().equals("--Select index--")){
-        compensate_normally();
+       continue_cec_consation_proc();
         
         }else{
         JOptionPane.showMessageDialog(null, "No selected axis.");
@@ -2866,6 +2897,23 @@ File f = chooser.getSelectedFile();
         
     }//GEN-LAST:event_btn_nextMouseClicked
 
+    private void cec_selection_id(){
+       String my_selection = txt_auto_2.getText().toString().trim();
+       my_selection=my_selection.replaceAll("[^A-Za-z0-9 ]", "");
+        my_selection=my_selection.trim();
+       if(my_selection.equals("AX1")){
+       int_selected_axis=1;
+       }else if(my_selection.equals("AX2")){
+           int_selected_axis=2;
+       
+       }else if(my_selection.equals("AX3")){
+           int_selected_axis=3;
+       
+       }else{
+       int_selected_axis=5;
+       }
+    }
+    
     private void cec_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cec_1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cec_1ActionPerformed
@@ -2883,7 +2931,11 @@ File f = chooser.getSelectedFile();
     }//GEN-LAST:event_txt_cec_header_footer_2ActionPerformed
 
     private void cec_2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cec_2ItemStateChanged
-       new_body_cec_selected_axis=cec_2.getSelectedItem().toString().trim();
+     
+        
+        
+        
+        new_body_cec_selected_axis=cec_2.getSelectedItem().toString().trim();
        cec_selected_axis=cec_2.getSelectedItem().toString().trim();
         
         if(!new_body_cec_selected_axis.equals(old_body_cec_selected_axis)){
@@ -2933,22 +2985,15 @@ File f = chooser.getSelectedFile();
            // String Stringx=add1+" "+add2+" "+add3+" "+add4+" "+add5+" "+add6+" "+add7+" "+add8+" "+add9+" "+add10+" "+add11+" "+add12+" "+add13+" "+add14;
            // txtage.setText(add10);
            // JOptionPane.showMessageDialog(null, Stringx); 
-             if(cec_comp_count<=2 ){
-             generate_body_data(); 
-             
-             if(cec_comp_count==2){
-              compensate_normally();
-             }
-             
-             }else{
-              JOptionPane.showMessageDialog(null, "You cannot select more than 2 axis");
-             }
+           //  continue_cec_consation_proc();
                    
        
         }else{
            btn_next.setEnabled(false);
            clear_fields();
-      JOptionPane.showMessageDialog(null, "Selection Out Of Rage"); 
+           String selectstring =cec_2.getSelectedItem().toString().trim();
+           if(!selectstring.equals("--Select index--")){
+      JOptionPane.showMessageDialog(null, "Selection Out Of Rage"); }
          }
       
       
@@ -2958,7 +3003,14 @@ File f = chooser.getSelectedFile();
       
       
   }
-    
+    private void continue_cec_consation_proc(){
+
+             generate_body_data();
+            //  compensate_normally();
+            // }
+             
+            
+    }
     private void generate_body_data(){
     verify_compefile();
     //analyse_file();        
@@ -2966,15 +3018,15 @@ File f = chooser.getSelectedFile();
     //temp_body_compesation_data_1.add("");
     add_bodydata_cec();
     add_bodydata2_cec();
-    if(cec_comp_count==1 ){
-    pop_up_option();
-    }
+  
+        compensate_normally();
     
     
-   //System.out.println(temp_body_compesation_data_1); 
+    
+   //System.out.println(temp_body_compesation_data_1); F
     }
     private void pop_up_option(){
-    int p = JOptionPane.showConfirmDialog(null,"Do you want to select another axis ?.");
+    int p = JOptionPane.showConfirmDialog(null,"Do you want to select another Gantry axis ?.");
           if (p==0){
               clear_fields();
         //herer
@@ -2988,6 +3040,7 @@ File f = chooser.getSelectedFile();
     else{}
     }
     private void clear_fields(){
+        cec_2.setSelectedIndex(0);
     txt_auto_1.setText("");
     txt_auto_2.setText("");
     txt_auto_3.setText("");
@@ -3159,6 +3212,7 @@ File f = chooser.getSelectedFile();
 
     private void btn_nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nextActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_btn_nextActionPerformed
 
     private void btn_exit_1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_exit_1MouseClicked
@@ -3181,7 +3235,25 @@ File f = chooser.getSelectedFile();
     private void txt_auto_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_auto_2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_auto_2ActionPerformed
-  
+
+    private void txt_header_1_1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_txt_header_1_1ItemStateChanged
+        // TODO add your handling code here:
+      
+    }//GEN-LAST:event_txt_header_1_1ItemStateChanged
+   private void selection_id_enc(){
+        String my_selection = txt_header_1_1.getSelectedItem().toString().trim();
+       if(my_selection.equals("AX1")){
+       int_selected_axis=1;
+       }else   if(my_selection.equals("AX2")){
+           int_selected_axis=2;
+       
+       }else   if(my_selection.equals("AX3")){
+           int_selected_axis=3;
+       
+       }else{
+       int_selected_axis=5;
+       }
+    }
     private void compensate_normally(){
         compesation_segments=0;
          String selectstring =cec_2.getSelectedItem().toString().trim();
@@ -4599,7 +4671,12 @@ private boolean start_loop_par1_2(){
     }
 
  private boolean insert_used_compesation() {
+           check_no_extract();
+           if(int_count_extract_xx >=2){
+               clear_extra_count();
            clearx8();
+           
+           }
          
          // String part5="$AA_ENC_COMP";
      //
@@ -4676,6 +4753,28 @@ private boolean start_loop_par1_2(){
      
         
        }
+ private void check_no_extract() {
+     
+     
+     String sql="Select count(*) as count_extract from tbl_extract_count";
+      try (
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)) {
+           
+            // loop through the result set
+            while (rs.next()) { 
+                        str_count_extract = rs.getString("count_extract");
+                        int_count_extract_xx= Integer.parseInt(str_count_extract);
+                     }
+     
+                    }catch(Exception e){
+                    
+                    }
+     ///////////////////////////////////
+     
+     
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
  private void finalise(){
   if(import_compesation_id==1){
          calculate_segments();
@@ -5116,6 +5215,8 @@ private void cec_select_row_0(){
             dataxx=header_part2;
          }
          else if(i==2){
+             int at = header_part3.indexOf(']');
+             header_part3 = header_part3.substring(0, at) + ","+body_part3 + header_part3.substring(at);
           dataxx=header_part3;
          }
           else if(i==3){
@@ -5301,6 +5402,8 @@ private void cec_select_row_0(){
             //footer_2_footer_text
          }
          else if(i==2){
+             int at = footer_2_4.indexOf(']');
+             footer_2_4 = footer_2_4.substring(0, at) + ","+body_part3 +footer_2_4.substring(at);
           dataxx=footer_2_4;
          }
           else if(i==3){
@@ -5616,6 +5719,7 @@ reader.close();
     
             
              private void clear_8() {
+                 
         String sql = "truncate table tbl_cec_comp_compesation";
         // String sql = " delete from tbl_cec_comp_compesation where id > ?";
         //String sql = "TRUNCATE TABLE tbl_chandata";
@@ -5631,6 +5735,23 @@ reader.close();
         }
    
     }
+             private void clear_extra_count(){
+                 
+                  String sql = "truncate table tbl_extract_count";
+        // String sql = " delete from tbl_cec_comp_compesation where id > ?";
+        //String sql = "TRUNCATE TABLE tbl_chandata";
+         
+        try {
+            pst = conn.prepareStatement(sql);
+           // pst.setString(1, "0");            
+            pst.execute();
+         
+        }
+        catch (Exception e){
+                 
+        }
+             
+             }
     private void clearx7() {
         
          String sql = " delete from  tbl_compensation_var_inputs where id > ?";
@@ -6012,6 +6133,9 @@ reader.close();
                                     data_used_only_xx.add(str_asset_status);
                                     
                                     data_used_only_indices.add("["+str_pos_counter_1+"]");
+                                     sec_insert_data_used_only_indices.add("["+str_pos_counter_1+"]");
+                                    
+                                    
                                  //   System.out.println(data_used_only_indices);
                                     size_store.add(str_pos_counter);
                                     str_base_id=0;
@@ -6084,6 +6208,7 @@ reader.close();
                           if(str_base_id==1){
                                     data_used_only_xx.add(str_asset_status);
                                     data_used_only_indices.add("["+str_pos_counter_1+"]");
+                                    sec_insert_data_used_only_indices.add("["+str_pos_counter_1+"]");
                                   //   System.out.println(data_used_only_indices);
                                     size_store.add(str_pos_counter);
                                 
@@ -6231,8 +6356,8 @@ reader.close();
     String[] stringArray = data.toArray(new String[data.size()]);
     // if(str_chandata.equals(chandata_loop)){
                   var1x=old_str_asset_def_body; 
-                 // if(leng == leng){
-                  if(leng == used_chennel_count){
+                  if(leng == leng){
+               //   if(leng == used_chennel_count){
                   try {    var2x=stringArray[0]; } catch (IndexOutOfBoundsException e) { var2x=""; }
                   try {    var3x=stringArray[1]; } catch (IndexOutOfBoundsException e) { var3x=""; }
                   try {    var4x=stringArray[2]; } catch (IndexOutOfBoundsException e) { var4x=""; }
@@ -7283,6 +7408,12 @@ data.clear();
         // SW1.addPropertyChangeListener(null);
          //create_muliti_dimentional_array();
          cec_create_muliti_dimentional_array();
+         check_empty_columns();
+         remove_empty_columns();
+         
+        // clearx2();
+       //  insert_used_indices(); 
+       //  insert_used_values_row();
          finish_loops();
         
          stop_threads();
@@ -7291,11 +7422,516 @@ data.clear();
         
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 
-        
+        sec_insert_data_used_only_indices.clear();
       // 
         status_used_sess_2=0;
         return true;
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+   private void remove_empty_columns(){
+       
+       String pick_num="";
+       int int_pick_num=0;
+       System.out.println(empty_cout_array);
+       try{
+       
+       for(int igt=0; igt < empty_cout_array.size(); igt++){
+           
+           pick_num=empty_cout_array.get(igt);
+           if(pick_num.length() > 0){
+           int_pick_num=Integer.parseInt(pick_num);
+           }else{
+           int_pick_num=0;
+           }  
+           if(int_pick_num > 14){
+               break_type=1;
+           sec_insert_data_used_only_indices.remove(igt);
+            data_used_only_xx.remove(igt);
+            //data_used_only_indices.remove(igt);
+          // size_store.remove(igt);
+           data12.remove(igt);
+           data15.remove(igt);
+            data4.remove(igt);
+           data14.remove(igt);
+           data28_3rd.remove(igt);
+            data1.remove(igt);
+           data2.remove(igt);
+           data16.remove(igt);
+           data17.remove(igt);
+            data5.remove(igt);
+           data6.remove(igt);
+           data3.remove(igt);
+           data0.remove(igt);
+            data7.remove(igt);
+           data8.remove(igt);
+           data18.remove(igt);
+           data19.remove(igt);
+            data20.remove(igt);
+           data24.remove(igt);
+           data21.remove(igt);
+          data21_a.remove(igt);
+        //    data22.remove(igt);
+         //  data22_a.remove(igt);
+        
+        //   data23.remove(igt);
+         //  data23_a.remove(igt);
+         //  data29_3rd.remove(igt);
+          // data26_3rd.remove(igt);
+         //  data25.remove(igt);
+         //  data27_3rd.remove(igt);
+           empty_cout_array.remove(igt);
+           break;
+          
+           }else{
+           break_type=0;
+           }
+       
+       }
+       if(break_type==1){
+       start_over();
+       break_type=0;
+       }
+       }catch(Exception e){
+       System.out.println(e);
+       }
+       show_dt();
+   }
+   private void show_dt(){
+       System.out.println("DXT "+ sec_insert_data_used_only_indices);
+           System.out.println("DXT "+data_used_only_xx);
+       //  System.out.println("DXT "+data_used_only_indices);
+         //System.out.println("DXT "+size_store); 
+        System.out.println("DXT "+data12); 
+         System.out.println("DXT "+data15);
+        System.out.println("DXT "+data14);
+           System.out.println("DXT "+data28_3rd); 
+           System.out.println("DXT "+data1);
+       System.out.println("DXT "+data2);
+         System.out.println("DXT "+data16); 
+          System.out.println("DXT "+data17); 
+          System.out.println("DXT "+data5); 
+          System.out.println("DXT "+data6);
+         System.out.println("DXT "+data3); 
+        System.out.println("DXT "+data0); 
+        System.out.println("DXT "+data7);
+        System.out.println("DXT "+data8);  
+        System.out.println("DXT "+data18); 
+          System.out.println("DXT "+data19); 
+          System.out.println("DXT "+data20); 
+          System.out.println("DXT "+data24);
+         System.out.println("DXT "+data21);
+         System.out.println("DXT "+data21_a); 
+   }
+   private void start_over(){
+   remove_empty_columns();
+   }
+    private void check_empty_columns() {
+        
+         
+         
+         loop_count=data_used_only_xx.size();
+        //heere
+        
+          empty_cout_array.clear();
+        check_whether_arralist_all_blank();
+        for(int ix=0; ix < loop_count; ix++){
+        empty_cout_array.add("");
+        }
+        for(int ix=0; ix < loop_count; ix++){
+            if(old_ix!=ix){
+            my_count_num=0;
+            old_ix=ix;
+            }
+      
+            //////////////////
+            ////////empty column section/////////
+            if(data4.size() > 0)
+            {
+            dataxpp=data4.get(ix);
+            tally_my_empty();
+            
+            }
+            //////////////////
+        
+             ////////empty column section/////////
+            if(data14.size() > 0)
+            {
+            dataxpp=data14.get(ix);
+            tally_my_empty();
+            
+            }
+            //////////////////
+            
+              ////////empty column section/////////
+            if(data28_3rd.size() > 0)
+            {
+            dataxpp=data28_3rd.get(ix);
+            tally_my_empty();
+            
+            }
+            //////////////////
+             ////////empty column section/////////
+            if(data1.size() > 0)
+            {
+            dataxpp=data1.get(ix);
+            tally_my_empty();
+            
+            }
+            //////////////////
+              ////////empty column section/////////
+            if(data2.size() > 0)
+            {
+            dataxpp=data2.get(ix);
+            tally_my_empty();
+            
+            }
+            //////////////////
+              ////////empty column section/////////
+            if(data16.size() > 0)
+            {
+            dataxpp=data16.get(ix);
+            tally_my_empty();
+            
+            }
+            //////////////////
+              ////////empty column section/////////
+            if(data17.size() > 0)
+            {
+            dataxpp=data17.get(ix);
+            tally_my_empty();
+            
+            }
+            //////////////////
+              ////////empty column section/////////
+            if(data5.size() > 0)
+            {
+            dataxpp=data5.get(ix);
+            tally_my_empty();
+            
+            }
+            //////////////////
+              ////////empty column section/////////
+            if(data6.size() > 0)
+            {
+            dataxpp=data6.get(ix);
+            tally_my_empty();
+            
+            }
+            //////////////////
+              ////////empty column section/////////
+            if(data3.size() > 0)
+            {
+            dataxpp=data3.get(ix);
+            tally_my_empty();
+            
+            }
+            //////////////////
+              ////////empty column section/////////
+            if(data0.size() > 0)
+            {
+            dataxpp=data0.get(ix);
+            tally_my_empty();
+            
+            }
+            //////////////////
+              ////////empty column section/////////
+            if(data7.size() > 0)
+            {
+            dataxpp=data7.get(ix);
+            tally_my_empty();
+            
+            }
+            //////////////////
+              ////////empty column section/////////
+            if(data8.size() > 0)
+            {
+            dataxpp=data8.get(ix);
+            tally_my_empty();
+            
+            }
+            //////////////////
+              ////////empty column section/////////
+            if(data18.size() > 0)
+            {
+            dataxpp=data18.get(ix);
+            tally_my_empty();
+            
+            }
+            //////////////////
+              ////////empty column section/////////
+            if(data19.size() > 0)
+            {
+            dataxpp=data19.get(ix);
+            tally_my_empty();
+            
+            }
+            //////////////////
+            
+           
+            empty_cout_array.set(ix, my_count_num+"");
+       // empty_cout_array.add("");
+        }
+       
+              //  System.out.println("sample"+ data12);
+          System.out.println("EMPTIES"+empty_cout_array);
+         //JOptionPane.showMessageDialog(null, empty_cout_array);
+         dataxpp="";
+         my_count_num=0;
+         old_ix=0;
+        
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+     private void check_whether_arralist_all_blank() {
+      // rr
+         check_val = new ArrayList<String>();
+          loop_count=data_used_only_xx.size();
+         check_dt1();
+         check_dt2();
+         check_dt3();
+         check_dt4();
+         check_dt5();
+         check_dt6();
+         check_dt7();
+         check_dt8();
+         check_dt9();
+         check_dt10();
+         check_dt11();
+         check_dt12();
+         check_dt13();
+         check_dt14();
+         check_dt15();
+         
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+     //////////////check blank elemets b4 remove colmns/////////////
+     private void check_dt1(){
+         for(int iff=0; iff < loop_count; iff++){
+            
+         str_iff=data4.get(iff);
+         if(str_iff.length()!=0){
+             check_val.add(str_iff);         
+         }
+         
+         }
+         if(check_val.size() == 0){
+           data4.clear();
+         }
+         check_val.clear();
+      }
+      //////////////check blank elemets b4 remove colmns/////////////
+     private void check_dt2(){
+         for(int iff=0; iff < loop_count; iff++){
+            
+         str_iff=data14.get(iff);
+         if(str_iff.length()!=0){
+             check_val.add(str_iff);         
+         }
+         
+         }
+         if(check_val.size() == 0){
+           data14.clear();
+         }
+         check_val.clear();
+      }
+      //////////////check blank elemets b4 remove colmns/////////////
+     private void check_dt3(){
+         for(int iff=0; iff < loop_count; iff++){
+            
+         str_iff=data28_3rd.get(iff);
+         if(str_iff.length()!=0){
+             check_val.add(str_iff);         
+         }
+         
+         }
+         if(check_val.size() == 0){
+           data28_3rd.clear();
+         }
+         check_val.clear();
+      }
+      //////////////check blank elemets b4 remove colmns/////////////
+     private void check_dt4(){
+         for(int iff=0; iff < loop_count; iff++){
+            
+         str_iff=data1.get(iff);
+         if(str_iff.length()!=0){
+             check_val.add(str_iff);         
+         }
+         
+         }
+         if(check_val.size() == 0){
+           data1.clear();
+         }
+         check_val.clear();
+      }
+      //////////////check blank elemets b4 remove colmns/////////////
+     private void check_dt5(){
+         for(int iff=0; iff < loop_count; iff++){
+            
+         str_iff=data2.get(iff);
+         if(str_iff.length()!=0){
+             check_val.add(str_iff);         
+         }
+         
+         }
+         if(check_val.size() == 0){
+           data2.clear();
+         }
+         check_val.clear();
+      }
+      //////////////check blank elemets b4 remove colmns/////////////
+     private void check_dt6(){
+         for(int iff=0; iff < loop_count; iff++){
+            
+         str_iff=data16.get(iff);
+         if(str_iff.length()!=0){
+             check_val.add(str_iff);         
+         }
+         
+         }
+         if(check_val.size() == 0){
+           data16.clear();
+         }
+         check_val.clear();
+      }
+      //////////////check blank elemets b4 remove colmns/////////////
+     private void check_dt7(){
+         for(int iff=0; iff < loop_count; iff++){
+            
+         str_iff=data17.get(iff);
+         if(str_iff.length()!=0){
+             check_val.add(str_iff);         
+         }
+         
+         }
+         if(check_val.size() == 0){
+           data17.clear();
+         }
+         check_val.clear();
+      }
+      //////////////check blank elemets b4 remove colmns/////////////
+     private void check_dt8(){
+         for(int iff=0; iff < loop_count; iff++){
+            
+         str_iff=data15.get(iff);
+         if(str_iff.length()!=0){
+             check_val.add(str_iff);         
+         }
+         
+         }
+         if(check_val.size() == 0){
+           data15.clear();
+         }
+         check_val.clear();
+      }
+      //////////////check blank elemets b4 remove colmns/////////////
+     private void check_dt9(){
+         for(int iff=0; iff < loop_count; iff++){
+            
+         str_iff=data6.get(iff);
+         if(str_iff.length()!=0){
+             check_val.add(str_iff);         
+         }
+         
+         }
+         if(check_val.size() == 0){
+           data6.clear();
+         }
+         check_val.clear();
+      }
+      //////////////check blank elemets b4 remove colmns/////////////
+     private void check_dt10(){
+         for(int iff=0; iff < loop_count; iff++){
+            
+         str_iff=data3.get(iff);
+         if(str_iff.length()!=0){
+             check_val.add(str_iff);         
+         }
+         
+         }
+         if(check_val.size() == 0){
+           data3.clear();
+         }
+         check_val.clear();
+      }
+      //////////////check blank elemets b4 remove colmns/////////////
+     private void check_dt11(){
+         for(int iff=0; iff < loop_count; iff++){
+            
+         str_iff=data0.get(iff);
+         if(str_iff.length()!=0){
+             check_val.add(str_iff);         
+         }
+         
+         }
+         if(check_val.size() == 0){
+           data0.clear();
+         }
+         check_val.clear();
+      }
+      //////////////check blank elemets b4 remove colmns/////////////
+     private void check_dt12(){
+         for(int iff=0; iff < loop_count; iff++){
+            
+         str_iff=data7.get(iff);
+         if(str_iff.length()!=0){
+             check_val.add(str_iff);         
+         }
+         
+         }
+         if(check_val.size() == 0){
+           data7.clear();
+         }
+         check_val.clear();
+      }
+      //////////////check blank elemets b4 remove colmns/////////////
+     private void check_dt13(){
+         for(int iff=0; iff < loop_count; iff++){
+            
+         str_iff=data8.get(iff);
+         if(str_iff.length()!=0){
+             check_val.add(str_iff);         
+         }
+         
+         }
+         if(check_val.size() == 0){
+           data8.clear();
+         }
+         check_val.clear();
+      }
+      //////////////check blank elemets b4 remove colmns/////////////
+     private void check_dt14(){
+         for(int iff=0; iff < loop_count; iff++){
+            
+         str_iff=data18.get(iff);
+         if(str_iff.length()!=0){
+             check_val.add(str_iff);         
+         }
+         
+         }
+         if(check_val.size() == 0){
+           data18.clear();
+         }
+         check_val.clear();
+      }
+      //////////////check blank elemets b4 remove colmns/////////////
+     private void check_dt15(){
+         for(int iff=0; iff < loop_count; iff++){
+            
+         str_iff=data19.get(iff);
+         if(str_iff.length()!=0){
+             check_val.add(str_iff);         
+         }
+         
+         }
+         if(check_val.size() == 0){
+           data19.clear();
+         }
+         check_val.clear();
+      }
+    private void tally_my_empty(){
+     if(dataxpp.length()==0){
+            my_count_num=my_count_num+1;            
+            }
     }
     private void insert_0() {
         int xx =data10.size();
@@ -7733,6 +8369,9 @@ data.clear();
      }    
     private void finish_loops() {
         
+      //  clearx2();
+        delete_1st_2_rows();
+        insert_used_values_row_2();
        
         for(int i=0; i < 43; i++){
         
@@ -7892,6 +8531,34 @@ data.clear();
                                 
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+        private void delete_1st_2_rows(){
+            for(int ig=1; ig < 3; ig++){
+            
+           String str_ig=ig+"";
+            
+      // String sql = "truncate table tbl_col_size";
+        
+        //String sql = "TRUNCATE TABLE tbl_chandata";
+         
+        try {
+                 //  String sql = " delete from tbl_processed_table where id=?";
+        //String sql = "TRUNCATE TABLE tbl_chandata";
+         
+      //String sql = "DELETE FROM ANDYSHORT.DVDS WHERE ID=?";
+           // String sql = " delete from tbl_processed_table where id=?";
+            PreparedStatement statement;
+            statement = conn.prepareStatement("DELETE FROM tbl_processed_table WHERE id = ?");
+            statement.setInt(1, ig);
+            statement.executeUpdate();  
+        
+        }
+        catch (Exception e){
+
+//JOptionPane.showMessageDialog(null, e);        
+        }
+ }
+        }
+    
     private void insert_column_size() {
        
        
@@ -8611,7 +9278,8 @@ data29_3rd.clear();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_used_indices() {
-                        
+        index_loop_count=index_loop_count+1;
+                        if(index_loop_count < 3){
                            old_str_asset_def_body ="INDEX";  
                            asset_code_dif_col="N10000";
                          //  used_chennel_count=data_used_only_xx.size();
@@ -8619,12 +9287,18 @@ data29_3rd.clear();
                           //  System.out.println(data_used_only_indices);
                           //  data_used_only_indices_keeper.clear();
                           //  data_used_only_indices_keeper=data_used_only_indices;
+                           
                            data=data_used_only_indices;
+                           if(data.size()==0){
+                           data=sec_insert_data_used_only_indices;
+                           }
                           // insert_column_size();                                
                            insert_array_2();
                           // used_inserted_status=1;
                           
-        
+                            }else{
+                        index_loop_count=0;
+                              }
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void insert_used_values_row() {
@@ -8634,6 +9308,30 @@ data29_3rd.clear();
                            insert_used_indices();
                         
                         }
+                        
+                       // }
+                           old_str_asset_def_body ="$MN_AXCONF_MACHAX_NAME_TAB";  
+                           asset_code_dif_col="N10000";
+                           used_chennel_count=data_used_only_xx.size();
+                           data=data_used_only_xx;
+                           System.out.println(data);
+                           insert_column_size();  
+                           insert_cec_column_size();
+                           if(ixx==0){
+                           insert_array();}
+                           
+                           used_inserted_status=1;
+                          
+        
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+     private void insert_used_values_row_2() {
+                        int ss = data_used_only_xx.size();
+                      //  if(ixx==0){
+                        //if(ixx==0){
+                           insert_used_indices();
+                        
+                       // }
                         
                        // }
                            old_str_asset_def_body ="$MN_AXCONF_MACHAX_NAME_TAB";  
@@ -8731,7 +9429,7 @@ data29_3rd.clear();
         
        // set_check_box();
         stop_timer();
-        int p = JOptionPane.showConfirmDialog(null,"Do you want to choose axes for "+chandata_loop+" ?");
+        int p = JOptionPane.showConfirmDialog(null,"Do you want to choose for "+chandata_loop+" ?");
           if (p==0){
           set_check_box();
          btnContinue.setVisible(true);
@@ -8970,6 +9668,7 @@ private void enable_btns() {
         enable_components();
         import_compesation_id=0;
         cec_comp_count=0;
+        insert_extract_count();
        JOptionPane.showMessageDialog(null, "Completed !");
        
       // txt_path2.setText("");
@@ -8979,7 +9678,27 @@ private void enable_btns() {
         open_table();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    private void insert_extract_count() {
+        // String col_size=data_used_only_xx.size()+"";
+       String sql = "insert into tbl_extract_count (extract) values(?) ";
+     
+        try{
+            pst = conn.prepareStatement(sql);            
+            pst.setString(1, "extract");
+           
+            pst.execute();  
+            //JOptionPane.showMessageDialog(null, "Patient Registered");
+            
+            
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        
+        }  
+        loop_id=0;
+        
+       // here
+      //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     private void clear_compesation_varia() {
          header_part1="";header_part2="";header_part3="";header_part4=""; header_part5="";
    body_part1="";body_part2="";body_part3="";body_part4="";
@@ -10052,4 +10771,12 @@ private void switch_table_2() {
  pivot_size_store.clear();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+  
+
+   
+
+   
+
+   
 }

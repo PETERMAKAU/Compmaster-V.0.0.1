@@ -238,7 +238,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/button_icon/icon_view2.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="View last extract"/>
+                <Property name="text" type="java.lang.String" value="View last 2 extract"/>
                 <Property name="horizontalAlignment" type="int" value="2"/>
               </Properties>
               <Events>
@@ -522,6 +522,7 @@
                 </Property>
               </Properties>
               <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="txt_header_1_1ItemStateChanged"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_header_1_1ActionPerformed"/>
               </Events>
             </Component>
@@ -1300,7 +1301,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="10" style="0"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="M7"/>
+                    <Property name="text" type="java.lang.String" value="M30"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_cec_header_footer_5ActionPerformed"/>
@@ -1330,7 +1331,7 @@
                       <Font name="Tahoma" size="10" style="1"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="4"/>
-                    <Property name="text" type="java.lang.String" value="M7"/>
+                    <Property name="text" type="java.lang.String" value="M30"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txt_auto_5">

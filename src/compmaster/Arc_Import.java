@@ -104,7 +104,7 @@ public class Arc_Import extends javax.swing.JFrame {
         String dataxpp ="";
         int my_count_num=0;
         int old_ix=0;    
-        
+        int interchange_count=1;
           String str_iff="";
          ArrayList <String> check_val;
          ArrayList<String> empty_cout_array;
@@ -314,6 +314,7 @@ public class Arc_Import extends javax.swing.JFrame {
         jProgressBar1 = new javax.swing.JProgressBar();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        btn_extract_tbl = new javax.swing.JButton();
         CheckBoxes1 = new javax.swing.JPanel();
         txt_header1 = new javax.swing.JTextField();
         txt_header_1_1 = new javax.swing.JComboBox();
@@ -406,7 +407,7 @@ public class Arc_Import extends javax.swing.JFrame {
         cec_lbl_6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Compmaster V 1.1.3");
+        setTitle("Compmaster V 1.1.5");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -532,25 +533,34 @@ public class Arc_Import extends javax.swing.JFrame {
             }
         });
 
+        btn_extract_tbl.setText("Clear Extract Table");
+        btn_extract_tbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_extract_tblMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_normalize, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_conf_file, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_raw_tbl, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_impo_compesation, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(lbl_per, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btn_normalize, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btn_conf_file, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btn_raw_tbl, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btn_impo_compesation, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lbl_per, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_extract_tbl, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12))
         );
         jPanel1Layout.setVerticalGroup(
@@ -567,6 +577,8 @@ public class Arc_Import extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(btn_raw_tbl))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_extract_tbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbl_per, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -642,7 +654,7 @@ public class Arc_Import extends javax.swing.JFrame {
         txt_header8.setText("NEWCONF");
 
         txt_header9.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        txt_header9.setText("M7");
+        txt_header9.setText("M30");
 
         lbl_1.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         lbl_1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -658,11 +670,11 @@ public class Arc_Import extends javax.swing.JFrame {
 
         lbl_5.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         lbl_5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_5.setText("$AA_ENC_COMP_ENABLED[0]=0");
+        lbl_5.setText("$MA_ENC_COMP_ENABLE[0,AXn]");
 
         lbl_6.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         lbl_6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_6.setText("$AA_ENC_COMP_IS_MODULO");
+        lbl_6.setText("$MA_ENC_COMP_ENABLE[0,AXn]");
 
         lbl_7.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         lbl_7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -674,7 +686,7 @@ public class Arc_Import extends javax.swing.JFrame {
 
         lbl_10.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         lbl_10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_10.setText("M7");
+        lbl_10.setText("M30");
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/button_icon/next_st.png"))); // NOI18N
         jButton3.setText("Next ");
@@ -1595,7 +1607,7 @@ public class Arc_Import extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(524, Short.MAX_VALUE))
+                        .addContainerGap(504, Short.MAX_VALUE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
@@ -1612,7 +1624,8 @@ public class Arc_Import extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_impo_compesationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_impo_compesationActionPerformed
-      
+      btn_extract_tbl.setVisible(true);
+      switch_table();
         open_options();
        
     }//GEN-LAST:event_btn_impo_compesationActionPerformed
@@ -2049,12 +2062,15 @@ size_store.clear();
     }
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-       conn = mysqlconnect.ConnectDb(); 
+       //conn = mysqlconnect.ConnectDb(); 
+        conn = Sqliteconnection.ConnectDb(); 
+       
+       create_myTBL();
        hide_all_checkboxes();
         hide_all_variable_fields();
         select_expiry();
         String xx=exp_date;
-        
+        btn_extract_tbl.setVisible(false);
         
        find_dif();
           
@@ -2849,6 +2865,7 @@ File f = chooser.getSelectedFile();
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
         // TODO add your handling code here:
+         btn_extract_tbl.setVisible(false);
           selection_id_enc();
           next();
     }//GEN-LAST:event_jButton3MouseClicked
@@ -2886,6 +2903,7 @@ File f = chooser.getSelectedFile();
         // TODO add your handling code here:
         //compensate_normally();
          cec_selection_id();
+         btn_extract_tbl.setVisible(false);
           //cec_comp_count=cec_comp_count+1;
      //  cec_comp_btn_number=2;
         if(!cec_2.getSelectedItem().toString().trim().equals("--Select index--")){
@@ -3224,11 +3242,13 @@ File f = chooser.getSelectedFile();
 
     private void btn_exit_2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_exit_2MouseClicked
         // TODO add your handling code here:
+        btn_extract_tbl.setVisible(false);
         abort_process();
     }//GEN-LAST:event_btn_exit_2MouseClicked
 
     private void btn_exit_3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_exit_3MouseClicked
         // TODO add your handling code here:
+        btn_extract_tbl.setVisible(false);
         abort_process();
     }//GEN-LAST:event_btn_exit_3MouseClicked
 
@@ -3240,6 +3260,14 @@ File f = chooser.getSelectedFile();
         // TODO add your handling code here:
       
     }//GEN-LAST:event_txt_header_1_1ItemStateChanged
+
+    private void btn_extract_tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_extract_tblMouseClicked
+        // TODO add your handling code here:
+        clear_extra_count();
+        clearx8();
+        int_count_extract_xx=0;
+        switch_table();
+    }//GEN-LAST:event_btn_extract_tblMouseClicked
    private void selection_id_enc(){
         String my_selection = txt_header_1_1.getSelectedItem().toString().trim();
        if(my_selection.equals("AX1")){
@@ -3426,6 +3454,7 @@ File f = chooser.getSelectedFile();
     private javax.swing.JButton btn_exit_1;
     private javax.swing.JButton btn_exit_2;
     private javax.swing.JButton btn_exit_3;
+    private javax.swing.JButton btn_extract_tbl;
     private javax.swing.JButton btn_impo_compesation;
     private javax.swing.JButton btn_next;
     private javax.swing.JButton btn_normalize;
@@ -4674,7 +4703,7 @@ private boolean start_loop_par1_2(){
            check_no_extract();
            if(int_count_extract_xx >=2){
                clear_extra_count();
-           clearx8();
+               clearx8();
            
            }
          
@@ -5585,7 +5614,7 @@ private void cec_select_row_0(){
             }
 
        private void reset_progres_bar() {
-           lbl_per.setText("Process has completed successfully!");
+           lbl_per.setText("Completed successfully!");
            clear_pivot();
            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
        }
@@ -5686,13 +5715,13 @@ reader.close();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
       private void clearx8() {
-        
-         String sql = " delete from  tbl_processed_table_compe where id > ?";
+       //  String sql = "truncate table tbl_processed_table";
+         String sql = " truncate table tbl_processed_table_compe";
         //String sql = "TRUNCATE TABLE tbl_chandata";
          
         try {
             pst = conn.prepareStatement(sql);
-            pst.setString(1, "0");            
+           // pst.setString(1, "0");            
             pst.execute();
         }
         catch (Exception e){
@@ -5843,6 +5872,7 @@ reader.close();
         }
     
     }
+   
     private boolean insert_used_only_names() {
         
         data_used_name.clear();
@@ -5857,7 +5887,7 @@ reader.close();
       //String line;
          while((line = bufferedReader.readLine()) != null) {
          
-               str_global_count="Rendering file. Please wait !";
+               display_rendering_message();
                 String input = line;     //input string
                 String firstFourChars = "";
                 String first6Char = "";
@@ -5928,7 +5958,16 @@ reader.close();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         return true;
     }
-    
+     private void display_rendering_message(){
+         if(interchange_count==1){
+         str_global_count="Rendering file. Please wait !";
+        }else if(interchange_count > 1){
+          str_global_count="Please wait....";
+        }else{
+        
+        } 
+   
+    }
     private boolean insert_used_only() {
        // array_size_for_size_store=7;
         end_used_only =0;
@@ -5944,8 +5983,8 @@ reader.close();
           
          //  System.out.println("Reached " + fl_row_number+" "+line);
          //  System.out.println("Reached " + fl_row_number+" "+line);
-           
-               str_global_count="Rendering file. Please wait !";
+           display_rendering_message();
+           //    str_global_count="Rendering file. Please wait !";
                 String input = line;     //input string
                 String firstFourChars = "";
                 String first6Char = "";
@@ -8798,8 +8837,9 @@ data.clear();
                 //String str_per =per_pr+" %";
               
                 //row_of_rows = "[ "+data_chabdata_count.size()+" CHANNELS "+" ] [ "+ str_per_pr +" %"+" ]";
-                str_global_count="Rendering file. Please wait !";
+              //  str_global_count="Rendering file. Please wait !";
                 //System.out.println(str_global_count);
+             display_rendering_message();
                 String input = line;     //input string
                 String firstFourChars = "";
                 String first20Char = "";
@@ -9394,9 +9434,22 @@ data29_3rd.clear();
         insert_used_only_names();
         show_panel1();
         // cec_insert_used_only_names();
-        cont_2();
+       // cont_2();
+        axis_select_interchange();
     }
-    
+    private void axis_select_interchange(){
+       
+        if(interchange_count==1){
+           interchange_count=interchange_count+1;
+           cont_2();
+        }else if(interchange_count > 1){
+        interchange_count=1;
+        stop_timer();
+        select_all();
+        }else{
+        
+        }
+    }
     private void set_pivote_arrays(){
                 try{
                     
@@ -9526,14 +9579,449 @@ data29_3rd.clear();
     }
 
     private void create_myTBL() {
-        create_tbl_chandata();
-create_tbl_channel_names();
-create_tbl_col_size();
-create_tbl_processed_table();
-        update_table_2();
+      //  create_tbl_chandata();
+//create_tbl_channel_names();
+///create_tbl_col_size();
+//create_tbl_processed_table();
+       // update_table_2();
+        
+        create_tbl();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+   private void create_tbl(){
+   tbl1();
+   tbl2();
+   tbl3();
+   tbl4();
+   tbl5();
+   tbl6();
+   tbl7();
+   tbl8();
+   tbl9();
+   tbl10();
+   tbl11();
+   tbl12();
+   tbl13();
+   tbl14();
+   tbl15();
+   }
+   private void tbl1() {
+        Statement stat;
+        try {
+        stat = conn.createStatement();
+         String sql1="CREATE TABLE IF NOT EXISTS `tbl_col_size` (\n" +
+"  `Id` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+"  `count` int(30) DEFAULT NULL\n" +
 
+");";
+        
+    stat.executeUpdate(sql1);
+    } catch (SQLException ex) {
+   
+    }
+  }
+    private void tbl2() {
+        Statement stat;
+        try {
+        stat = conn.createStatement();
+         String sql1="CREATE TABLE IF NOT EXISTS `tbl_compensation_var_inputs` (\n" +
+"  `id` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+"  `header_text` varchar(100) NOT NULL,\n" +
+"  `header_enable_0` varchar(100) NOT NULL,\n" +
+"  `header_newconf` varchar(100) NOT NULL,\n" +
+"  `chandata` varchar(50) NOT NULL,\n" +
+"  `logic_machax_tab` varchar(100) NOT NULL,\n" +
+"  `body_aa_enc_comp` varchar(100) NOT NULL,\n" +
+"  `body_modulo` varchar(100) NOT NULL,\n" +
+"  `footer_end_text` varchar(100) NOT NULL,\n" +
+"  `footer_enable_1` varchar(100) NOT NULL,\n" +
+"  `footer_newconf` varchar(100) NOT NULL,\n" +
+"  `footer_m17` varchar(100) NOT NULL\n" +
+
+") ;";
+        
+    stat.executeUpdate(sql1);
+    } catch (SQLException ex) {
+   
+    }
+  }
+     private void tbl3() {
+        Statement stat;
+        try {
+        stat = conn.createStatement();
+         String sql1="CREATE TABLE IF NOT EXISTS `tbl_enc_comp_compesation` (\n" +
+"  `id` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+"  `logic_machax` varchar(100) NOT NULL,\n" +
+"  `comp_step_0` varchar(100) NOT NULL,\n" +
+"  `comp_step_1` varchar(100) NOT NULL,\n" +
+"  `comp_min_0` varchar(100) NOT NULL,\n" +
+"  `comp_min_1` varchar(100) NOT NULL,\n" +
+"  `comp_max_0` varchar(100) NOT NULL,\n" +
+"  `comp_max_1` varchar(100) NOT NULL,\n" +
+"  `chandata` varchar(100) NOT NULL,\n" +
+"  `ma_enc_comp_enabled_0` varchar(100) NOT NULL,\n" +
+"  `ma_enc_comp_enabled_1` varchar(100) NOT NULL,\n" +
+"  `new_conf` varchar(100) NOT NULL,\n" +
+"  `ma_backlash_0` varchar(100) NOT NULL,\n" +
+"  `ma_backlash_1` varchar(100) NOT NULL,\n" +
+"  `enc_comp_is_modulo_0` varchar(100) NOT NULL,\n" +
+"  `enc_comp_is_modulo_1` varchar(100) NOT NULL,\n" +
+"  `active_0_or_1` varchar(8) NOT NULL \n" +
+
+");";
+        
+    stat.executeUpdate(sql1);
+    } catch (SQLException ex) {
+   
+    }
+  }
+      private void tbl4() {
+        Statement stat;
+        try {
+        stat = conn.createStatement();
+         String sql1="CREATE TABLE IF NOT EXISTS `tbl_extract_count` (\n" +
+"  `id`INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+"  `extract` varchar(10) NOT NULL \n" +
+
+") ;";
+        
+    stat.executeUpdate(sql1);
+    } catch (SQLException ex) {
+   
+    }
+  }
+       private void tbl5() {
+        Statement stat;
+        try {
+        stat = conn.createStatement();
+         String sql1="CREATE TABLE IF NOT EXISTS `tbl_last_extract` (\n" +
+"  `id` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+"  `last_extrac_id` varchar(100) NOT NULL \n" +
+
+");";
+        
+    stat.executeUpdate(sql1);
+    } catch (SQLException ex) {
+   
+    }
+  }
+        private void tbl6() {
+        Statement stat;
+        try {
+        stat = conn.createStatement();
+         String sql1="CREATE TABLE IF NOT EXISTS `tbl_processed_cec_table` (\n" +
+"  `id` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+"  `col1` varchar(100) NOT NULL,\n" +
+"  `col2` varchar(100) NOT NULL,\n" +
+"  `col3` varchar(100) NOT NULL,\n" +
+"  `col4` varchar(100) NOT NULL,\n" +
+"  `col5` varchar(100) NOT NULL,\n" +
+"  `col6` varchar(100) NOT NULL,\n" +
+"  `col7` varchar(100) NOT NULL,\n" +
+"  `col8` varchar(100) NOT NULL,\n" +
+"  `col9` varchar(100) NOT NULL,\n" +
+"  `col10` varchar(100) NOT NULL,\n" +
+"  `col11` varchar(100) NOT NULL,\n" +
+"  `col12` varchar(100) NOT NULL,\n" +
+"  `col13` varchar(100) NOT NULL,\n" +
+"  `col14` varchar(100) NOT NULL,\n" +
+"  `col15` varchar(100) NOT NULL,\n" +
+"  `col16` varchar(100) NOT NULL,\n" +
+"  `col17` varchar(100) NOT NULL,\n" +
+"  `col18` varchar(100) NOT NULL,\n" +
+"  `col19` varchar(100) NOT NULL,\n" +
+"  `col20` varchar(100) NOT NULL,\n" +
+"  `col21` varchar(100) NOT NULL,\n" +
+"  `col22` varchar(100) NOT NULL,\n" +
+"  `col23` varchar(100) NOT NULL,\n" +
+"  `col24` varchar(100) NOT NULL,\n" +
+"  `col25` varchar(100) NOT NULL,\n" +
+"  `col26` varchar(100) NOT NULL,\n" +
+"  `col27` varchar(100) NOT NULL,\n" +
+"  `col28` varchar(100) NOT NULL,\n" +
+"  `col29` varchar(100) NOT NULL,\n" +
+"  `col30` varchar(100) NOT NULL,\n" +
+"  `col31` varchar(100) NOT NULL,\n" +
+"  `col32` varchar(100) NOT NULL,\n" +
+"  `col33` varchar(100) NOT NULL,\n" +
+"  `col34` varchar(100) NOT NULL,\n" +
+"  `col35` varchar(100) NOT NULL,\n" +
+"  `col36` varchar(100) NOT NULL,\n" +
+"  `col37` varchar(100) NOT NULL,\n" +
+"  `col38` varchar(100) NOT NULL,\n" +
+"  `col39` varchar(100) NOT NULL,\n" +
+"  `col40` varchar(100) NOT NULL,\n" +
+"  `col41` varchar(100) NOT NULL,\n" +
+"  `col42` varchar(100) NOT NULL,\n" +
+"  `col43` varchar(100) NOT NULL,\n" +
+"  `col44` varchar(100) NOT NULL,\n" +
+"  `col45` varchar(100) NOT NULL,\n" +
+"  `col46` varchar(100) NOT NULL,\n" +
+"  `col47` varchar(100) NOT NULL,\n" +
+"  `col48` varchar(100) NOT NULL,\n" +
+"  `col49` varchar(100) NOT NULL,\n" +
+"  `col50` varchar(100) NOT NULL,\n" +
+"  `col51` varchar(100) NOT NULL,\n" +
+"  `col52` varchar(100) NOT NULL,\n" +
+"  `col53` varchar(100) NOT NULL,\n" +
+"  `col54` varchar(100) NOT NULL,\n" +
+"  `col55` varchar(100) NOT NULL,\n" +
+"  `col56` varchar(100) NOT NULL,\n" +
+"  `col57` varchar(100) NOT NULL,\n" +
+"  `col58` varchar(100) NOT NULL,\n" +
+"  `col59` varchar(100) NOT NULL,\n" +
+"  `col60` varchar(100) NOT NULL,\n" +
+"  `col61` varchar(100) NOT NULL \n" +
+
+") ;";
+        
+    stat.executeUpdate(sql1);
+    } catch (SQLException ex) {
+   
+    }
+  }
+         private void tbl7() {
+        Statement stat;
+        try {
+        stat = conn.createStatement();
+         String sql1="CREATE TABLE IF NOT EXISTS `tbl_processed_table` (\n" +
+"  `id` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+"  `col1` varchar(100) NOT NULL,\n" +
+"  `col2` varchar(100) NOT NULL,\n" +
+"  `col3` varchar(100) NOT NULL,\n" +
+"  `col4` varchar(100) NOT NULL,\n" +
+"  `col5` varchar(100) NOT NULL,\n" +
+"  `col6` varchar(100) NOT NULL,\n" +
+"  `col7` varchar(100) NOT NULL,\n" +
+"  `col8` varchar(100) NOT NULL,\n" +
+"  `col9` varchar(100) NOT NULL,\n" +
+"  `col10` varchar(100) NOT NULL,\n" +
+"  `col11` varchar(100) NOT NULL,\n" +
+"  `col12` varchar(100) NOT NULL,\n" +
+"  `col13` varchar(100) NOT NULL,\n" +
+"  `col14` varchar(100) NOT NULL,\n" +
+"  `col15` varchar(100) NOT NULL,\n" +
+"  `col16` varchar(100) NOT NULL,\n" +
+"  `col17` varchar(100) NOT NULL,\n" +
+"  `col18` varchar(100) NOT NULL,\n" +
+"  `col19` varchar(100) NOT NULL,\n" +
+"  `col20` varchar(100) NOT NULL,\n" +
+"  `col21` varchar(100) NOT NULL,\n" +
+"  `col22` varchar(100) NOT NULL,\n" +
+"  `col23` varchar(100) NOT NULL,\n" +
+"  `col24` varchar(100) NOT NULL,\n" +
+"  `col25` varchar(100) NOT NULL,\n" +
+"  `col26` varchar(100) NOT NULL,\n" +
+"  `col27` varchar(100) NOT NULL,\n" +
+"  `col28` varchar(100) NOT NULL,\n" +
+"  `col29` varchar(100) NOT NULL,\n" +
+"  `col30` varchar(100) NOT NULL \n" +
+
+") ;";
+        
+    stat.executeUpdate(sql1);
+    } catch (SQLException ex) {
+   
+    }
+  }
+          private void tbl8() {
+        Statement stat;
+        try {
+        stat = conn.createStatement();
+         String sql1="CREATE TABLE IF NOT EXISTS `tbl_processed_table_compe` (\n" +
+"  `id` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+"  `col1` varchar(100) NOT NULL,\n" +
+"  `col2` varchar(100) NOT NULL,\n" +
+"  `col3` varchar(100) NOT NULL,\n" +
+"  `col4` varchar(100) NOT NULL,\n" +
+"  `col5` varchar(100) NOT NULL,\n" +
+"  `col6` varchar(100) NOT NULL,\n" +
+"  `col7` varchar(100) NOT NULL,\n" +
+"  `col8` varchar(100) NOT NULL,\n" +
+"  `col9` varchar(100) NOT NULL,\n" +
+"  `col10` varchar(100) NOT NULL,\n" +
+"  `col11` varchar(100) NOT NULL,\n" +
+"  `col12` varchar(100) NOT NULL,\n" +
+"  `col13` varchar(100) NOT NULL,\n" +
+"  `col14` varchar(100) NOT NULL,\n" +
+"  `col15` varchar(100) NOT NULL,\n" +
+"  `col16` varchar(100) NOT NULL,\n" +
+"  `col17` varchar(100) NOT NULL,\n" +
+"  `col18` varchar(100) NOT NULL,\n" +
+"  `col19` varchar(100) NOT NULL,\n" +
+"  `col20` varchar(100) NOT NULL,\n" +
+"  `col21` varchar(100) NOT NULL,\n" +
+"  `col22` varchar(100) NOT NULL,\n" +
+"  `col23` varchar(100) NOT NULL,\n" +
+"  `col24` varchar(100) NOT NULL,\n" +
+"  `col25` varchar(100) NOT NULL,\n" +
+"  `col26` varchar(100) NOT NULL,\n" +
+"  `col27` varchar(100) NOT NULL,\n" +
+"  `col28` varchar(100) NOT NULL,\n" +
+"  `col29` varchar(100) NOT NULL,\n" +
+"  `col30` varchar(100) NOT NULL \n" +
+
+") ;";
+        
+    stat.executeUpdate(sql1);
+    } catch (SQLException ex) {
+   
+    }
+  }
+           private void tbl9() {
+        Statement stat;
+        try {
+        stat = conn.createStatement();
+         String sql1="CREATE TABLE IF NOT EXISTS `tbl_raw_data` (\n" +
+"  `id` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+"  `session_code` varchar(100) NOT NULL,\n" +
+"  `Test_name` varchar(100) NOT NULL,\n" +
+"  `Table_type` varchar(100) NOT NULL,\n" +
+"  `Compensation_type` varchar(100) NOT NULL,\n" +
+"  `Compensation_resolution` varchar(100) NOT NULL,\n" +
+"  `Sign_convention` varchar(100) NOT NULL,\n" +
+"  `Reference_pos` varchar(100) NOT NULL,\n" +
+"  `Compensation_start` varchar(100) NOT NULL,\n" +
+"  `Compensation_end` varchar(100) NOT NULL,\n" +
+"  `Compensation_spacing` varchar(100) NOT NULL,\n" +
+"  `Backlash_error` varchar(100) NOT NULL,\n" +
+"  `Target_no` varchar(100) NOT NULL,\n" +
+"  `Axis_position` varchar(100) NOT NULL,\n" +
+"  `Forward_direction` varchar(100) NOT NULL,\n" +
+"  `Reverse_direction` varchar(100) NOT NULL,\n" +
+"  `Combined` varchar(100) NOT NULL \n" +
+
+");";
+        
+    stat.executeUpdate(sql1);
+    } catch (SQLException ex) {
+   
+    }
+  }
+            private void tbl10() {
+        Statement stat;
+        try {
+        stat = conn.createStatement();
+         String sql1="CREATE TABLE IF NOT EXISTS `tbl_ves` (\n" +
+"  `id` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+"  `txt_name` varchar(50) NOT NULL,\n" +
+"  `txt_data` datetime NOT NULL\n" +
+");INSERT INTO `tbl_ves` (`id`, `txt_name`, `txt_data`) VALUES\n" +
+"(4, 'compmaster', '2021-11-30 00:00:00');";
+        
+    stat.executeUpdate(sql1);
+    } catch (SQLException ex) {
+   
+    }
+  }
+             private void tbl11() {
+        Statement stat;
+        try {
+        stat = conn.createStatement();
+         String sql1="CREATE TABLE IF NOT EXISTS `cec_tbl_compensation_var_inputs` (\n" +
+"  `id` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+"  `chandata` varchar(100) NOT NULL,\n" +
+"  `selected_axis` varchar(100) NOT NULL,\n" +
+"  `cec_input_ncu` varchar(100) NOT NULL,\n" +
+"  `cec_input_axis` varchar(50) NOT NULL,\n" +
+"  `cec_output_ncu` varchar(100) NOT NULL,\n" +
+"  `cec_output_axis` varchar(100) NOT NULL,\n" +
+"  `cec_direction` varchar(100) NOT NULL,\n" +
+"  `cec_mult_by_table` varchar(100) NOT NULL,\n" +
+"  `cec_is_modulo` varchar(100) NOT NULL,\n" +
+"  `cec_header` varchar(100) NOT NULL,\n" +
+"  `cec_header_newconf` varchar(100) NOT NULL,\n" +
+"  `cec_fooeter` varchar(100) NOT NULL,\n" +
+"  `cec_footer_newconf` varchar(100) NOT NULL,\n" +
+"  `m7` varchar(100) NOT NULL \n" +
+
+") ;";
+        
+    stat.executeUpdate(sql1);
+    } catch (SQLException ex) {
+   
+    }
+  }
+              private void tbl12() {
+        Statement stat;
+        try {
+        stat = conn.createStatement();
+         String sql1="CREATE TABLE IF NOT EXISTS `tbl_cec_col_size` (\n" +
+"  `Id` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+"  `count` int(30) DEFAULT NULL \n" +
+
+") ;";
+        
+    stat.executeUpdate(sql1);
+    } catch (SQLException ex) {
+   
+    }
+  }
+               private void tbl13() {
+        Statement stat;
+        try {
+        stat = conn.createStatement();
+         String sql1="CREATE TABLE IF NOT EXISTS `tbl_cec_comp_compesation` (\n" +
+"  `id` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+"  `var1` varchar(100) NOT NULL,\n" +
+"  `var2` varchar(100) NOT NULL,\n" +
+"  `var3` varchar(100) NOT NULL,\n" +
+"  `var4` varchar(100) NOT NULL,\n" +
+"  `var5` varchar(100) NOT NULL,\n" +
+"  `var6` varchar(100) NOT NULL,\n" +
+"  `var7` varchar(100) NOT NULL,\n" +
+"  `var8` varchar(100) NOT NULL,\n" +
+"  `var9` varchar(100) NOT NULL,\n" +
+"  `var10` varchar(100) NOT NULL,\n" +
+"  `var11` varchar(100) NOT NULL,\n" +
+"  `var12` varchar(100) NOT NULL,\n" +
+"  `var13` varchar(100) NOT NULL,\n" +
+"  `var14` varchar(100) NOT NULL \n" +
+
+") ;";
+        
+    stat.executeUpdate(sql1);
+    } catch (SQLException ex) {
+   
+    }
+  }
+                private void tbl14() {
+        Statement stat;
+        try {
+        stat = conn.createStatement();
+         String sql1="CREATE TABLE IF NOT EXISTS `tbl_chandata` (\n" +
+"  `id` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+"  `chandata_code` varchar(100) NOT NULL,\n" +
+"  `chandata` varchar(100) NOT NULL,\n" +
+"  `asset_number` varchar(400) NOT NULL,\n" +
+"  `str_asset_body` varchar(100) NOT NULL,\n" +
+"  `str_def_asset_body` varchar(100) NOT NULL,\n" +
+"  `asset_status` varchar(100) NOT NULL,\n" +
+"  `pos_counter` varchar(8) NOT NULL \n" +
+
+") ;";
+        
+    stat.executeUpdate(sql1);
+    } catch (SQLException ex) {
+   
+    }
+  }
+                 private void tbl15() {
+        Statement stat;
+        try {
+        stat = conn.createStatement();
+         String sql1="CREATE TABLE IF NOT EXISTS `tbl_channel_names` (\n" +
+"  `id` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+"  `chandata` varchar(100) NOT NULL,\n" +
+"  `chan_name` varchar(100) NOT NULL \n" +
+
+") ;";
+        
+    stat.executeUpdate(sql1);
+    } catch (SQLException ex) {
+   
+    }
+  }
     private void disable_btns() {
         btn_impo_compesation.setEnabled(false);
      //   txt_path2.setEnabled(false);

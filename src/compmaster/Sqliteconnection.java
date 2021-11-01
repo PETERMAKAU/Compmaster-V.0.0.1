@@ -15,9 +15,9 @@ import javax.swing.JOptionPane;
  * @author peter
  */
 public class Sqliteconnection{
-    Connection conn =null;
-    public static Connection ConnectrDb(){
-    try{
+     Connection conn =null;
+    static Connection ConnectDb() {
+        try{
        
         Class.forName("org.sqlite.JDBC");   
        Connection  conn = DriverManager.getConnection("jdbc:sqlite:temp.db");
@@ -29,7 +29,11 @@ public class Sqliteconnection{
         JOptionPane.showMessageDialog(null, e);
         return null;
     }
-  //  return null;
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+  
+    
+   
     
 }

@@ -407,7 +407,7 @@ public class Arc_Import extends javax.swing.JFrame {
         cec_lbl_6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Compmaster V 1.1.5");
+        setTitle("Compmaster V 1.1.7 MySQL");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -608,7 +608,7 @@ public class Arc_Import extends javax.swing.JFrame {
         });
 
         txt_header_2.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        txt_header_2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "$MA_ENC_COMP_ENABLE[0]=0", "$MA_ENC_COMP_ENABLE[0]=1", "$MA_ENC_COMP_ENABLE[1]=0", "$MA_ENC_COMP_ENABLE[1]=1" }));
+        txt_header_2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "$MA_ENC_COMP_ENABLE[0,AXn]=0", "$MA_ENC_COMP_ENABLE[0,AXn]=1", "$MA_ENC_COMP_ENABLE[1,AXn]=0", "$MA_ENC_COMP_ENABLE[1,AXn]=1" }));
         txt_header_2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_header_2ActionPerformed(evt);
@@ -643,7 +643,7 @@ public class Arc_Import extends javax.swing.JFrame {
         txt_header6.setText(";End Text");
 
         txt_header7.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        txt_header7.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "$MA_ENC_COMP_ENABLE[0]=0", "$MA_ENC_COMP_ENABLE[0]=1", "$MA_ENC_COMP_ENABLE[1]=0", "$MA_ENC_COMP_ENABLE[1]=1" }));
+        txt_header7.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "$MA_ENC_COMP_ENABLE[0,AXn]=0", "$MA_ENC_COMP_ENABLE[0,AXn]=1", "$MA_ENC_COMP_ENABLE[1,AXn]=0", "$MA_ENC_COMP_ENABLE[1,AXn]=1" }));
         txt_header7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_header7ActionPerformed(evt);
@@ -2062,11 +2062,11 @@ size_store.clear();
     }
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-       //conn = mysqlconnect.ConnectDb(); 
-        conn = Sqliteconnection.ConnectDb(); 
+         conn = mysqlconnect.ConnectDb(); 
+        // conn = Sqliteconnection.ConnectDb(); 
        
-       create_myTBL();
-       hide_all_checkboxes();
+        create_myTBL();
+        hide_all_checkboxes();
         hide_all_variable_fields();
         select_expiry();
         String xx=exp_date;
@@ -2867,9 +2867,13 @@ File f = chooser.getSelectedFile();
         // TODO add your handling code here:
          btn_extract_tbl.setVisible(false);
           selection_id_enc();
+          please_wait();
           next();
     }//GEN-LAST:event_jButton3MouseClicked
-   private void next(){
+    private void please_wait(){
+    lbl_per.setText("Please wait for a few seconds...");
+    }
+    private void next(){
             hide_panels();       
            hide_all_variable_fields();
            cec_hide_all_variable_fields();
@@ -2902,12 +2906,14 @@ File f = chooser.getSelectedFile();
     private void btn_nextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nextMouseClicked
         // TODO add your handling code here:
         //compensate_normally();
+        
          cec_selection_id();
          btn_extract_tbl.setVisible(false);
           //cec_comp_count=cec_comp_count+1;
      //  cec_comp_btn_number=2;
         if(!cec_2.getSelectedItem().toString().trim().equals("--Select index--")){
-       continue_cec_consation_proc();
+            please_wait();
+            continue_cec_consation_proc();
         
         }else{
         JOptionPane.showMessageDialog(null, "No selected axis.");
@@ -5695,10 +5701,9 @@ reader.close();
      
      
       private void clearx3() {
-        String sql = "truncate table tbl_enc_comp_compesation";
-        // String sql = " delete from  tbl_enc_comp_compesation where id > ?";
-        //String sql = "TRUNCATE TABLE tbl_chandata";
-         
+      //  String sql = "truncate table tbl_enc_comp_compesation";
+        String sql = "delete from tbl_enc_comp_compesation";
+        
         try {
             pst = conn.prepareStatement(sql);
             //pst.setString(1, "0");            
@@ -5716,7 +5721,7 @@ reader.close();
     }
       private void clearx8() {
        //  String sql = "truncate table tbl_processed_table";
-         String sql = " truncate table tbl_processed_table_compe";
+         String sql = "delete from tbl_processed_table_compe";
         //String sql = "TRUNCATE TABLE tbl_chandata";
          
         try {
@@ -5730,7 +5735,7 @@ reader.close();
        
     }
     private void clearx2() {
-         String sql = "truncate table tbl_processed_table";
+         String sql = "delete from tbl_processed_table";
         // String sql = " delete from  tbl_processed_table where id > ?";
         //String sql = "TRUNCATE TABLE tbl_chandata";
          
@@ -5749,7 +5754,7 @@ reader.close();
             
              private void clear_8() {
                  
-        String sql = "truncate table tbl_cec_comp_compesation";
+        String sql = " delete from tbl_cec_comp_compesation";
         // String sql = " delete from tbl_cec_comp_compesation where id > ?";
         //String sql = "TRUNCATE TABLE tbl_chandata";
          
@@ -5766,7 +5771,7 @@ reader.close();
     }
              private void clear_extra_count(){
                  
-                  String sql = "truncate table tbl_extract_count";
+                  String sql = "delete from tbl_extract_count";
         // String sql = " delete from tbl_cec_comp_compesation where id > ?";
         //String sql = "TRUNCATE TABLE tbl_chandata";
          
@@ -5814,7 +5819,7 @@ reader.close();
    
     }
      private void clear_cec_x2() {
-        String sql = "truncate table tbl_processed_cec_table";
+        String sql = "delete from tbl_processed_cec_table";
          //String sql = " delete from  tbl_processed_cec_table where id > ?";
         //String sql = "TRUNCATE TABLE tbl_chandata";
          
@@ -5835,7 +5840,7 @@ reader.close();
     }
     private void clearx() {
         
-          String sql = "truncate table tbl_chandata";
+          String sql = "delete from tbl_chandata";
         //String sql = "TRUNCATE TABLE tbl_chandata";
          
         try {
@@ -5856,7 +5861,7 @@ reader.close();
     }
     private void trancate_table1(){
         
-         String sql = "truncate table tbl_chandata";
+         String sql = "delete from tbl_chandata";
         //String sql = "TRUNCATE TABLE tbl_chandata";
          
         try {
@@ -8411,6 +8416,7 @@ data.clear();
       //  clearx2();
         delete_1st_2_rows();
         insert_used_values_row_2();
+     
        
         for(int i=0; i < 43; i++){
         
@@ -8558,6 +8564,7 @@ data.clear();
         }
         else if(i==41){
          cec_data_14();
+           // update_name_code();
         }
        
         else{
@@ -8570,10 +8577,29 @@ data.clear();
                                 
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-        private void delete_1st_2_rows(){
-            for(int ig=1; ig < 3; ig++){
+    
+    private void update_name_code(){
+       try {
+           
+           //UPDATE employees SET lastname = 'Smith' WHERE employeeid = 3
+            String sql = "UPDATE tbl_processed_table col29 = ? WHERE col29 = ?";
+            pst = conn.prepareStatement(sql);
+           pst.setString(1, "N10000");
+            pst.setString(2, "N1000N");
+      
+            pst.executeUpdate();
+            //UpdateJTable();
             
-           String str_ig=ig+"";
+        }
+        catch (Exception e){
+            JOptionPane.showMessageDialog(null, e);        
+        }
+    
+    }
+        private void delete_1st_2_rows(){
+            for(int ig=1; ig < 2; ig++){
+            
+           String str_ig="N10000";
             
       // String sql = "truncate table tbl_col_size";
         
@@ -8586,8 +8612,10 @@ data.clear();
       //String sql = "DELETE FROM ANDYSHORT.DVDS WHERE ID=?";
            // String sql = " delete from tbl_processed_table where id=?";
             PreparedStatement statement;
-            statement = conn.prepareStatement("DELETE FROM tbl_processed_table WHERE id = ?");
-            statement.setInt(1, ig);
+            //DELETE FROM tbl_test  ORDER BY id LIMIT 3
+            
+            statement = conn.prepareStatement("DELETE FROM tbl_processed_table WHERE col29 = 'N1000N'");
+           // statement.setString(1, str_ig);
             statement.executeUpdate();  
         
         }
@@ -8642,7 +8670,7 @@ data.clear();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void clear_col_size() {
-        String sql = "truncate table tbl_col_size";
+        String sql = "delete from tbl_col_size";
         ///String sql = " delete from tbl_col_size where Id > ?";
         //String sql = "TRUNCATE TABLE tbl_chandata";
          
@@ -8658,7 +8686,7 @@ data.clear();
     }
      private void clear_cec_col_size() {
       //  String sql = " delete from tbl_cec_col_size where Id > ?";
-        String sql = "truncate table tbl_cec_col_size";
+        String sql = "delete from tbl_cec_col_size";
         //String sql = "TRUNCATE TABLE tbl_chandata";
          
         try {
@@ -9321,6 +9349,30 @@ data29_3rd.clear();
         index_loop_count=index_loop_count+1;
                         if(index_loop_count < 3){
                            old_str_asset_def_body ="INDEX";  
+                           asset_code_dif_col="N1000N";
+                         //  used_chennel_count=data_used_only_xx.size();
+                           // data_used_only_indices=data_used_only_indices_1;
+                          //  System.out.println(data_used_only_indices);
+                          //  data_used_only_indices_keeper.clear();
+                          //  data_used_only_indices_keeper=data_used_only_indices;
+                           
+                           data=data_used_only_indices;
+                           if(data.size()==0){
+                           data=sec_insert_data_used_only_indices;
+                           }
+                          // insert_column_size();                                
+                           insert_array_2();
+                          // used_inserted_status=1;
+                          
+                            }else{
+                        index_loop_count=0;
+                              }
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    private void insert_used_indices2() {
+        index_loop_count=index_loop_count+1;
+                        if(index_loop_count < 3){
+                           old_str_asset_def_body ="INDEX";  
                            asset_code_dif_col="N10000";
                          //  used_chennel_count=data_used_only_xx.size();
                            // data_used_only_indices=data_used_only_indices_1;
@@ -9351,7 +9403,7 @@ data29_3rd.clear();
                         
                        // }
                            old_str_asset_def_body ="$MN_AXCONF_MACHAX_NAME_TAB";  
-                           asset_code_dif_col="N10000";
+                           asset_code_dif_col="N1000N";
                            used_chennel_count=data_used_only_xx.size();
                            data=data_used_only_xx;
                            System.out.println(data);
@@ -9369,7 +9421,7 @@ data29_3rd.clear();
                         int ss = data_used_only_xx.size();
                       //  if(ixx==0){
                         //if(ixx==0){
-                           insert_used_indices();
+                           insert_used_indices2();
                         
                        // }
                         
@@ -10906,18 +10958,21 @@ private void create_muliti_dimentional_array() {
     private void insert_compesantation_vars_inputs() {
         
          String sql = "insert into tbl_compensation_var_inputs (header_text, header_enable_0, header_newconf,chandata,logic_machax_tab, body_aa_enc_comp,body_modulo, footer_end_text,footer_enable_1,footer_newconf,footer_m17) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
-       
+      String enabled_1= txt_header_2.getSelectedItem().toString().trim();
+      enabled_1 = enabled_1.replace(",AXn","");
+      String enabled_2= txt_header7.getSelectedItem().toString().trim();
+       enabled_2 = enabled_2.replace(",AXn","");
         try{
             pst = conn.prepareStatement(sql);            
             pst.setString(1, txt_header1.getText().toString().trim());
-            pst.setString(2, txt_header_2.getSelectedItem().toString().trim());
+            pst.setString(2, enabled_1);
             pst.setString(3, txt_header3.getText().toString().trim());   
              pst.setString(4, txt_header_chandata.getSelectedItem().toString().trim());
             pst.setString(5, txt_header_1_1.getSelectedItem().toString().trim());
             pst.setString(6, txt_header4.getSelectedItem().toString().trim());  
             pst.setString(7, txt_header5.getSelectedItem().toString().trim());
             pst.setString(8, txt_header6.getText().toString().trim());
-            pst.setString(9, txt_header7.getSelectedItem().toString().trim());
+            pst.setString(9, enabled_2);
             pst.setString(10, txt_header8.getText().toString().trim());
             pst.setString(11, txt_header9.getText().toString().trim());
            

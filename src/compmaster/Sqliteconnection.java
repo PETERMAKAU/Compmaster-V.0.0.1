@@ -22,7 +22,7 @@ public class Sqliteconnection{
         Class.forName("org.sqlite.JDBC");   
        Connection  conn = DriverManager.getConnection("jdbc:sqlite:temp.db");
       //  Connection conn = DriverManager.getConnection("jdbc:sqlite:Users.sqlite");
-        JOptionPane.showMessageDialog(null, "Connected");
+        //JOptionPane.showMessageDialog(null, "Connected");
         return conn;
     }catch(Exception e)
     {
